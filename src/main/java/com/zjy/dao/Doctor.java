@@ -12,13 +12,13 @@ public class Doctor {
     private String sex;
     private String birth;
     private String phone;
-    private double registrationfee;
+    private double registrationFee;
     private String entryDate;
     private String leaveDate;
     private String type;
     private Date createTime;
     private Date updateTime;
-    private String isdeleted;
+    private String isDeleted;
     private String depId;
 
     public String getId() {
@@ -85,12 +85,12 @@ public class Doctor {
         this.phone = phone;
     }
 
-    public double getRegistrationfee() {
-        return registrationfee;
+    public double getRegistrationFee() {
+        return registrationFee;
     }
 
-    public void setRegistrationfee(double registrationfee) {
-        this.registrationfee = registrationfee;
+    public void setRegistrationFee(double registrationFee) {
+        this.registrationFee = registrationFee;
     }
 
     public String getEntryDate() {
@@ -133,12 +133,12 @@ public class Doctor {
         this.updateTime = updateTime;
     }
 
-    public String getIsdeleted() {
-        return isdeleted;
+    public String getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIsdeleted(String isdeleted) {
-        this.isdeleted = isdeleted;
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getDepId() {
