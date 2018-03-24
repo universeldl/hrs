@@ -15,6 +15,7 @@
       <commons.fileupload.version>1.2.1</commons.fileupload.version>
       <javassist.version>3.15.0.GA</javassist.version>
       <cxf.version>3.0.2</cxf.version>
+      <quartz.version>2.2.1</quartz.version>
   </properties>
   <dependencies>
     <!--1:日志，java日志：slf4j,log4j,logback,common-logging 使用：slf4j+logBack -->
@@ -150,6 +151,16 @@
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>2.5</version>
+    </dependency>
+    <dependency>
+	    <groupId>org.quartz-scheduler</groupId>
+	    <artifactId>quartz</artifactId>
+	    <version>${quartz.version}</version>
+    </dependency>
+    <dependency>  
+      <groupId>org.quartz-scheduler</groupId>  
+      <artifactId>quartz-jobs</artifactId>  
+      <version>${quartz.version}</version>  
     </dependency>
   </dependencies>
   <build>
