@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zjy.dao.Doctor;
-import com.zjy.service.DoctorManagermentService;
+import com.zjy.entity.Doctor;
+import com.zjy.service.DoctorService;
 
 /**
  * 菜单 ： 医生管理 TODO
@@ -22,7 +22,7 @@ import com.zjy.service.DoctorManagermentService;
 public class DoctorManagermentController {
 
     @Autowired
-    private DoctorManagermentService service;
+    private DoctorService service;
 
     /**
      * 医生查询，条件查询，不是查所有字段
@@ -55,9 +55,7 @@ public class DoctorManagermentController {
      */
     @RequestMapping("/addDoctor")
     public String addDoctor(Doctor doctor) {
-        if (service.addDoctor(doctor)) {
-            return "";
-        }
+        service.insert(doctor);
         return "";
     }
     
@@ -72,7 +70,7 @@ public class DoctorManagermentController {
      */
     @RequestMapping("/updateDoctor")
     public String updateDoctor(Doctor doctor) {
-        if(service.updateDoctor(doctor)) {
+        if(service.updateByPrimaryKeySelective(doctor)) {
             return "";
         }
         return "";
@@ -90,21 +88,6 @@ public class DoctorManagermentController {
     @RequestMapping("/doctorDetail")
     public String doctorDetail(@RequestParam("id") String id,Model model) {
         
-        return "";
-    }
-
-    /**
-     * 删除医生信息
-     * isDeleted值修改为1
-     * 
-     * @param id
-     * @return
-     */
-    @RequestMapping("/deleteDoctor")
-    public String deleteDoctor(@RequestParam("id")String id) {
-        if(service.deleteDoctor(id)) {
-            return "";
-        }
         return "";
     }
 }
