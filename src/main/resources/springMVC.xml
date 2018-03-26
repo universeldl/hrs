@@ -22,4 +22,43 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
+    
+    <!-- 
+    <bean id="SpringQtzJob" class="com.ncs.hj.SpringQtz"/>  
+	    <bean id="SpringQtzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+	    <property name="targetObject">  
+	        <ref bean="SpringQtzJob"/>  
+	    </property>  
+	    <property name="targetMethod">  
+	        <value>execute</value>  
+	    </property>  
+	</bean>  
+	-->  
+	<!-- ======================== 调度触发器 ======================== -->  
+	<!--
+	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+	    <property name="jobDetail" ref="SpringQtzJobMethod"></property>  
+	    <property name="cronExpression" value="0/5 * * * * ?"></property>  
+	</bean>  
+	-->  
+	<!-- ======================== 调度工厂 ======================== -->  
+	<!--
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+	    <property name="triggers">  
+	        <list>  
+	            <ref bean="CronTriggerBean"/>  
+	        </list>  
+	    </property>  
+	</bean>    
+     -->
+     <!-- 
+        public class SpringQtz {  
+		    private static int counter = 0;  
+		    protected void execute()  {  
+		        long ms = System.currentTimeMillis();  
+		        System.out.println("\t\t" + new Date(ms));  
+		        System.out.println("(" + counter++ + ")");  
+		    }  
+		}
+      -->
 </beans>
