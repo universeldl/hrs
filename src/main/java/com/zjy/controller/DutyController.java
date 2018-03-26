@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.zjy.service.SchedulingService;
+import com.zjy.service.DutyService;
 
 /**
  * 医生排班功能
@@ -16,10 +16,10 @@ import com.zjy.service.SchedulingService;
  * @version $Id: SchedulingController.java, v 0.1 2018年3月21日 上午10:54:01 zhoujiayi Exp $
  */
 @Controller
-public class SchedulingController {
+public class DutyController {
     
     @Autowired
-    private SchedulingService service;
+    private DutyService service;
     
     /**
      * 排班编辑
