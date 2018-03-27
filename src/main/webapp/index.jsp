@@ -14,7 +14,7 @@
 	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">
 	<title>Insert title here</title>
 </head>
-<body class="templatemo-bg-gray">
+<body class="templatemo-bg-gray" style="background-image: url('images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">用户登录</h1>
