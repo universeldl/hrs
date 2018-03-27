@@ -10,8 +10,10 @@ package com.zjy.util;
  *
  */
 public class Constants {
-	//session名
+	// 存放在session中用户常量
 	public static final String SESSION_USER = "session_user";
+	// 定义存放在Session中验证码常量
+	public final static String VERIFY_CODE = "verify_code";
 	
 	//各实体编号随机数位数
 	public static final int DEPARTMENT_NO_DIGITS = 3;

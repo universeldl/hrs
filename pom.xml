@@ -196,7 +196,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<configuration>
 					<!--项目请求路径 -->
-					<path>/hrs</path>
+					<path>/</path>
 					<!-- 端口号 -->
 					<port>8090</port>
 					<!-- 支持热部署 -->
