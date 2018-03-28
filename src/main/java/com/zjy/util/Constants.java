@@ -35,9 +35,10 @@ public class Constants {
 	public static final int MALE = 1;
 	public static final int FEMALE = 0;
 	
-	//医生类型：1-医生；0-管理员
+	//医生类型：1-医生；0-管理员；2-病人；
 	public static final int DOCTOR_TYPE = 1;
 	public static final int ADMIN_TYPE = 0;
+	public static final int PATIENT_TYPE = 2;
 	
 	//某日是否值班：1-是；0-否
 	public static final int ON_DUTY = 1;

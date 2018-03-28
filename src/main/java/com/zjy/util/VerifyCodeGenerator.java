@@ -70,10 +70,12 @@ public class VerifyCodeGenerator {
 
 		double shx = Math.random();
 
-		if (shx < 0.25)
+		if (shx < 0.25) {
 			shx = 0.25;
-		if (shx > 0.55)
+		}
+		if (shx > 0.55) {
 			shx = 0.55;
+		}
 
 		int temp = random.nextInt(2);
 		int offsetLeft = 2;

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zjy.service.LoginService;
+import com.zjy.util.Constants;
 
 /**
  * 用户登陆
@@ -25,11 +26,11 @@ public class LoginController {
     public String login(@RequestParam("id") String id,
             @RequestParam("password") String password,
             @RequestParam("type")String type) {
-        if("0".equals(type)&&service.DLogin(id,password)) {
+        if(String.valueOf(Constants.DOCTOR_TYPE).equals(type)&&service.DLogin(id,password)) {
             return "doctorindex";
-        }else if("1".equals(type)&&service.DLogin(id,password)) {
+        }else if(String.valueOf(Constants.ADMIN_TYPE).equals(type)&&service.DLogin(id,password)) {
             return "adminindex";
-        }else if("2".equals(type)&&service.PLogin(id,password)) {
+        }else if(String.valueOf(Constants.PATIENT_TYPE).equals(type)&&service.PLogin(id,password)) {
             return "patientindex";
         }
         return "loginerror";

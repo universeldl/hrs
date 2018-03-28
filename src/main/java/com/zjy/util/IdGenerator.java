@@ -32,8 +32,9 @@ public class IdGenerator {
 	 */
 	public static String generateNumber(String prefix, int numOfDigits) {
 		String number = prefix;
-		for (int i = 0; i < numOfDigits; ++i)
+		for (int i = 0; i < numOfDigits; ++i) {
 			number += random.nextInt(10);
+		}
 		return number;
 	}
 	

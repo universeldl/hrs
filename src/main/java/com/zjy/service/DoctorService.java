@@ -18,8 +18,9 @@ public class DoctorService {
          * 入职日期和离职日期，前端接收date类型，在这里转string类型的YYYY-MM-DD格式后set
          */
         try{
-        	if (doctorMapper.insert(doctor) == 1)
+        	if (doctorMapper.insert(doctor) == 1) {
         		return true;
+        	}
         }catch (Exception e) {
             throw new RuntimeException("插入医生失败");
         }
@@ -28,8 +29,9 @@ public class DoctorService {
 
     public boolean updateByPrimaryKeySelective(Doctor doctor) {
         try{
-        	if (doctorMapper.updateByPrimaryKeySelective(doctor) == 1)
+        	if (doctorMapper.updateByPrimaryKeySelective(doctor) == 1) {
         		return true;
+        	}
         }catch (Exception e) {
             throw new RuntimeException("更新医生失败");
         }
