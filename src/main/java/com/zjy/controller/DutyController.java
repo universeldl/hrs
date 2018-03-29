@@ -23,7 +23,6 @@ public class DutyController {
     
     /**
      * 排班编辑
-     * 默认查看所有医生的排班情况（第一列编号[合并]，第二列姓名[合并]，第三列周一到周日[固定]，第四列是否上班[ischecked]）
      * 
      * @param id
      * @param model

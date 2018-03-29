@@ -1,5 +1,8 @@
 package com.zjy.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.zjy.entity.Doctor;
 
 public interface DoctorMapper {
@@ -16,4 +19,6 @@ public interface DoctorMapper {
     int updateByPrimaryKey(Doctor record);
 
     Doctor selectByDoctorNo(String id);
+
+    List<Doctor> queryDoctor(Map<String, Object> param);
 }

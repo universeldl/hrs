@@ -37,6 +37,29 @@
     where doctor_no = #{id,jdbcType=VARCHAR}
   </select>
   
+  <select id="queryDoctor" parameterType="HashMap" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from doctor 
+  	<where>
+  		<if test="param.name!=null and param.name!=''">
+  			and doctor_name=#{param.name}
+  		</if>
+  		<if test="param.depNo!=null and param.depNo!=''">
+  			and doctor_department_no=#{param.depNo}
+  		</if>
+  		<if test="param.status==1">
+  			and doctor_quit_time is not null
+  		</if>
+  		<if test="param.status==0">
+  			and doctor_quit_time is null
+  		</if>
+  		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
+  			and doctor_hire_time between #{param.startTime} and #{param.endTime}
+  		</if>
+  	</where>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from doctor
     where id = #{id,jdbcType=VARCHAR}
