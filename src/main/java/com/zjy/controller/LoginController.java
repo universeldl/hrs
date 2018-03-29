@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zjy.service.LoginService;
 import com.zjy.util.Constants;
+import com.zjy.util.CryptographyHelper;
 
 /**
  * 用户登陆
@@ -30,6 +31,8 @@ public class LoginController {
             @RequestParam(value="type",required=false)String type,
             @RequestParam("verificationCode") String verificationCode,
             HttpServletRequest request) {
+//        String salt = CryptographyHelper.getRandomSalt();
+//        String saltpassword = CryptographyHelper.encrypt(password, salt);
         if(!verificationCode.toLowerCase().equals(request.getSession().getAttribute(Constants.VERIFY_CODE).toString().toLowerCase())) {
             return "loginerror";
         }

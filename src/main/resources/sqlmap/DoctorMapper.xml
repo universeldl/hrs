@@ -65,17 +65,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zjy.entity.Doctor" >
-    insert into doctor (id, doctor_no, doctor_name, 
-      doctor_password, doctor_salt, doctor_sex, 
-      doctor_birth, doctor_phone, doctor_registration_fee, 
-      doctor_hire_time, doctor_department_no, doctor_quit_time, 
-      type, create_time, update_time
+    insert into doctor (
+		<include refid="Base_Column_List" />
       )
     values (#{id,jdbcType=VARCHAR}, #{doctorNo,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{doctorPassword,jdbcType=VARCHAR}, #{doctorSalt,jdbcType=VARCHAR}, #{doctorSex,jdbcType=VARCHAR}, 
       #{doctorBirth,jdbcType=DATE}, #{doctorPhone,jdbcType=VARCHAR}, #{doctorRegistrationFee,jdbcType=DOUBLE}, 
       #{doctorHireTime,jdbcType=DATE}, #{doctorDepartmentNo,jdbcType=VARCHAR}, #{doctorQuitTime,jdbcType=DATE}, 
-      #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{type,jdbcType=VARCHAR}, date_format(now(),'%Y-%m-%d %T'), date_format(now(),'%Y-%m-%d %T')
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zjy.entity.Doctor" >

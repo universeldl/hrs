@@ -137,7 +137,7 @@ public class Doctor {
     }
 
     public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+        this.type = "1";
     }
 
     public Date getCreateTime() {

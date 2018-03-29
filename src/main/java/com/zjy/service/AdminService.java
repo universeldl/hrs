@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zjy.dao.DoctorMapper;
 import com.zjy.entity.Doctor;
+import com.zjy.util.CryptographyHelper;
 
 /**
  * 
@@ -27,6 +28,11 @@ public class AdminService {
          * 处理密码，密码盐
          * 入职日期和离职日期，前端接收date类型，在这里转string类型的YYYY-MM-DD格式后set
          */
+        String password = doctor.getDoctorPassword();
+        String salt = CryptographyHelper.getRandomSalt();
+        String dPassword = CryptographyHelper.encrypt(password, salt);
+        doctor.setDoctorPassword(dPassword);
+        doctor.setDoctorSalt(salt);
         try{
             if (doctorMapper.insert(doctor) == 1) {
                 return true;
