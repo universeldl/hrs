@@ -14,4 +14,6 @@ public interface PatientMapper {
     int updateByPrimaryKeySelective(Patient record);
 
     int updateByPrimaryKey(Patient record);
+
+    Patient selectByPatientNo(String id);
 }
