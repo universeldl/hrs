@@ -1,5 +1,7 @@
 package com.zjy.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zjy.service.LoginService;
 import com.zjy.util.Constants;
+import com.zjy.util.CryptographyHelper;
 
 /**
  * 用户登陆
@@ -25,7 +28,14 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(@RequestParam("id") String id,
             @RequestParam("password") String password,
-            @RequestParam("type")String type) {
+            @RequestParam(value="type",required=false)String type,
+            @RequestParam("verificationCode") String verificationCode,
+            HttpServletRequest request) {
+//        String salt = CryptographyHelper.getRandomSalt();
+//        String saltpassword = CryptographyHelper.encrypt(password, salt);
+        if(!verificationCode.toLowerCase().equals(request.getSession().getAttribute(Constants.VERIFY_CODE).toString().toLowerCase())) {
+            return "loginerror";
+        }
         if(String.valueOf(Constants.DOCTOR_TYPE).equals(type)&&service.DLogin(id,password)) {
             return "doctorindex";
         }else if(String.valueOf(Constants.ADMIN_TYPE).equals(type)&&service.DLogin(id,password)) {

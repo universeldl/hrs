@@ -29,22 +29,50 @@
     from doctor
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectByDoctorNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctor_no = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryDoctor" parameterType="HashMap" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from doctor 
+  	<where>
+  		<if test="param.name!=null and param.name!=''">
+  			and doctor_name=#{param.name}
+  		</if>
+  		<if test="param.depNo!=null and param.depNo!=''">
+  			and doctor_department_no=#{param.depNo}
+  		</if>
+  		<if test="param.status==1">
+  			and doctor_quit_time is not null
+  		</if>
+  		<if test="param.status==0">
+  			and doctor_quit_time is null
+  		</if>
+  		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
+  			and doctor_hire_time between #{param.startTime} and #{param.endTime}
+  		</if>
+  	</where>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from doctor
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zjy.entity.Doctor" >
-    insert into doctor (id, doctor_no, doctor_name, 
-      doctor_password, doctor_salt, doctor_sex, 
-      doctor_birth, doctor_phone, doctor_registration_fee, 
-      doctor_hire_time, doctor_department_no, doctor_quit_time, 
-      type, create_time, update_time
+    insert into doctor (
+		<include refid="Base_Column_List" />
       )
     values (#{id,jdbcType=VARCHAR}, #{doctorNo,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{doctorPassword,jdbcType=VARCHAR}, #{doctorSalt,jdbcType=VARCHAR}, #{doctorSex,jdbcType=VARCHAR}, 
       #{doctorBirth,jdbcType=DATE}, #{doctorPhone,jdbcType=VARCHAR}, #{doctorRegistrationFee,jdbcType=DOUBLE}, 
       #{doctorHireTime,jdbcType=DATE}, #{doctorDepartmentNo,jdbcType=VARCHAR}, #{doctorQuitTime,jdbcType=DATE}, 
-      #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{type,jdbcType=VARCHAR}, date_format(now(),'%Y-%m-%d %T'), date_format(now(),'%Y-%m-%d %T')
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zjy.entity.Doctor" >

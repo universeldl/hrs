@@ -8,6 +8,13 @@ import com.zjy.dao.PatientMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Patient;
 
+/**
+ * 
+ * TODO
+ *
+ * @author zhoujiayi
+ * @version $Id: LoginService.java, v 0.1 2018年3月29日 上午10:41:23 zhoujiayi Exp $
+ */
 @Service
 public class LoginService {
     
@@ -19,19 +26,19 @@ public class LoginService {
 
     public boolean DLogin(String id, String password) {
         // TODO Auto-generated method stub
-//        Doctor doctor = dMapper.selectByPrimaryKey(id);
-//        if(null!=doctor&&doctor.getPassword().equals(password)) {
-//            return true;
-//        }
+        Doctor doctor = dMapper.selectByDoctorNo(id);
+        if(null!=doctor&&doctor.getDoctorPassword().equals(password)) {
+            return true;
+        }
         return false;
     }
 
     public boolean PLogin(String id, String password) {
         // TODO Auto-generated method stub
-//        Patient patient = pMapper.queryPatient(id);
-//        if(null!=patient&&patient.getPassword().equals(password)) {
-//            return true;
-//        }
+        Patient patient = pMapper.selectByPatientNo(id);
+        if(null!=patient&&patient.getPatientPassword().equals(password)) {
+            return true;
+        }
         return false;
     }
 

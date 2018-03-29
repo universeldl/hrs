@@ -47,17 +47,6 @@ public class DoctorManagermentController {
         return "";
     }
 
-    /**
-     * 新增医生
-     * 
-     * @param doctor
-     * @return
-     */
-    @RequestMapping("/addDoctor")
-    public String addDoctor(Doctor doctor) {
-        service.insert(doctor);
-        return "";
-    }
     
     /**
      * 修改医生信息
