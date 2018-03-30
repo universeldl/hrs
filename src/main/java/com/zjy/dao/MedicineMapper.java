@@ -17,5 +17,7 @@ public interface MedicineMapper {
 
     int updateByPrimaryKey(Medicine record);
 
-    List<Medicine> selectByMedicineName(String medicineName);
+    List<Medicine> selectByMedicineName(String medicineName, int a, int b);
+
+    int count(String medicineName);
 }

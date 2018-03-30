@@ -43,10 +43,10 @@
   	from doctor 
   	<where>
   		<if test="param.name!=null and param.name!=''">
-  			and doctor_name=#{param.name}
+  			and doctor_name=#{name}
   		</if>
   		<if test="param.depNo!=null and param.depNo!=''">
-  			and doctor_department_no=#{param.depNo}
+  			and doctor_department_no=#{depNo}
   		</if>
   		<if test="param.status==1">
   			and doctor_quit_time is not null
@@ -55,7 +55,31 @@
   			and doctor_quit_time is null
   		</if>
   		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
-  			and doctor_hire_time between #{param.startTime} and #{param.endTime}
+  			and doctor_hire_time between #{startTime} and #{endTime}
+  		</if>
+  	</where>
+  	limit #{a},#{b}
+  </select>
+  
+  <select id="count" parameterType="HashMap">
+  	select 
+  	count(0) 
+  	from doctor 
+  	<where>
+  		<if test="param.name!=null and param.name!=''">
+  			and doctor_name=#{name}
+  		</if>
+  		<if test="param.depNo!=null and param.depNo!=''">
+  			and doctor_department_no=#{depNo}
+  		</if>
+  		<if test="param.status==1">
+  			and doctor_quit_time is not null
+  		</if>
+  		<if test="param.status==0">
+  			and doctor_quit_time is null
+  		</if>
+  		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
+  			and doctor_hire_time between #{startTime} and #{endTime}
   		</if>
   	</where>
   </select>

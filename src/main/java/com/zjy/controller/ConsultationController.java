@@ -1,6 +1,7 @@
 package com.zjy.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,10 +72,12 @@ public class ConsultationController {
      * @return
      */
     @RequestMapping("/medicineQuery")
-    public String medicineQuery(@RequestParam("medicineName")String medicineName) {
-        List<Medicine> list = medicineService.queryByMedicineName(medicineName);
-        
-        return "";
+    public Map<String, Object> medicineQuery(@RequestParam("medicineName")String medicineName,
+                                             int pageSize,int pageNumber) {
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        Map<String, Object> map = medicineService.queryByMedicineName(medicineName,a,b);
+        return map;
     }
     
     
