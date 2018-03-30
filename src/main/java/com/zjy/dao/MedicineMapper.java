@@ -1,5 +1,7 @@
 package com.zjy.dao;
 
+import java.util.List;
+
 import com.zjy.entity.Medicine;
 
 public interface MedicineMapper {
@@ -14,4 +16,6 @@ public interface MedicineMapper {
     int updateByPrimaryKeySelective(Medicine record);
 
     int updateByPrimaryKey(Medicine record);
+
+    List<Medicine> selectByMedicineName(String medicineName);
 }

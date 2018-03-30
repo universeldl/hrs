@@ -20,6 +20,14 @@
     from medicine
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectByMedicineName" parameterType="String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_name = #{medicineName,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from medicine
     where id = #{id,jdbcType=VARCHAR}
