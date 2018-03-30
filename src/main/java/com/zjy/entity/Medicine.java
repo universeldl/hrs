@@ -1,7 +1,6 @@
 package com.zjy.entity;
 
-import com.zjy.util.Constants;
-import com.zjy.util.IdGenerator;
+import java.util.Date;
 
 public class Medicine {
     private String id;
@@ -14,20 +13,24 @@ public class Medicine {
 
     private Integer medicineAmount;
 
+    private Integer medicineLastAddAccount;
+
+    private Date updateTime;
+
     public String getId() {
         return id;
     }
 
-    public void setId() {
-        this.id = IdGenerator.generateUUIDforPrimaryKey();
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getMedicineNo() {
         return medicineNo;
     }
 
-    public void setMedicineNo() {
-        this.medicineNo = IdGenerator.generateNumber(Constants.MEDICINE_NO_PREFIX, Constants.MEDICINE_NO_DIGITS);
+    public void setMedicineNo(String medicineNo) {
+        this.medicineNo = medicineNo == null ? null : medicineNo.trim();
     }
 
     public String getMedicineName() {
@@ -52,5 +55,21 @@ public class Medicine {
 
     public void setMedicineAmount(Integer medicineAmount) {
         this.medicineAmount = medicineAmount;
+    }
+
+    public Integer getMedicineLastAddAccount() {
+        return medicineLastAddAccount;
+    }
+
+    public void setMedicineLastAddAccount(Integer medicineLastAddAccount) {
+        this.medicineLastAddAccount = medicineLastAddAccount;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
