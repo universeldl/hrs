@@ -14,4 +14,6 @@ public interface RegistrationMapper {
     int updateByPrimaryKeySelective(Registration record);
 
     int updateByPrimaryKey(Registration record);
+
+    Registration selectRegistrationByNo(String regNo);
 }

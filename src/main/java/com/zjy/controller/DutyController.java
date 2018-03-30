@@ -1,11 +1,15 @@
 package com.zjy.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zjy.entity.Duty;
 import com.zjy.service.DutyService;
 
 /**
@@ -22,25 +26,29 @@ public class DutyController {
     private DutyService service;
     
     /**
-     * 排班编辑
+     * 排班调整
+     * 只能输入医生编号，先查看单个医生的值班情况，
+     * 每一次只能对一个医生进行修改
      * 
      * @param id
      * @param model
      * @return
      */
-    @RequestMapping("/viewScheduling")
+    @RequestMapping("/changeScheduling")
     public String viewScheduling(@RequestParam("id")String id, Model model) {
+        Duty duty = service.queryDutyById(id);
         
         return "";
     }
     
     /**
      * 各科室排班表（像课程表那样）
-     * 
+     * 必须选择科室
      * @return
      */
     @RequestMapping("/schedulingList")
-    public String schedulingList() {
+    public String schedulingList(@RequestParam("depNo")String depNo) {
+        Map<String,List<String>> map = service.queryscheduling(depNo);
         
         return "";
     }

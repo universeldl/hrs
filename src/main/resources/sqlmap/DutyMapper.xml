@@ -29,6 +29,14 @@
     from duty
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectDutyByNo">
+  	select 
+    <include refid="Base_Column_List" />
+    from duty
+    where doctor_no = #{id,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from duty
     where id = #{id,jdbcType=VARCHAR}

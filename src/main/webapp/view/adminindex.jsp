@@ -30,7 +30,7 @@
                         <!-- 利用data-target指定要折叠的分组列表 -->
                         <div class="panel-heading" id="collapseListGroupHeading1" data-toggle="collapse" data-target="#collapseListGroup1" role="tab" >
                             <h4 class="panel-title">
-                                分组1
+                              	医生管理
                                 <span class="glyphicon glyphicon-chevron-up right"></span>
                             </h4>
                         </div>
@@ -39,14 +39,14 @@
                             <ul class="list-group">
                               <li class="list-group-item">
                                 <!-- 利用data-target指定URL -->
-                                <button class="menu-item-left" data-target="test2.html">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项1-1
-                                </button>
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>医生录入
+                                </a>
                               </li>
                               <li class="list-group-item">
-                                <button class="menu-item-left">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项1-2
-                                </button>
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>医生列表
+                                </a>
                               </li>
                             </ul>
                         </div>
@@ -54,21 +54,43 @@
                     <div class="panel panel-primary leftMenu">
                         <div class="panel-heading" id="collapseListGroupHeading2" data-toggle="collapse" data-target="#collapseListGroup2" role="tab" >
                             <h4 class="panel-title">
-                                分组2
+                                	排班
                                 <span class="glyphicon glyphicon-chevron-down right"></span>
                             </h4>
                         </div>
                         <div id="collapseListGroup2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading2">
                             <ul class="list-group">
                               <li class="list-group-item">
-                                <button class="menu-item-left">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-1
-                                </button>
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>排班表
+                                </a>
                               </li>
                               <li class="list-group-item">
-                                <button class="menu-item-left">
-                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-2
-                                </button>
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>排班调整
+                                </a>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary leftMenu">
+                        <div class="panel-heading" id="collapseListGroupHeading2" data-toggle="collapse" data-target="#collapseListGroup2" role="tab" >
+                            <h4 class="panel-title">
+                                	统计
+                                <span class="glyphicon glyphicon-chevron-down right"></span>
+                            </h4>
+                        </div>
+                        <div id="collapseListGroup2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading2">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>就诊量
+                                </a>
+                              </li>
+                              <li class="list-group-item">
+                                <a class="menu-item-left" target="admin">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>收入
+                                </a>
                               </li>
                             </ul>
                         </div>
@@ -76,7 +98,8 @@
                 </div>
             </div>
             <div class="col-md-10">
-                内容
+               	<iframe name="admin">
+               	</iframe>
             </div>
         </div>
         

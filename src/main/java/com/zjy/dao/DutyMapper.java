@@ -14,4 +14,6 @@ public interface DutyMapper {
     int updateByPrimaryKeySelective(Duty record);
 
     int updateByPrimaryKey(Duty record);
+
+    Duty selectDutyByNo(String id);
 }
