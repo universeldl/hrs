@@ -9,11 +9,13 @@ public class Prescription {
 
     private String medicineNo;
 
+    private Integer medicineAmount;
+
     public String getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(String id) {
         this.id = IdGenerator.generateUUIDforPrimaryKey();
     }
 
@@ -31,5 +33,13 @@ public class Prescription {
 
     public void setMedicineNo(String medicineNo) {
         this.medicineNo = medicineNo == null ? null : medicineNo.trim();
+    }
+
+    public Integer getMedicineAmount() {
+        return medicineAmount;
+    }
+
+    public void setMedicineAmount(Integer medicineAmount) {
+        this.medicineAmount = medicineAmount;
     }
 }

@@ -137,7 +137,7 @@ public class Doctor {
     }
 
     public void setType(String type) {
-        this.type = "1";
+        this.type = Constants.DOCTOR_TYPE;
     }
 
     public Date getCreateTime() {
