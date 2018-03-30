@@ -2,12 +2,13 @@ package com.zjy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.zjy.dao.ConsultationMapper;
 import com.zjy.dao.DepartmentMapper;
 import com.zjy.dao.DoctorMapper;
 import com.zjy.dao.PatientMapper;
 import com.zjy.dao.RegistrationMapper;
+import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Consultation;
 import com.zjy.entity.Department;
 import com.zjy.entity.Doctor;
@@ -25,9 +26,6 @@ import com.zjy.entity.Registration;
 public class ConsultationService {
     
     @Autowired
-    private ConsultationMapper cMapper;
-    
-    @Autowired
     private RegistrationMapper rMapper;
     
     @Autowired
@@ -38,7 +36,11 @@ public class ConsultationService {
     
     @Autowired
     private DepartmentMapper depMapper;
+    
+    @Autowired
+    private VisitMapper vMapper;
 
+    @Transactional
     public Consultation queryConsultationByNo(String regNo) {
         // TODO Auto-generated method stub
         try {
@@ -58,13 +60,15 @@ public class ConsultationService {
                     consultation.setDoctorName(doctor.getDoctorName());
                     consultation.setDepartmentName(department.getDepartmentName());
                 }
+
+                /**
+                 * 要加入visit表 
+                 * 还要改状态 
+                 * 病例描述字段由编写病例之后再update对应数据
+                 */
+                registration.setStatus("2");
+                vMapper.insert(registration);
             }
-            /**
-             * 要加入visit表 
-             * 还要改状态 
-             * 病例描述字段由编写病例之后再update对应数据
-             * 
-             */
             return consultation;
         }catch(Exception e) {
             throw new RuntimeException("挂号信息有误，查询失败");

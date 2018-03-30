@@ -30,19 +30,22 @@
     from visit
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <update id="updateDiagnostic" parameterType="String">
+  	update visit set diagnostic_description=#{diagnostic,jdbcType=LONGVARCHAR} where patient_no=#{patientNo,jdbcType=VARCHAR}
+  </update>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from visit
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zjy.entity.Visit" >
+  <insert id="insert" parameterType="com.zjy.entity.Registration" >
     insert into visit (id, registration_no, patient_no, 
       doctor_no, appointment_time, visit_time, 
-      status, create_time, update_time, 
-      diagnostic_description)
+      status, create_time, update_time)
     values (#{id,jdbcType=VARCHAR}, #{registrationNo,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
       #{doctorNo,jdbcType=VARCHAR}, #{appointmentTime,jdbcType=TIMESTAMP}, #{visitTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{diagnosticDescription,jdbcType=LONGVARCHAR})
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zjy.entity.Visit" >
     insert into visit

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zjy.entity.Consultation;
 import com.zjy.service.ConsultationService;
+import com.zjy.service.VisitService;
 
 /**
  * 就诊相关
@@ -21,6 +22,9 @@ public class ConsultationController {
     @Autowired
     private ConsultationService service;
     
+    @Autowired
+    private VisitService visitService;
+    
     @RequestMapping("/consultationQuery")
     public String consultationQuery() {
         return "consultationQuery";
@@ -34,6 +38,23 @@ public class ConsultationController {
     @RequestMapping("/consultationQueryDetail")
     public String consultationQueryDetail(@RequestParam("regNo") String regNo) {
         Consultation Consultation = service.queryConsultationByNo(regNo);
+        
+        return "";
+    }
+    
+    /**
+     * 医生编写病例  
+     * 更新visit表里的病例描述字段
+     * @param patientNo
+     * @param diagnostic
+     * @return
+     */
+    @RequestMapping("/writeDiagnostic")
+    public String writeDiagnostic(@RequestParam("patientNo")String patientNo,
+                                  @RequestParam("diagnostic")String diagnostic) {
+        if(visitService.updateDiagnostic(patientNo,diagnostic)) {
+            return "";
+        }
         return "";
     }
 }
