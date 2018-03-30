@@ -79,7 +79,7 @@ public class Visit {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = Constants.VISIT_TYPE;
     }
 
     public Date getCreateTime() {
