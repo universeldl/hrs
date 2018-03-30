@@ -34,4 +34,13 @@ public class DoctorService {
         }
     }
 
+    public Doctor queryById(String id) {
+        // TODO Auto-generated method stub
+        try {
+            return doctorMapper.selectByDoctorNo(id);
+        }catch(Exception e) {
+            throw new RuntimeException("查看详情失败");
+        }
+    }
+
 }

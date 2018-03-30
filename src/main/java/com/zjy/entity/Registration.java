@@ -77,7 +77,7 @@ public class Registration {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = "1";
     }
 
     public Date getCreateTime() {

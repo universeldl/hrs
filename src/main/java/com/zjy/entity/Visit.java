@@ -30,16 +30,16 @@ public class Visit {
         return id;
     }
 
-    public void setId() {
-        this.id = IdGenerator.generateUUIDforPrimaryKey();
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRegistrationNo() {
         return registrationNo;
     }
 
-    public void setRegistrationNo() {
-        this.registrationNo = IdGenerator.generateNumber(Constants.REGISTRATION_NO_PREFIX, Constants.REGISTRATION_NO_DIGITS);
+    public void setRegistrationNo(String registrationNo) {
+        this.registrationNo = registrationNo;
     }
 
     public String getPatientNo() {
