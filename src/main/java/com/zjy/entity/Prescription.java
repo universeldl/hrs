@@ -15,7 +15,7 @@ public class Prescription {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId() {
         this.id = IdGenerator.generateUUIDforPrimaryKey();
     }
 
