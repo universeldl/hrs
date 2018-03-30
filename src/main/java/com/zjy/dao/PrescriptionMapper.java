@@ -1,5 +1,7 @@
 package com.zjy.dao;
 
+import java.util.List;
+
 import com.zjy.entity.Prescription;
 
 public interface PrescriptionMapper {
@@ -14,4 +16,6 @@ public interface PrescriptionMapper {
     int updateByPrimaryKeySelective(Prescription record);
 
     int updateByPrimaryKey(Prescription record);
+
+    void addPrescriptions(List<Prescription> list);
 }
