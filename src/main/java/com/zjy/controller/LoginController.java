@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.service.LoginService;
 import com.zjy.util.Constants;
-import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataResult;
 
 /**
  * 用户登陆
@@ -23,26 +24,27 @@ import com.zjy.util.CryptographyHelper;
 public class LoginController {
     
     @Autowired
-    private LoginService service;
+    private LoginService loginService;
 
     @RequestMapping("/login")
-    public String login(@RequestParam("id") String id,
-            @RequestParam("password") String password,
+    @ResponseBody
+    public DataResult login(@RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "password", required = true) String password,
             @RequestParam(value="type",required=false)String type,
-            @RequestParam("verificationCode") String verificationCode,
+            @RequestParam(value = "verificationCode", required = true) String verificationCode,
+            @RequestParam("remindMe") String remindMe,
             HttpServletRequest request) {
-//        String salt = CryptographyHelper.getRandomSalt();
-//        String saltpassword = CryptographyHelper.encrypt(password, salt);
-        if(!verificationCode.toLowerCase().equals(request.getSession().getAttribute(Constants.VERIFY_CODE).toString().toLowerCase())) {
-            return "loginerror";
-        }
-        if(String.valueOf(Constants.DOCTOR_TYPE).equals(type)&&service.DLogin(id,password)) {
-            return "doctorindex";
-        }else if(String.valueOf(Constants.ADMIN_TYPE).equals(type)&&service.DLogin(id,password)) {
-            return "adminindex";
-        }else if(String.valueOf(Constants.PATIENT_TYPE).equals(type)&&service.PLogin(id,password)) {
-            return "patientindex";
-        }
-        return "loginerror";
+    	
+    	DataResult dataResult = null;
+    	
+    	if (Constants.DOCTOR_TYPE.equals(type)) {
+    		dataResult = loginService.DLogin(id, password, verificationCode, remindMe, request);
+    	} else if (Constants.ADMIN_TYPE.equals(type)) {
+    		dataResult = loginService.DLogin(id, password, verificationCode, remindMe, request);
+    	} else if (Constants.PATIENT_TYPE.equals(type)) {
+    		dataResult = loginService.PLogin(id, password, verificationCode, remindMe, request);
+    	}
+    	
+        return dataResult;
     }
 }
