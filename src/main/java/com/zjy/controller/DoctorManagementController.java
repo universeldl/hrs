@@ -16,7 +16,7 @@ import com.zjy.service.DoctorService;
  * @version $Id: DoctorManagermentController.java, v 0.1 2018年3月21日 上午9:54:55 zhoujiayi Exp $
  */
 @Controller
-public class DoctorManagermentController {
+public class DoctorManagementController {
 
     @Autowired
     private DoctorService service;

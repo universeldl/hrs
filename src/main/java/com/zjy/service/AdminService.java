@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.zjy.dao.DoctorMapper;
 import com.zjy.entity.Doctor;
-import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataResult;
 
 /**
  * 
@@ -24,24 +24,18 @@ public class AdminService {
     @Autowired
     private DoctorMapper doctorMapper;
 
-    public boolean insert(Doctor doctor) {
-        /**
-         * 处理密码，密码盐
-         * 入职日期和离职日期，前端接收date类型，在这里转string类型的YYYY-MM-DD格式后set
-         */
-        String password = doctor.getDoctorPassword();
-        String salt = CryptographyHelper.getRandomSalt();
-        String dPassword = CryptographyHelper.encrypt(password, salt);
-        doctor.setDoctorPassword(dPassword);
-        doctor.setDoctorSalt(salt);
+    public DataResult insert(Doctor doctor) {
+    	DataResult dataResult = new DataResult();
         try{
             if (doctorMapper.insert(doctor) == 1) {
-                return true;
+                dataResult.setStatus(true);
+                dataResult.setTips("插入成功");
             }
         }catch (Exception e) {
-            throw new RuntimeException("插入医生失败");
+            dataResult.setStatus(false);
+            dataResult.setTips("插入失败");
         }
-        return false;
+        return dataResult;
     }
     
     public Map<String, Object> queryDoctorByPage(Map<String, Object> param) {

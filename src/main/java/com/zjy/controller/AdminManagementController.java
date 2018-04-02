@@ -1,43 +1,49 @@
+/**
+ * 
+ */
 package com.zjy.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Doctor;
 import com.zjy.service.AdminService;
+import com.zjy.util.Constants;
+import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataResult;
 
 /**
- * 管理员功能
- * TODO
+ * @author Mervyn
  *
- * @author zhoujiayi
- * @version $Id: AdminManagementController.java, v 0.1 2018年3月29日 下午3:00:27 zhoujiayi Exp $
  */
-@Controller
+
+@RequestMapping("/admin")
 public class AdminManagementController {
-    
-    @Autowired
-    private AdminService aService;
-    
+
+	@Autowired
+	AdminService adminService;
+	
     /**
      * 新增医生
      * @param doctor
      * @return
      */
     @RequestMapping("/insertDoctor")
-    public String insertDoctor(@RequestBody Doctor doctor) {
-        if(aService.insert(doctor)) {
-            return "";
-        }
-        return "";
+    public DataResult insertDoctor(@RequestBody Doctor doctor) {
+    	DataResult dataResult;
+        dataResult = adminService.insert(doctor);
+        return dataResult;
     }
     
     /**
@@ -62,7 +68,7 @@ public class AdminManagementController {
         param.put("endTime", null==endTime?"":endTime);
         param.put("a", a);
         param.put("b", b);
-        Map<String, Object> map = aService.queryDoctorByPage(param);
+        Map<String, Object> map = adminService.queryDoctorByPage(param);
         return map;
     }
     
