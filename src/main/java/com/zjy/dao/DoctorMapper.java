@@ -23,4 +23,6 @@ public interface DoctorMapper {
     List<Doctor> queryDoctor(Map<String, Object> param);
 
     List<Doctor> queryDoctorByDepNo(String depNo);
+
+    int count(Map<String, Object> param);
 }

@@ -1,5 +1,6 @@
 package com.zjy.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +44,12 @@ public class AdminService {
         return false;
     }
     
-    public List<Doctor> queryDoctorByPage(Map<String, Object> param) {
+    public Map<String, Object> queryDoctorByPage(Map<String, Object> param) {
         // TODO Auto-generated method stub
-        List<Doctor> list = doctorMapper.queryDoctor(param);
-        return list;
+        Map<String, Object> result = new HashMap<String, Object>();
+        List<Doctor> rows = doctorMapper.queryDoctor(param);
+        result.put("rows", rows);
+        result.put("total", doctorMapper.count(param));
+        return result;
     }
 }

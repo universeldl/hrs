@@ -46,20 +46,24 @@ public class AdminManagementController {
      * @return
      */
     @RequestMapping("/queryDoctorList")
-    public String queryDoctorList(@RequestParam("name")String name,
+    public Map<String, Object> queryDoctorList(@RequestParam("name")String name,
                                   @RequestParam("depNo")String depNo,
                                   @RequestParam("status")String status,
                                   @RequestParam("startTime")Date startTime,
-                                  @RequestParam("endTime")Date endTime) {
+                                  @RequestParam("endTime")Date endTime,
+                                  int pageSize,int pageNumber) {
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("name", null==name?"":name);
         param.put("depNo", null==depNo?"":depNo);
         param.put("status", null==status?"":status);
         param.put("startTime", null==startTime?"":startTime);
         param.put("endTime", null==endTime?"":endTime);
-        List<Doctor> list = aService.queryDoctorByPage(param);
-        
-        return "";
+        param.put("a", a);
+        param.put("b", b);
+        Map<String, Object> map = aService.queryDoctorByPage(param);
+        return map;
     }
     
 }

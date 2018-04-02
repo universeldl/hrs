@@ -1,16 +1,19 @@
 package com.zjy.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zjy.entity.Consultation;
-import com.zjy.entity.Medicine;
+import com.zjy.entity.Prescription;
 import com.zjy.service.ConsultationService;
 import com.zjy.service.MedicineService;
+import com.zjy.service.PrescriptionService;
 import com.zjy.service.VisitService;
 
 /**
@@ -31,6 +34,9 @@ public class ConsultationController {
     
     @Autowired
     private MedicineService medicineService;
+    
+    @Autowired
+    private PrescriptionService preService;
     
     @RequestMapping("/consultationQuery")
     public String consultationQuery() {
@@ -71,11 +77,25 @@ public class ConsultationController {
      * @return
      */
     @RequestMapping("/medicineQuery")
-    public String medicineQuery(@RequestParam("medicineName")String medicineName) {
-        List<Medicine> list = medicineService.queryByMedicineName(medicineName);
-        
-        return "";
+    public Map<String, Object> medicineQuery(@RequestParam("medicineName")String medicineName,
+                                             int pageSize,int pageNumber) {
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        Map<String, Object> map = medicineService.queryByMedicineName(medicineName,a,b);
+        return map;
     }
     
-    
+    /**
+     * 处方确认，传多个对象回来
+     * 存入数据库
+     * @param list
+     * @return
+     */
+    @RequestMapping("/confirmMedicine")
+    public String confirmMedicine(@RequestBody List<Prescription> list) {
+        if(preService.addPrescriptions(list)) {
+            return "";
+        }
+        return "";
+    }
 }

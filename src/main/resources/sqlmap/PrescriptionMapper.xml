@@ -26,6 +26,15 @@
     values (#{id,jdbcType=VARCHAR}, #{registrationNo,jdbcType=VARCHAR}, #{medicineNo,jdbcType=VARCHAR}, 
       #{medicineAmount,jdbcType=INTEGER})
   </insert>
+  
+  <insert id="addPrescriptions">
+  	insert into prescription (id, registration_no, medicine_no, 
+      medicine_amount) values 
+      <foreach collection="list" item="pre" separator=",">
+      	(#{pre.id},#{pre.registrationNo},#{pre.medicineNo},#{pre.medicineAmount})
+      </foreach>
+  </insert>
+  
   <insert id="insertSelective" parameterType="com.zjy.entity.Prescription" >
     insert into prescription
     <trim prefix="(" suffix=")" suffixOverrides="," >

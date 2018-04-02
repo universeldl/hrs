@@ -25,7 +25,14 @@
   	select 
     <include refid="Base_Column_List" />
     from medicine
-    where medicine_name = #{medicineName,jdbcType=VARCHAR}
+    where medicine_name like '%${medicineName,jdbcType=VARCHAR}%' limit #{a},#{b}
+  </select>
+  
+  <select id="count" parameterType="String">
+  	select 
+    count(0)
+    from medicine
+    where medicine_name like '%${medicineName,jdbcType=VARCHAR}%'
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
