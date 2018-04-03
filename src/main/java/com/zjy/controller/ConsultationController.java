@@ -50,7 +50,7 @@ public class ConsultationController {
      */
     @RequestMapping("/consultationQueryDetail")
     public String consultationQueryDetail(@RequestParam("regNo") String regNo) {
-        Consultation Consultation = service.queryConsultationByNo(regNo);
+        Consultation consultation = service.queryConsultationByNo(regNo);
         
         return "";
     }

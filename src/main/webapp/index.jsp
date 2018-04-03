@@ -68,8 +68,8 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 	             	<div class="checkbox control-wrapper">
-	                	<label>
-	                  		<input type="checkbox"> 记住我
+	                	<label for="remember-me">
+	                  		<input id="remFlag" name="remFlag" type="checkbox" onclick="remember();"> 记住我
                 		</label>
 	              	</div>
 		          </div>
@@ -90,5 +90,49 @@
 		      </div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+	        //记住密码功能
+	        var str = getCookie("loginInfo");
+	        str = str.substring(1,str.length-1);
+	        var id = str.split(",")[0];
+	        var password = str.split(",")[1];
+	        //自动填充用户名和密码
+	        $("#id").val(id);
+	        $("#password").val(password);
+	        if(id != null && id != ""){
+	        	$("#remFlag").attr("checked","checked");
+	        }
+		});
+		
+		//获取cookie
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0; i<ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1);
+		        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+		    }
+		    return "";
+		}
+		
+		//记住密码功能
+		function remember(){
+		    var remFlag = $("input[type='checkbox']").is(':checked');
+		    if(remFlag==true){ //如果选中设置remFlag为1
+		        //cookie存用户名和密码,回显的是真实的用户名和密码,存在安全问题.
+		        var conFlag = confirm("为了您的账号安全，确认要在公共场合记住密码吗？");
+		        if(conFlag){ //确认标志
+		            $("#remFlag").val("1");
+		        }else{
+		            $("input[type='checkbox']").removeAttr('checked');
+		            $("#remFlag").val("0");
+		        }
+		    }else{ //如果没选中设置remFlag为""
+		        $("#remFlag").val("0");
+		    }
+		}
+	</script>
 </body>
 </html>
