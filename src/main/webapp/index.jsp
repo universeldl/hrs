@@ -14,7 +14,7 @@
 	<link href="${pageContext.request.contextPath}/css/templatemo_style.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
-	<title>Insert title here</title>
+	<title>用户登录</title>
 	
 	<style type="text/css">
 		.form-control-xxx {
@@ -61,14 +61,14 @@
 		          	<div class="control-wrapper">
 		            	<label for="verificationCode" class="control-label fa-label" style="margin-left: 10px">验证码：</label>
 		            	<input type="text" class="form-control form-control-xxx" id="verificationCode" name="verificationCode" style="width: 100px;margin-left: 55px"/>
-		            	<img src="${pageContext.request.contextPath}/verify/generateVerify" style="margin-left: 10px;margin-bottom: 2px" width="80" height="30"/>
+		            	<img id="verifyCode" src="${pageContext.request.contextPath}/verify/generateVerify" style="margin-left: 10px;margin-bottom: 2px" width="80" height="30"/>
 		            </div>
 		          </div>
 		        </div>
 		        <div class="form-group">
 		          <div class="col-md-12">
 	             	<div class="checkbox control-wrapper">
-	                	<label for="remember-me">
+	                	<label for="remFlag">
 	                  		<input id="remFlag" name="remFlag" type="checkbox" onclick="remember();"> 记住我
                 		</label>
 	              	</div>
@@ -103,6 +103,19 @@
 	        if(id != null && id != ""){
 	        	$("#remFlag").attr("checked","checked");
 	        }
+	        $("#verifyCode").mouseover(
+					function() {//为验证码绑定onMouseOver事件
+						//鼠标指针变成手掌
+						//this是document对象,需要转换成jquery对象
+						$(this).css("cursor", "pointer").prop(
+								"title", "换一张");
+					}).click(
+					function() {//绑定点击事件,更改验证码
+						$(this).attr(
+								"src",
+								"${pageContext.request.contextPath}/verify/generateVerify?random="
+										+ Math.random())
+					});
 		});
 		
 		//获取cookie
