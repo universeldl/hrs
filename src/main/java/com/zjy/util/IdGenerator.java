@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 public class IdGenerator {
 	
-	private static Random random;
+	private static Random random = new Random();
 	
 	/**
 	 * 获取UUID

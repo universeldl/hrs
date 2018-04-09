@@ -1,5 +1,6 @@
 package com.zjy.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,13 +43,7 @@ public class Patient {
     }
 
     public void setPatientNo() {
-    	Calendar calendar = Calendar.getInstance();
-		String datePrefix = "";
-		datePrefix += calendar.get(Calendar.YEAR);
-		datePrefix += String.format("%02d", calendar.get(Calendar.MONTH)+1);
-		datePrefix += String.format("%02d", calendar.get(Calendar.DATE));
-		datePrefix = datePrefix.substring(2);
-        this.patientNo = IdGenerator.generateNumber(datePrefix, Constants.PATIENT_NO_DIGITS);
+        this.patientNo = IdGenerator.generateNumber(new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()).substring(2), Constants.PATIENT_NO_DIGITS);
     }
 
     public String getPatientName() {
@@ -111,15 +106,15 @@ public class Patient {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateTime() {
+        this.createTime = Calendar.getInstance().getTime();
     }
 
     public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateTime() {
+        this.updateTime = Calendar.getInstance().getTime();
     }
 }

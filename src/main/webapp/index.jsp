@@ -12,8 +12,8 @@
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/templatemo_style.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<title>用户登录</title>
 	
 	<style type="text/css">
@@ -79,6 +79,8 @@
 		          	<div class="control-wrapper">
 		          		<input type="submit" value="登录" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
+		          		<a href="${pageContext.request.contextPath}/patient/toRegistration" class="text-right pull-right">病人注册</a>
+		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>
 		          		<a href="forgot-password.html" class="text-right pull-right">忘记密码?</a>
 		          	</div>
 		          </div>
