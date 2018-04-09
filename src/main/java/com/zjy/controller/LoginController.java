@@ -35,7 +35,7 @@ public class LoginController {
             @RequestParam(value = "password", required = true) String password,
             @RequestParam(value="type",required=false)String type,
             @RequestParam(value = "verificationCode", required = true) String verificationCode,
-            @RequestParam("remFlag") String remFlag,
+            @RequestParam(value = "remFlag", required = false) String remFlag,
             HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model) {
@@ -46,7 +46,7 @@ public class LoginController {
          */
         // "1"表示用户勾选记住密码
         if("1".equals(remFlag)){ 
-            String loginInfo = id+","+password;
+            String loginInfo = id+","+password+","+type;
             Cookie userCookie=new Cookie("loginInfo",loginInfo); 
             // 存活期为7天 7*24*60*60
             userCookie.setMaxAge(7*24*60*60);   

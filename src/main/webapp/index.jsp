@@ -99,12 +99,16 @@
 	        str = str.substring(1,str.length-1);
 	        var id = str.split(",")[0];
 	        var password = str.split(",")[1];
+	        var type = str.split(",")[2];
 	        //自动填充用户名和密码
 	        $("#id").val(id);
 	        $("#password").val(password);
+	        var i = parseInt(type);
+	        $("#type").val(type);
 	        if(id != null && id != ""){
 	        	$("#remFlag").attr("checked","checked");
 	        }
+	        
 	        $("#verifyCode").mouseover(
 					function() {//为验证码绑定onMouseOver事件
 						//鼠标指针变成手掌
