@@ -1,5 +1,6 @@
 package com.zjy.entity;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import com.zjy.util.Constants;
@@ -144,15 +145,15 @@ public class Doctor {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateTime() {
+        this.createTime = Calendar.getInstance().getTime();
     }
 
     public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateTime() {
+        this.updateTime = Calendar.getInstance().getTime();
     }
 }
