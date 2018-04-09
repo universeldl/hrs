@@ -29,17 +29,17 @@ public class LoginService {
     @Autowired
     private PatientMapper pMapper;
     
-    public DataResult DLogin(String id, String password, String verifyCode, String remindMe, HttpServletRequest request) {
+    public DataResult DLogin(String id, String password, String verifyCode, HttpServletRequest request) {
     	
     	DataResult dataResult = new DataResult();
     	
-        Doctor doctor = dMapper.selectByDoctorNo(id);
         if (verifyCode.equalsIgnoreCase((String) request.getSession().getAttribute(Constants.VERIFY_CODE))) {
+            Doctor doctor = dMapper.selectByDoctorNo(id);
         	if (doctor != null) {
         		if (doctor.getDoctorPassword().equals(CryptographyHelper.encrypt(password, doctor.getDoctorSalt()))) {
         			request.getSession().setAttribute(Constants.SESSION_USER, doctor);
         			/*
-        			 * 记住账号功能待完成        			
+        			 * 记住账号功能待完成        	--->  在controller层		
         			 * */
         			dataResult.setStatus(true);
         			dataResult.setTips("登录成功");
@@ -59,7 +59,7 @@ public class LoginService {
         return dataResult;
     }
 
-    public DataResult PLogin(String id, String password, String verifyCode, String remindMe, HttpServletRequest request) {
+    public DataResult PLogin(String id, String password, String verifyCode, HttpServletRequest request) {
     	
     	DataResult dataResult = new DataResult();
     	
