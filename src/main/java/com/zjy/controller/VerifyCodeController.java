@@ -36,7 +36,6 @@ public class VerifyCodeController {
 	@RequestMapping(value = "/generateVerify", method = RequestMethod.GET)
 	public void generateVerify(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		VerifyCodeGenerator.execute(request, response);
-		System.out.println(request.getSession().getAttribute(Constants.VERIFY_CODE));
 	}
 	
 }
