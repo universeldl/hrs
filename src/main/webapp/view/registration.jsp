@@ -70,6 +70,10 @@
 						validators: {
 							notEmpty: {
 								message: '出生年月日不能为空'
+							},
+							date: {
+								format: 'YYYY-MM-DD',
+								message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
 							}
 						}
 					},
@@ -121,20 +125,20 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-						<div class='input-group date' id='datetimepicker'>
-					        <span class="input-group-addon">
-					            <span class="fa fa-calendar"></span>
-					        </span>
-					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
-					    </div>
+		            	<label for="phone" class="control-label fa-label"><i class="fa fa-phone fa-medium"></i></label>
+		            	<input type="tel" class="form-control" id="phone" name="phone" placeholder="手机号">
 		            </div>
 		          </div>
 		        </div>
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-		            	<label for="phone" class="control-label fa-label"><i class="fa fa-phone fa-medium"></i></label>
-		            	<input type="tel" class="form-control" id="phone" name="phone" placeholder="手机号">
+						<div class='input-group date' id='datetimepicker'>
+					        <span class="input-group-addon">
+					            <span class="fa fa-calendar"></span>
+					        </span>
+					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
+					    </div>
 		            </div>
 		          </div>
 		        </div>
@@ -168,7 +172,8 @@
 		$(function () {
 	        $('#datetimepicker').datetimepicker({
 	            format: 'YYYY-MM-DD',//日期格式化，只显示日期
-	            locale: 'zh-CN'
+	            locale: 'zh-CN',
+	            maxDate: new Date()
 	        });
 	    });
 	</script> 
