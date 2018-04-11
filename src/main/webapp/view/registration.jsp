@@ -13,10 +13,12 @@
 	<link href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/templatemo_style.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 	<title>病人注册</title>
 	
 	<style type="text/css">
@@ -25,12 +27,73 @@
 		    display:inline;
 		}
 	</style>
+	
+	<script type="text/javascript">
+		$(function() {
+			$("#registerForm").bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					name: {
+						validators: {
+							notEmpty: {
+								message: '姓名不能为空'
+							},
+							stringLength: {
+								mix: 2
+							}
+						}
+					},
+					password: {
+						validators: {
+							notEmpty: {
+								message: '密码不能为空'
+							}
+						}
+					},
+					confirmPassword: {
+						validators: {
+							notEmpty: {
+								message: '密码不能为空'
+							},
+							identical: {
+								field: 'password',
+								message: '确认密码与输入的密码不相同'
+							}
+						}
+					},
+					birth: {
+						validators: {
+							notEmpty: {
+								message: '出生年月日不能为空'
+							}
+						}
+					},
+					phone: {
+						validators: {
+							notEmpty: {
+								message: '手机号码不能为空'
+							},
+							digit: {},
+		                    phone: {
+		                        country: 'CN'
+		                    }
+						}
+					}
+				}
+			});
+		});
+	</script>
 </head>
 <body class="templatemo-bg-gray" style="background-image: url('../images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-xs-12">
 			<h1 class="margin-bottom-15">病人注册</h1>
-			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
+			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
@@ -58,12 +121,11 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-		            	<label for="birth" class="control-label fa-label"><i class="fa fa-calendar"></i></label>
 						<div class='input-group date' id='datetimepicker'>
-					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
 					        <span class="input-group-addon">
 					            <span class="fa fa-calendar"></span>
 					        </span>
+					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
 					    </div>
 		            </div>
 		          </div>
@@ -79,8 +141,8 @@
 		        <div class="form-group">
 		          <div class="">
 		          	<div class="control-wrapper">
-		            	<label for="sex" class="control-label fa-label" style="margin-left: 20px">性别：</label>
-		            	<select id="sex" name="sex" class="form-control" style="width: 100px;margin-left: 70px">
+		            	<label for="gender" class="control-label fa-label" style="margin-left: 20px">性别：</label>
+		            	<select id="gender" name="gender" class="form-control" style="width: 100px;margin-left: 70px">
 		            		<option value="1" selected>男</option>
 		            		<option value="0">女</option>
 		            	</select>
@@ -106,7 +168,7 @@
 		$(function () {
 	        $('#datetimepicker').datetimepicker({
 	            format: 'YYYY-MM-DD',//日期格式化，只显示日期
-	            locale: 'zh-CN'      //中文化
+	            locale: 'zh-CN'
 	        });
 	    });
 	</script> 

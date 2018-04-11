@@ -12,8 +12,10 @@
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/templatemo_style.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 	<title>用户登录</title>
 	
 	<style type="text/css">
@@ -22,12 +24,48 @@
 		    display:inline;
 		}
 	</style>
+	
+	<script type="text/javascript">
+		$(function() {
+			$("#loginForm").bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					id: {
+						validators: {
+							notEmpty: {
+								message: '编号不能为空'
+							}
+						}
+					},
+					password: {
+						validators: {
+							notEmpty: {
+								message: '密码不能为空'
+							}
+						}
+					},
+					verificationCode: {
+						validators: {
+							notEmpty: {
+								message: '密码不能为空'
+							}
+						}
+					}
+				}
+			});
+		});
+	</script>
 </head>
 <body class="templatemo-bg-gray" style="background-image: url('images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">用户登录</h1>
-			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/login" method="post">				
+			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/login" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
