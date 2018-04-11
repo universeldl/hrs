@@ -44,7 +44,8 @@
 								message: '姓名不能为空'
 							},
 							stringLength: {
-								mix: 2
+								min: 2,
+								message: '姓名需要至少2个字符'
 							}
 						}
 					},
@@ -52,6 +53,11 @@
 						validators: {
 							notEmpty: {
 								message: '密码不能为空'
+							},
+							stringLength: {
+								min: 6,
+								max: 16,
+								message: '密码需要 6 至 16 个字符'
 							}
 						}
 					},
@@ -84,7 +90,8 @@
 							},
 							digit: {},
 		                    phone: {
-		                        country: 'CN'
+		                        country: 'CN',
+		                        message: '请输入正确的手机号'
 		                    }
 						}
 					}
