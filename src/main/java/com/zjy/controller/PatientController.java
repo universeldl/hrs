@@ -2,13 +2,13 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Patient;
 import com.zjy.service.PatientService;
@@ -36,13 +36,14 @@ public class PatientController {
 	}
 
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
+	@ResponseBody
 	public DataResult registrate(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "birth", required = true) String birth,
 			@RequestParam(value = "phone", required = true) String phone,
-			@RequestParam(value = "sex", required = true) String sex) {
+			@RequestParam(value = "gender", required = true) String gender) {
 		
-		DataResult dataResult = null;
+		DataResult dataResult = new DataResult();
 		
 		Patient patient = new Patient();
 		patient.setId();
@@ -50,7 +51,7 @@ public class PatientController {
 		patient.setPatientName(name);
 		patient.setPatientSalt(CryptographyHelper.getRandomSalt());
 		patient.setPatientPassword(CryptographyHelper.encrypt(password, patient.getPatientSalt()));
-		patient.setPatientSex(sex);
+		patient.setPatientSex(gender);
 		try {
 			patient.setPatientBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birth));
 		} catch (ParseException e) {
@@ -61,7 +62,8 @@ public class PatientController {
 		patient.setCreateTime();
 		patient.setUpdateTime();
 		
-		System.out.println(patientService.insert(patient));
+		dataResult.setStatus(patientService.insert(patient)==1?true:false);
+		dataResult.setTips(patient.getPatientNo());
 		
 		return dataResult;
 		
