@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.service.LoginService;
 import com.zjy.util.Constants;
+import com.zjy.util.CookieTools;
 import com.zjy.vo.DataResult;
 
 /**
@@ -29,6 +30,19 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @RequestMapping("/logout")
+    @ResponseBody
+    public DataResult logout(HttpServletRequest request, HttpServletResponse response) {
+    	DataResult dataResult = new DataResult();
+
+		request.getSession().removeAttribute(Constants.SESSION_USER);
+    	CookieTools.removeCookie(Constants.COOKIE_NAME, response, request);
+    	dataResult.setStatus(true);
+    	dataResult.setTips("退出登录成功");
+    	
+    	return dataResult;
+    }
+    
     @RequestMapping("/login")
     @ResponseBody
     public DataResult login(@RequestParam(value = "id", required = true) String id,
@@ -47,11 +61,8 @@ public class LoginController {
         // "1"表示用户勾选记住密码
         if("1".equals(remFlag)){ 
             String loginInfo = id+","+password+","+type;
-            Cookie userCookie=new Cookie("loginInfo",loginInfo); 
-            // 存活期为7天 7*24*60*60
-            userCookie.setMaxAge(7*24*60*60);   
-            userCookie.setPath("/");
-            response.addCookie(userCookie); 
+            System.out.println(loginInfo);
+            CookieTools.addCookie(Constants.COOKIE_NAME, loginInfo, Constants.MAX_AGE, response, request);
         }
         
     	DataResult dataResult = null;

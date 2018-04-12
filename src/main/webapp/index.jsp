@@ -133,7 +133,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 	        //记住密码功能
-	        var str = getCookie("loginInfo");
+	        var str = getCookie("hrs_cookie");
 	        str = str.substring(1,str.length-1);
 	        var id = str.split(",")[0];
 	        var password = str.split(",")[1];
