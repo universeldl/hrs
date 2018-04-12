@@ -24,4 +24,8 @@ public class PatientService {
 		return patientMapper.insert(patient);
 	}
 	
+	public int updateByPrimaryKeySelective(Patient patient) {
+		return patientMapper.updateByPrimaryKeySelective(patient);
+	}
+	
 }

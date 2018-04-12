@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
-	<title>病人注册</title>
+	<title>用户注册</title>
 	
 	<style type="text/css">
 		.form-control-xxx {
@@ -103,7 +103,7 @@
 <body class="templatemo-bg-gray" style="background-image: url('../images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-xs-12">
-			<h1 class="margin-bottom-15">病人注册</h1>
+			<h1 class="margin-bottom-15">用户注册</h1>
 			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
