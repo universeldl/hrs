@@ -25,7 +25,7 @@
 					    </a>
 				    </li>
 				    <li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/view/queryDoctor.jsp" target="frame">
 					    	<span class="menu-text">医生列表</span>
 					    </a>
 				    </li>

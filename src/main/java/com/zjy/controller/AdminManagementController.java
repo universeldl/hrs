@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +29,7 @@ import com.zjy.vo.DataResult;
  * @author Mervyn
  *
  */
-
+@Controller
 @RequestMapping("/admin")
 public class AdminManagementController {
 
@@ -42,6 +44,12 @@ public class AdminManagementController {
     @RequestMapping("/insertDoctor")
     public DataResult insertDoctor(@RequestBody Doctor doctor) {
     	DataResult dataResult;
+    	doctor.setId();
+    	doctor.setDoctorNo();
+    	doctor.setDoctorSalt(CryptographyHelper.getRandomSalt());
+    	doctor.setDoctorPassword(CryptographyHelper.encrypt(doctor.getDoctorPassword(), doctor.getDoctorSalt()));
+    	doctor.setCreateTime();
+    	doctor.setUpdateTime();
         dataResult = adminService.insert(doctor);
         return dataResult;
     }
@@ -51,25 +59,37 @@ public class AdminManagementController {
      * 条件：姓名，科室，状态（在职-1/离职-0），入职时间
      * @return
      */
-    @RequestMapping("/queryDoctorList")
-    public Map<String, Object> queryDoctorList(@RequestParam("name")String name,
+    @RequestMapping(value="/queryDoctorList", method=RequestMethod.POST)
+    @ResponseBody
+    public String queryDoctorList(@RequestParam(value="name", required=false)String name,
                                   @RequestParam("depNo")String depNo,
                                   @RequestParam("status")String status,
-                                  @RequestParam("startTime")Date startTime,
-                                  @RequestParam("endTime")Date endTime,
-                                  int pageSize,int pageNumber) {
+                                  @RequestParam("startTime")String startTime,
+                                  @RequestParam("endTime")String endTime,
+                                  Integer pageSize,Integer pageNumber,
+                                  ModelMap model) {
+        pageSize = (pageSize==null?0:pageSize);
+        pageNumber = (pageNumber==null?1:pageNumber);
         int a = (pageNumber-1)*pageSize;
         int b = pageSize;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("name", null==name?"":name);
         param.put("depNo", null==depNo?"":depNo);
         param.put("status", null==status?"":status);
-        param.put("startTime", null==startTime?"":startTime);
-        param.put("endTime", null==endTime?"":endTime);
+        try {
+            param.put("startTime", null==startTime||"".equals(startTime)?"":sdf.parse(startTime));
+            param.put("endTime", null==endTime||"".equals(endTime)?"":sdf.parse(endTime));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         param.put("a", a);
         param.put("b", b);
         Map<String, Object> map = adminService.queryDoctorByPage(param);
-        return map;
+        model.put("rows", map.get("rows"));
+        model.put("total", map.get("total"));
+        return "";
     }
     
 }

@@ -3,6 +3,7 @@ package com.zjy.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,8 +51,9 @@ public class DoctorManagementController {
      * @return
      */
     @RequestMapping("/doctorDetail")
-    public String doctorDetail(@RequestParam("id") String id,Model model) {
+    public String doctorDetail(@RequestParam("id") String id,ModelMap model) {
         Doctor doctor = service.queryById(id);
+        model.put("doctor", doctor);
         return "";
     }
 }
