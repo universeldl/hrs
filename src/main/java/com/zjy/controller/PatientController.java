@@ -2,6 +2,11 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +39,18 @@ public class PatientController {
 	public String toRegistrate() {
 		return "registration";
 	}
-
+	
+	/**
+	 * 用户注册
+	 * @author Mervyn
+	 * 
+	 * @param name
+	 * @param password
+	 * @param birth
+	 * @param phone
+	 * @param gender
+	 * @return
+	 */
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	@ResponseBody
 	public DataResult registrate(@RequestParam(value = "name", required = true) String name,
@@ -64,6 +80,33 @@ public class PatientController {
 		
 		dataResult.setStatus(patientService.insert(patient)==1?true:false);
 		dataResult.setTips(patient.getPatientNo());
+		
+		return dataResult;
+		
+	}
+	
+	/**
+	 * 修改手机号
+	 * @author Mervyn
+	 * 
+	 * @param phone
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/updatePhone", method=RequestMethod.POST)
+	@ResponseBody
+	public DataResult editPatient(@RequestParam(value = "phone", required = true) String phone,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		DataResult dataResult = new DataResult();
+		
+		Patient patient = (Patient) request.getSession().getAttribute(Constants.SESSION_USER);
+		patient.setPatientPhone(phone);
+		patient.setUpdateTime();
+		
+		dataResult.setStatus(patientService.updateByPrimaryKeySelective(patient)==1?true:false);
+		dataResult.setTips(patient.getPatientPhone());
 		
 		return dataResult;
 		

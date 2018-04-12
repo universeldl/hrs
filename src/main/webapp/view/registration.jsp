@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
-	<title>病人注册</title>
+	<title>用户注册</title>
 	
 	<style type="text/css">
 		.form-control-xxx {
@@ -44,7 +44,8 @@
 								message: '姓名不能为空'
 							},
 							stringLength: {
-								mix: 2
+								min: 2,
+								message: '姓名需要至少2个字符'
 							}
 						}
 					},
@@ -52,6 +53,11 @@
 						validators: {
 							notEmpty: {
 								message: '密码不能为空'
+							},
+							stringLength: {
+								min: 6,
+								max: 16,
+								message: '密码需要 6 至 16 个字符'
 							}
 						}
 					},
@@ -84,7 +90,8 @@
 							},
 							digit: {},
 		                    phone: {
-		                        country: 'CN'
+		                        country: 'CN',
+		                        message: '请输入正确的手机号'
 		                    }
 						}
 					}
@@ -96,7 +103,7 @@
 <body class="templatemo-bg-gray" style="background-image: url('../images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-xs-12">
-			<h1 class="margin-bottom-15">病人注册</h1>
+			<h1 class="margin-bottom-15">用户注册</h1>
 			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
