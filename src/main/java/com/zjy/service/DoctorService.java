@@ -34,8 +34,7 @@ public class DoctorService {
         }
     }
 
-    public Doctor queryById(String id) {
-        // TODO Auto-generated method stub
+    public Doctor selectByDoctorNo(String id) {
         try {
             return doctorMapper.selectByDoctorNo(id);
         }catch(Exception e) {

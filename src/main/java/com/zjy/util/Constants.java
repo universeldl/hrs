@@ -11,9 +11,13 @@ package com.zjy.util;
  */
 public class Constants {
 	// 存放在session中用户常量
-	public static final String SESSION_USER = "session_user";
+	public static final String SESSION_USER = "hrs_session_user";
 	// 定义存放在Session中验证码常量
 	public final static String VERIFY_CODE = "verify_code";
+	// 定义Cookie的名字
+	public static final String COOKIE_NAME = "hrs_cookie";
+	// 定义Cookie的生命周期7天
+	public static final int MAX_AGE = 60 * 60 * 24 * 7;
 	
 	//各实体编号随机数位数
 	public static final int DEPARTMENT_NO_DIGITS = 3;

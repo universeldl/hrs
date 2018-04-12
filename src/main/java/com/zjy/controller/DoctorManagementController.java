@@ -52,7 +52,7 @@ public class DoctorManagementController {
      */
     @RequestMapping("/doctorDetail")
     public String doctorDetail(@RequestParam("id") String id,ModelMap model) {
-        Doctor doctor = service.queryById(id);
+        Doctor doctor = service.selectByDoctorNo(id);
         model.put("doctor", doctor);
         return "";
     }
