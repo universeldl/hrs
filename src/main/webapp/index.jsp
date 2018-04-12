@@ -53,6 +53,11 @@
 						validators: {
 							notEmpty: {
 								message: '密码不能为空'
+							},
+							stringLength: {
+								min: 4,
+								max: 4,
+								message: ' '
 							}
 						}
 					}
