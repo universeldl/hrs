@@ -39,6 +39,19 @@
 						validators: {
 							notEmpty: {
 								message: '编号不能为空'
+							},
+							remote: {
+								type: 'POST',
+								url: '${pageContext.request.contextPath}/checkId',
+								data: {
+									id: function() {
+										return $('#id').val();
+									},
+									type: function() {
+										return $('#type').val();
+									}
+								},
+								message: '账号不存在'
 							}
 						}
 					},
@@ -52,12 +65,17 @@
 					verificationCode: {
 						validators: {
 							notEmpty: {
-								message: '密码不能为空'
+								message: '验证码不能为空'
 							},
-							stringLength: {
-								min: 4,
-								max: 4,
-								message: ' '
+							remote: {
+								type: 'POST',
+								url: '${pageContext.request.contextPath}/checkVerifyCode',
+								data: {
+									verifyCode: function() {
+										return $('#verificationCode').val();
+									}
+								},
+								message: '验证码不正确'
 							}
 						}
 					}
@@ -72,6 +90,18 @@
 			<h1 class="margin-bottom-15">用户登录</h1>
 			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/login" method="post">				
 		        <div class="form-group">
+		          <div class="">
+		          	<div class="control-wrapper">
+		            	<label for="type" class="control-label fa-label" style="margin-left: 20px">账户类型：</label>
+		            	<select id="type" name="type" class="form-control" style="width: 100px;margin-left: 70px">
+		            		<option value="0" selected>医生</option>
+		            		<option value="1">管理员</option>
+		            		<option value="2">病人</option>
+		            	</select>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
 		            	<label for="id" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
@@ -84,18 +114,6 @@
 		          	<div class="control-wrapper">
 		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码……">
-		            </div>
-		          </div>
-		        </div>
-		        <div class="form-group">
-		          <div class="">
-		          	<div class="control-wrapper">
-		            	<label for="type" class="control-label fa-label" style="margin-left: 20px">账户类型：</label>
-		            	<select id="type" name="type" class="form-control" style="width: 100px;margin-left: 70px">
-		            		<option value="0" selected>医生</option>
-		            		<option value="1">管理员</option>
-		            		<option value="2">病人</option>
-		            	</select>
 		            </div>
 		          </div>
 		        </div>
@@ -147,7 +165,9 @@
 	        $("#id").val(id);
 	        $("#password").val(password);
 	        var i = parseInt(type);
-	        $("#type").val(type);
+	       	if (type != null && type != "") {
+		        $("#type").val(type);
+	       	}
 	        if(id != null && id != ""){
 	        	$("#remFlag").attr("checked","checked");
 	        }
