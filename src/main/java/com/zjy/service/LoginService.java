@@ -36,9 +36,6 @@ public class LoginService {
         Doctor doctor = dMapper.selectByDoctorNo(id);
 		if (doctor.getDoctorPassword().equals(CryptographyHelper.encrypt(password, doctor.getDoctorSalt()))) {
 			request.getSession().setAttribute(Constants.SESSION_USER, doctor);
-			/*
-			 * 记住账号功能待完成        	--->  在controller层		
-			 * */
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {
@@ -56,9 +53,6 @@ public class LoginService {
         
 		if (patient.getPatientPassword().equals(CryptographyHelper.encrypt(password, patient.getPatientSalt()))) {
 			request.getSession().setAttribute(Constants.SESSION_USER, patient);
-			/*
-			 * 记住账号功能待完成        			
-			 * */
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {

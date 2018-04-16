@@ -42,7 +42,7 @@
 							},
 							remote: {
 								type: 'POST',
-								url: '${pageContext.request.contextPath}/checkId',
+								url: '${pageContext.request.contextPath}/check/id',
 								data: {
 									id: function() {
 										return $('#id').val();
@@ -69,7 +69,7 @@
 							},
 							remote: {
 								type: 'POST',
-								url: '${pageContext.request.contextPath}/checkVerifyCode',
+								url: '${pageContext.request.contextPath}/check/verifyCode',
 								data: {
 									verifyCode: function() {
 										return $('#verificationCode').val();

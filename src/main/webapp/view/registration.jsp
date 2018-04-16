@@ -140,11 +140,12 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
+		            	<label for="phone" class="control-label fa-label"><i class="fa fa-birthday-cake"></i></label>
 						<div class='input-group date' id='datetimepicker'>
 					        <span class="input-group-addon">
 					            <span class="fa fa-calendar"></span>
 					        </span>
-					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
+					        <input type='text' class="form-control" id="birth" name="birth" value="" placeholder="出生年月日" />
 					    </div>
 		            </div>
 		          </div>

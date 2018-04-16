@@ -70,59 +70,6 @@ public class LoginController {
 		return "forward:/index.jsp";
 	}
 	
-    /**
-     * 登陆验证码表单验证
-     * @author Mervyn
-     * 
-     * @param code
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/checkVerifyCode", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, String> checkVerifyCode(@RequestParam(value = "verifyCode") String code, HttpServletRequest request) {
-    	Map<String, String> result = new HashMap<String, String>();
-    	
-    	if (((String)request.getSession().getAttribute(Constants.VERIFY_CODE)).equalsIgnoreCase(code)) {
-    		result.put("valid", "true");
-    	} else {
-    		result.put("valid", "false");
-    	}
-    	
-    	return result;
-    }
-    
-    /**
-     * 检查账户是否存在
-     * @author Mervyn
-     * 
-     * @param id
-     * @param type
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/checkId", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, String> checkId(@RequestParam(value = "id") String id,
-    		@RequestParam(value = "type") String type, HttpServletRequest request) {
-    	Map<String, String> result = new HashMap<String, String>();
-    	
-    	Object obj = null;
-    	if (Constants.ADMIN_TYPE.equals(type) || Constants.DOCTOR_TYPE.equals(type)) {
-    		obj = doctorService.selectByDoctorNo(id);
-    	} else if (Constants.PATIENT_TYPE.equals(type)) {
-    		obj = patientService.selectByPatientNo(id);
-    	}
-    	
-    	if (obj == null) {
-    		result.put("valid", "false");
-    	} else {
-    		result.put("valid", "true");
-    	}
-    	
-    	return result;
-    }
-    
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public DataResult login(@RequestParam(value = "id", required = true) String id,
