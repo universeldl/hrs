@@ -57,6 +57,11 @@ public class AdminManagementController {
         return dataResult;
     }
     
+    @RequestMapping("/showAddDepartment")
+    public String showAddDepartment() {
+    	return "admin/addDepartment";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn

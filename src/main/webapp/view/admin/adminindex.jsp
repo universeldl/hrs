@@ -20,7 +20,7 @@
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse1">
 	  				<li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/admin/showAddDepartment" target="frame">
 					    	<span class="menu-text">科室录入</span>
 					    </a>
 				    </li>
@@ -32,10 +32,10 @@
 	  			</ul>
 	 		</li>
 	    	<li class="panel">
-	    		<a class="panel-heading collapsed" href="#collapse1" data-toggle="collapse" data-parent="#nav_parent">
+	    		<a class="panel-heading collapsed" href="#collapse2" data-toggle="collapse" data-parent="#nav_parent">
 	    			<span class="menu-text"> 医生管理 </span>
 	  			</a>
-	  			<ul class="nav submenu collapse" id="collapse1">
+	  			<ul class="nav submenu collapse" id="collapse2">
 	  				<li>
 					    <a href="#" target="frame">
 					    	<span class="menu-text">医生录入</span>
@@ -49,10 +49,10 @@
 	  			</ul>
 	 		</li>
 	 		<li class="panel">
-	  			<a class="panel-heading collapsed" href="#collapse2" data-toggle="collapse" data-parent="#nav_parent">
+	  			<a class="panel-heading collapsed" href="#collapse3" data-toggle="collapse" data-parent="#nav_parent">
 	  				<span class="menu-text">排班</span>
 	 			</a>
-	  			<ul class="nav submenu collapse" id="collapse2">
+	  			<ul class="nav submenu collapse" id="collapse3">
 	  				<li>
 	   					<a href="#" target="frame"><span class="menu-text">排班表</span></a>
 	  				</li>
@@ -64,10 +64,10 @@
 	  			</ul>
 	 		</li>
 	 		<li class="panel">
-	  			<a class="panel-heading collapsed" href="#collapse3" data-toggle="collapse" data-parent="#nav_parent">
+	  			<a class="panel-heading collapsed" href="#collapse4" data-toggle="collapse" data-parent="#nav_parent">
 	  				<span class="menu-text">统计</span>
 	 			</a>
-	  			<ul class="nav submenu collapse" id="collapse3">
+	  			<ul class="nav submenu collapse" id="collapse4">
 	  				<li>
 	   					<a href="#" target="frame"><span class="menu-text">就诊量</span></a>
 	  				</li>
