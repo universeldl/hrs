@@ -81,6 +81,38 @@
 					}
 				}
 			});
+			$('#loginButton').click(function() {
+				var id = $('#id').val();
+				var password = $('#password').val();
+				var type = $('#type').val();
+				var remFlag = $('#remFlag').val();
+				$.ajax({
+					url : "${pageContext.request.contextPath}/login",
+					async : true,
+					type : "POST",
+					data : {
+						id: id,
+						password: password,
+						type: type,
+						remFlag: remFlag
+					},
+					dataType : "json",
+					success : function(data) {
+						if (data.status == true) {
+							if (type == "0") {
+								window.location.href = "${pageContext.request.contextPath}/toDoctorIndex";
+							} else if (type == "1") {
+								window.location.href = "${pageContext.request.contextPath}/toAdminIndex";
+							} else if (type == "2") {
+								window.location.href = "${pageContext.request.contextPath}/toPatientIndex";
+							}
+						} else {
+							alert(data.tips);
+							//页面内提示未实现
+						}
+					}
+				});
+			});
 		});
 	</script>
 </head>
@@ -88,7 +120,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">用户登录</h1>
-			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/login" method="post">				
+			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" method="post">				
 		        <div class="form-group">
 		          <div class="">
 		          	<div class="control-wrapper">
@@ -114,6 +146,7 @@
 		          	<div class="control-wrapper">
 		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码……">
+		            	<font id="tip" color="red"></font>
 		            </div>
 		          </div>
 		        </div>
@@ -138,7 +171,7 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
-		          		<input type="submit" value="登录" class="btn btn-info">
+		          		<input id="loginButton" type="submit" value="登录" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
 		          		<a href="${pageContext.request.contextPath}/patient/toRegistration" class="text-right pull-right">用户注册</a>
 		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>
@@ -167,6 +200,13 @@
 	        var i = parseInt(type);
 	       	if (type != null && type != "") {
 		        $("#type").val(type);
+				if (type == "0") {
+					window.location.href = "${pageContext.request.contextPath}/toDoctorIndex";
+				} else if (type == "1") {
+					window.location.href = "${pageContext.request.contextPath}/toAdminIndex";
+				} else if (type == "2") {
+					window.location.href = "${pageContext.request.contextPath}/toPatientIndex";
+				}
 	       	}
 	        if(id != null && id != ""){
 	        	$("#remFlag").attr("checked","checked");

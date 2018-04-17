@@ -39,7 +39,7 @@ public class Constants {
 	public static final String MALE = "1";
 	public static final String FEMALE = "0";
 	
-	//医生类型：1-医生；0-管理员；2-病人；
+	//医生类型：0-医生；1-管理员；2-病人；
 	public static final String DOCTOR_TYPE = "0";
 	public static final String ADMIN_TYPE = "1";
 	public static final String PATIENT_TYPE = "2";

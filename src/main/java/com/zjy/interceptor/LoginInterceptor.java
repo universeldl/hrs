@@ -37,7 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (obj == null){
 			Cookie cookie = CookieTools.getCookie(Constants.COOKIE_NAME, request);
 			if (cookie != null){
-				String userNo = cookie.getValue();
+				String userNo = cookie.getValue().split(",")[0];
 				
 				//因为不确定是病人还是医生
 				Doctor doctor = doctorService.selectByDoctorNo(userNo);

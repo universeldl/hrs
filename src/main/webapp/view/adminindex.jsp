@@ -16,6 +16,23 @@
 	    <ul class="nav panel-group sidebar-menu" id="nav_parent">
 	    	<li class="panel">
 	    		<a class="panel-heading collapsed" href="#collapse1" data-toggle="collapse" data-parent="#nav_parent">
+	    			<span class="menu-text"> 部门管理 </span>
+	  			</a>
+	  			<ul class="nav submenu collapse" id="collapse1">
+	  				<li>
+					    <a href="#" target="frame">
+					    	<span class="menu-text">部门录入</span>
+					    </a>
+				    </li>
+				    <li>
+					    <a href="#" target="frame">
+					    	<span class="menu-text">部门列表</span>
+					    </a>
+				    </li>
+	  			</ul>
+	 		</li>
+	    	<li class="panel">
+	    		<a class="panel-heading collapsed" href="#collapse1" data-toggle="collapse" data-parent="#nav_parent">
 	    			<span class="menu-text"> 医生管理 </span>
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse1">

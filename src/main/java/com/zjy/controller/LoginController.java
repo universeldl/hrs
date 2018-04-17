@@ -66,8 +66,23 @@ public class LoginController {
     }
     
 	@RequestMapping(value = "/fail")
-	public String tologin() {
+	public String toLogin() {
 		return "forward:/index.jsp";
+	}
+	
+	@RequestMapping(value = "/toDoctorIndex")
+	public String toDoctorIndex() {
+		return "doctorindex";
+	}
+	
+	@RequestMapping(value = "/toAdminIndex")
+	public String toAdminIndex() {
+		return "adminindex";
+	}
+	
+	@RequestMapping(value = "/toPatientIndex")
+	public String toPatientIndex() {
+		return "patientindex";
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -75,7 +90,6 @@ public class LoginController {
     public DataResult login(@RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "password", required = true) String password,
             @RequestParam(value="type",required=false)String type,
-            @RequestParam(value = "verificationCode", required = true) String verificationCode,
             @RequestParam(value = "remFlag", required = false) String remFlag,
             HttpServletRequest request,
             HttpServletResponse response,

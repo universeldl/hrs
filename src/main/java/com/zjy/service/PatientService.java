@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.zjy.dao.PatientMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Patient;
+import com.zjy.vo.DataResult;
 
 /**
  * @author Mervyn
@@ -21,20 +22,32 @@ public class PatientService {
 	@Autowired
 	PatientMapper patientMapper;
 	
-	public int insert(Patient patient) {
+	public DataResult insert(Patient patient) {
+		DataResult dataResult = new DataResult();
         try {
-    		return patientMapper.insert(patient);
+    		if (patientMapper.insert(patient)==1) {
+    			dataResult.setStatus(true);
+    			dataResult.setTips("添加病人成功");
+    		}
         }catch(Exception e) {
-            throw new RuntimeException("插入病人失败");
+			dataResult.setStatus(false);
+			dataResult.setTips("添加病人失败");
         }
+		return dataResult;
 	}
 	
-	public int updateByPrimaryKeySelective(Patient patient) {
+	public DataResult updateByPrimaryKeySelective(Patient patient) {
+		DataResult dataResult = new DataResult();
         try {
-    		return patientMapper.updateByPrimaryKeySelective(patient);
+    		if (patientMapper.updateByPrimaryKeySelective(patient)==1) {
+    			dataResult.setStatus(true);
+    			dataResult.setTips("更新病人成功");
+    		}
         }catch(Exception e) {
-            throw new RuntimeException("更新病人失败");
+			dataResult.setStatus(false);
+			dataResult.setTips("更新病人失败");
         }
+		return dataResult;
 	}
 	
     public Patient selectByPatientNo(String id) {

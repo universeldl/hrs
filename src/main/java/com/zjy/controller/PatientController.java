@@ -78,8 +78,7 @@ public class PatientController {
 		patient.setCreateTime();
 		patient.setUpdateTime();
 		
-		dataResult.setStatus(patientService.insert(patient)==1?true:false);
-		dataResult.setTips(patient.getPatientNo());
+		dataResult = patientService.insert(patient);
 		
 		return dataResult;
 		
@@ -99,14 +98,13 @@ public class PatientController {
 	public DataResult editPatient(@RequestParam(value = "phone", required = true) String phone,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		DataResult dataResult = new DataResult();
+		DataResult dataResult;
 		
 		Patient patient = (Patient) request.getSession().getAttribute(Constants.SESSION_USER);
 		patient.setPatientPhone(phone);
 		patient.setUpdateTime();
 		
-		dataResult.setStatus(patientService.updateByPrimaryKeySelective(patient)==1?true:false);
-		dataResult.setTips(patient.getPatientPhone());
+		dataResult = patientService.updateByPrimaryKeySelective(patient);
 		
 		return dataResult;
 		
