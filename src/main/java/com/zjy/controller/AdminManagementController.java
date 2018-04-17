@@ -57,36 +57,6 @@ public class AdminManagementController {
         return dataResult;
     }
     
-    @RequestMapping("/showAddDepartment")
-    public String showAddDepartment() {
-    	return "admin/addDepartment";
-    }
-    
-    /**
-     * 添加部门
-     * @author Mervyn
-     * 
-     * @param name
-     * @return
-     */
-    @RequestMapping("/addDepartment")
-    @ResponseBody
-    public DataResult addDepartment(@RequestParam("name") String name) {
-    	DataResult dataResult;
-    	
-    	Department department = new Department();
-    	department.setId();
-    	department.setDepartmentNo();
-    	department.setDepartmentName(name);
-    	department.setIsDeleted(Constants.NOT_DELETED);
-    	department.setCreateTime();
-    	department.setUpdateTime();
-    	
-    	dataResult = departmentService.insert(department);
-    	
-        return dataResult;
-    }
-    
     /**
      * 医生列表    条件查询
      * 条件：姓名，科室，状态（在职-1/离职-0），入职时间
@@ -123,6 +93,41 @@ public class AdminManagementController {
         model.put("rows", map.get("rows"));
         model.put("total", map.get("total"));
         return "";
+    }
+    
+    /**
+     * 添加部门
+     * @author Mervyn
+     * 
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult addDepartment(@RequestParam("name") String name) {
+    	DataResult dataResult;
+    	
+    	Department department = new Department();
+    	department.setId();
+    	department.setDepartmentNo();
+    	department.setDepartmentName(name);
+    	department.setIsDeleted(Constants.NOT_DELETED);
+    	department.setCreateTime();
+    	department.setUpdateTime();
+    	
+    	dataResult = departmentService.insert(department);
+    	
+        return dataResult;
+    }
+    
+    @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult deleteDepartment(@RequestParam("id") String id) {
+    	DataResult dataResult;
+    	
+    	dataResult = departmentService.deleteByPrimaryKey(id);
+    	
+        return dataResult;
     }
     
 }

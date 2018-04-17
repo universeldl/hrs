@@ -89,10 +89,54 @@
   	from doctor where doctor_department_no=#{depNo}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from doctor
+  <update id="deleteByPrimaryKey" parameterType="com.zjy.entity.Doctor" >
+    update doctor
+    <set >
+      <if test="doctorNo != null" >
+        doctor_no = #{doctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        doctor_name = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorPassword != null" >
+        doctor_password = #{doctorPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorSalt != null" >
+        doctor_salt = #{doctorSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorSex != null" >
+        doctor_sex = #{doctorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorBirth != null" >
+        doctor_birth = #{doctorBirth,jdbcType=DATE},
+      </if>
+      <if test="doctorPhone != null" >
+        doctor_phone = #{doctorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRegistrationFee != null" >
+        doctor_registration_fee = #{doctorRegistrationFee,jdbcType=DOUBLE},
+      </if>
+      <if test="doctorHireTime != null" >
+        doctor_hire_time = #{doctorHireTime,jdbcType=DATE},
+      </if>
+      <if test="doctorDepartmentNo != null" >
+        doctor_department_no = #{doctorDepartmentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorQuitTime != null" >
+        doctor_quit_time = #{doctorQuitTime,jdbcType=DATE},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
     where id = #{id,jdbcType=VARCHAR}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.zjy.entity.Doctor" >
     insert into doctor (
 		<include refid="Base_Column_List" />

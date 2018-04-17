@@ -32,4 +32,17 @@ public class DepartmentService {
 		
 		return dataResult;
 	}
+	
+	public DataResult deleteByPrimaryKey(String id) {
+		DataResult dataResult = new DataResult();
+		if (departmentMapper.deleteByPrimaryKey(id) == 1) {
+			dataResult.setStatus(true);
+			dataResult.setTips("刪除部门成功");
+		} else {
+			dataResult.setStatus(false);
+			dataResult.setTips("刪除部门失败");
+		}
+		
+		return dataResult;
+	}
 }

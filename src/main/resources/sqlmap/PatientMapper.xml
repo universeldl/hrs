@@ -32,10 +32,9 @@
     where patient_no = #{id,jdbcType=VARCHAR}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from patient
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    update patient set is_deleted = 1 where id = #{id,jdbcType=VARCHAR}
+  </update>
   <insert id="insert" parameterType="com.zjy.entity.Patient" >
     insert into patient (id, patient_no, patient_name, 
       patient_password, patient_salt, patient_sex, 
