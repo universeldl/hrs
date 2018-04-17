@@ -70,19 +70,19 @@ public class LoginController {
 		return "forward:/index.jsp";
 	}
 	
-	@RequestMapping(value = "/toDoctorIndex")
+	@RequestMapping(value = "/doctorIndex")
 	public String toDoctorIndex() {
-		return "doctorindex";
+		return "doctor/doctorindex";
 	}
 	
-	@RequestMapping(value = "/toAdminIndex")
+	@RequestMapping(value = "/adminIndex")
 	public String toAdminIndex() {
-		return "adminindex";
+		return "admin/adminindex";
 	}
 	
-	@RequestMapping(value = "/toPatientIndex")
+	@RequestMapping(value = "/patientIndex")
 	public String toPatientIndex() {
-		return "patientindex";
+		return "patient/patientindex";
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.POST)

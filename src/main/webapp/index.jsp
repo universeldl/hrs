@@ -100,11 +100,11 @@
 					success : function(data) {
 						if (data.status == true) {
 							if (type == "0") {
-								window.location.href = "${pageContext.request.contextPath}/toDoctorIndex";
+								window.location.href = "${pageContext.request.contextPath}/doctorIndex";
 							} else if (type == "1") {
-								window.location.href = "${pageContext.request.contextPath}/toAdminIndex";
+								window.location.href = "${pageContext.request.contextPath}/adminIndex";
 							} else if (type == "2") {
-								window.location.href = "${pageContext.request.contextPath}/toPatientIndex";
+								window.location.href = "${pageContext.request.contextPath}/patientIndex";
 							}
 						} else {
 							alert(data.tips);
@@ -173,7 +173,7 @@
 		          	<div class="control-wrapper">
 		          		<input id="loginButton" type="submit" value="登录" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
-		          		<a href="${pageContext.request.contextPath}/patient/toRegistration" class="text-right pull-right">用户注册</a>
+		          		<a href="${pageContext.request.contextPath}/patient/registration" class="text-right pull-right">用户注册</a>
 		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>
 		          		<a href="forgot-password.html" class="text-right pull-right">忘记密码?</a>
 		          	</div>
@@ -201,11 +201,11 @@
 	       	if (type != null && type != "") {
 		        $("#type").val(type);
 				if (type == "0") {
-					window.location.href = "${pageContext.request.contextPath}/toDoctorIndex";
+					window.location.href = "${pageContext.request.contextPath}/doctorIndex";
 				} else if (type == "1") {
-					window.location.href = "${pageContext.request.contextPath}/toAdminIndex";
+					window.location.href = "${pageContext.request.contextPath}/adminIndex";
 				} else if (type == "2") {
-					window.location.href = "${pageContext.request.contextPath}/toPatientIndex";
+					window.location.href = "${pageContext.request.contextPath}/patientIndex";
 				}
 	       	}
 	        if(id != null && id != ""){

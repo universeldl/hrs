@@ -104,7 +104,7 @@
 	<div class="container">
 		<div class="col-xs-12">
 			<h1 class="margin-bottom-15">用户注册</h1>
-			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
+			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/register" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">

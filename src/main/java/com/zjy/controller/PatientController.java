@@ -35,9 +35,9 @@ public class PatientController {
 	@Autowired
 	PatientService patientService;
 	
-	@RequestMapping(value="/toRegistration", method=RequestMethod.GET)
+	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String toRegistrate() {
-		return "registration";
+		return "patient/registration";
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class PatientController {
 	 * @param gender
 	 * @return
 	 */
-	@RequestMapping(value="/registration", method=RequestMethod.POST)
+	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
 	public DataResult registrate(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "password", required = true) String password,
