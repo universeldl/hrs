@@ -39,6 +39,19 @@
 						validators: {
 							notEmpty: {
 								message: '编号不能为空'
+							},
+							remote: {
+								type: 'POST',
+								url: '${pageContext.request.contextPath}/check/id',
+								data: {
+									id: function() {
+										return $('#id').val();
+									},
+									type: function() {
+										return $('#type').val();
+									}
+								},
+								message: '账号不存在'
 							}
 						}
 					},
@@ -52,16 +65,53 @@
 					verificationCode: {
 						validators: {
 							notEmpty: {
-								message: '密码不能为空'
+								message: '验证码不能为空'
 							},
-							stringLength: {
-								min: 4,
-								max: 4,
-								message: ' '
+							remote: {
+								type: 'POST',
+								url: '${pageContext.request.contextPath}/check/verifyCode',
+								data: {
+									verifyCode: function() {
+										return $('#verificationCode').val();
+									}
+								},
+								message: '验证码不正确'
 							}
 						}
 					}
 				}
+			});
+			$('#loginButton').click(function() {
+				var id = $('#id').val();
+				var password = $('#password').val();
+				var type = $('#type').val();
+				var remFlag = $('#remFlag').val();
+				$.ajax({
+					url : "${pageContext.request.contextPath}/login",
+					async : true,
+					type : "POST",
+					data : {
+						id: id,
+						password: password,
+						type: type,
+						remFlag: remFlag
+					},
+					dataType : "json",
+					success : function(data) {
+						if (data.status == true) {
+							if (type == "0") {
+								window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+							} else if (type == "1") {
+								window.location.href = "${pageContext.request.contextPath}/adminIndex";
+							} else if (type == "2") {
+								window.location.href = "${pageContext.request.contextPath}/patientIndex";
+							}
+						} else {
+							alert(data.tips);
+							//页面内提示未实现
+						}
+					}
+				});
 			});
 		});
 	</script>
@@ -70,7 +120,19 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">用户登录</h1>
-			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/login" method="post">				
+			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" method="post">				
+		        <div class="form-group">
+		          <div class="">
+		          	<div class="control-wrapper">
+		            	<label for="type" class="control-label fa-label" style="margin-left: 20px">账户类型：</label>
+		            	<select id="type" name="type" class="form-control" style="width: 100px;margin-left: 70px">
+		            		<option value="0" selected>医生</option>
+		            		<option value="1">管理员</option>
+		            		<option value="2">病人</option>
+		            	</select>
+		            </div>
+		          </div>
+		        </div>
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
@@ -84,18 +146,7 @@
 		          	<div class="control-wrapper">
 		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码……">
-		            </div>
-		          </div>
-		        </div>
-		        <div class="form-group">
-		          <div class="">
-		          	<div class="control-wrapper">
-		            	<label for="type" class="control-label fa-label" style="margin-left: 20px">账户类型：</label>
-		            	<select id="type" name="type" class="form-control" style="width: 100px;margin-left: 70px">
-		            		<option value="0" selected>医生</option>
-		            		<option value="1">管理员</option>
-		            		<option value="2">病人</option>
-		            	</select>
+		            	<font id="tip" color="red"></font>
 		            </div>
 		          </div>
 		        </div>
@@ -120,9 +171,9 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
-		          		<input type="submit" value="登录" class="btn btn-info">
+		          		<input id="loginButton" type="submit" value="登录" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
-		          		<a href="${pageContext.request.contextPath}/patient/toRegistration" class="text-right pull-right">用户注册</a>
+		          		<a href="${pageContext.request.contextPath}/patient/registration" class="text-right pull-right">用户注册</a>
 		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>
 		          		<a href="forgot-password.html" class="text-right pull-right">忘记密码?</a>
 		          	</div>
@@ -147,7 +198,16 @@
 	        $("#id").val(id);
 	        $("#password").val(password);
 	        var i = parseInt(type);
-	        $("#type").val(type);
+	       	if (type != null && type != "") {
+		        $("#type").val(type);
+				if (type == "0") {
+					window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+				} else if (type == "1") {
+					window.location.href = "${pageContext.request.contextPath}/adminIndex";
+				} else if (type == "2") {
+					window.location.href = "${pageContext.request.contextPath}/patientIndex";
+				}
+	       	}
 	        if(id != null && id != ""){
 	        	$("#remFlag").attr("checked","checked");
 	        }

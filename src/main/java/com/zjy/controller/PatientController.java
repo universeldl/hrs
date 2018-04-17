@@ -35,9 +35,9 @@ public class PatientController {
 	@Autowired
 	PatientService patientService;
 	
-	@RequestMapping(value="/toRegistration", method=RequestMethod.GET)
+	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String toRegistrate() {
-		return "registration";
+		return "patient/registration";
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class PatientController {
 	 * @param gender
 	 * @return
 	 */
-	@RequestMapping(value="/registration", method=RequestMethod.POST)
+	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
 	public DataResult registrate(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "password", required = true) String password,
@@ -78,8 +78,7 @@ public class PatientController {
 		patient.setCreateTime();
 		patient.setUpdateTime();
 		
-		dataResult.setStatus(patientService.insert(patient)==1?true:false);
-		dataResult.setTips(patient.getPatientNo());
+		dataResult = patientService.insert(patient);
 		
 		return dataResult;
 		
@@ -99,14 +98,13 @@ public class PatientController {
 	public DataResult editPatient(@RequestParam(value = "phone", required = true) String phone,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		DataResult dataResult = new DataResult();
+		DataResult dataResult;
 		
 		Patient patient = (Patient) request.getSession().getAttribute(Constants.SESSION_USER);
 		patient.setPatientPhone(phone);
 		patient.setUpdateTime();
 		
-		dataResult.setStatus(patientService.updateByPrimaryKeySelective(patient)==1?true:false);
-		dataResult.setTips(patient.getPatientPhone());
+		dataResult = patientService.updateByPrimaryKeySelective(patient);
 		
 		return dataResult;
 		

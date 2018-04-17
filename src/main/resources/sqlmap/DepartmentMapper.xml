@@ -26,10 +26,9 @@
     where department_no = #{doctorDepartmentNo,jdbcType=VARCHAR}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from department
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    update department set is_deleted = 1 where id = #{id,jdbcType=VARCHAR}
+  </update>
   <insert id="insert" parameterType="com.zjy.entity.Department" >
     insert into department (id, department_no, department_name, 
       is_deleted, create_time, update_time

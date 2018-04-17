@@ -104,7 +104,7 @@
 	<div class="container">
 		<div class="col-xs-12">
 			<h1 class="margin-bottom-15">用户注册</h1>
-			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/registration" method="post">				
+			<form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="${pageContext.request.contextPath}/patient/register" method="post">				
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
@@ -140,11 +140,12 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
+		            	<label for="phone" class="control-label fa-label"><i class="fa fa-birthday-cake"></i></label>
 						<div class='input-group date' id='datetimepicker'>
 					        <span class="input-group-addon">
 					            <span class="fa fa-calendar"></span>
 					        </span>
-					        <input type='text' class="form-control" id="birth" name="birth" placeholder="出生年月日" />
+					        <input type='text' class="form-control" id="birth" name="birth" value="" placeholder="出生年月日" />
 					    </div>
 		            </div>
 		          </div>

@@ -5,8 +5,6 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zjy.entity.Department;
 import com.zjy.entity.Doctor;
 import com.zjy.service.AdminService;
+import com.zjy.service.DepartmentService;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.DataResult;
@@ -35,6 +35,9 @@ public class AdminManagementController {
 
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	DepartmentService departmentService;
 	
     /**
      * 新增医生
@@ -90,6 +93,41 @@ public class AdminManagementController {
         model.put("rows", map.get("rows"));
         model.put("total", map.get("total"));
         return "";
+    }
+    
+    /**
+     * 添加部门
+     * @author Mervyn
+     * 
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult addDepartment(@RequestParam("name") String name) {
+    	DataResult dataResult;
+    	
+    	Department department = new Department();
+    	department.setId();
+    	department.setDepartmentNo();
+    	department.setDepartmentName(name);
+    	department.setIsDeleted(Constants.NOT_DELETED);
+    	department.setCreateTime();
+    	department.setUpdateTime();
+    	
+    	dataResult = departmentService.insert(department);
+    	
+        return dataResult;
+    }
+    
+    @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult deleteDepartment(@RequestParam("id") String id) {
+    	DataResult dataResult;
+    	
+    	dataResult = departmentService.deleteByPrimaryKey(id);
+    	
+        return dataResult;
     }
     
 }
