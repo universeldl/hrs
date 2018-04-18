@@ -136,7 +136,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
-		            	<label for="id" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
+		            	<label for="id" class="control-label fa-label"><i class="fa fa-user"></i></label>
 		            	<input type="text" class="form-control" id="id" name="id" placeholder="编号……">
 		            </div>		            	            
 		          </div>              
@@ -144,7 +144,7 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
-		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码……">
 		            	<font id="tip" color="red"></font>
 		            </div>

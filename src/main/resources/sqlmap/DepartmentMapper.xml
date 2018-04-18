@@ -19,7 +19,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectByDepNo" parameterType="String" resultMap="BaseResultMap">
+  <select id="selectByDeptNo" parameterType="String" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from department

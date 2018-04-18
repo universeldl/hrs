@@ -108,7 +108,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
-		            	<label for="name" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
+		            	<label for="name" class="control-label fa-label"><i class="fa fa-user"></i></label>
 		            	<input type="text" class="form-control" id="name" name="name" placeholder="姓名">
 		            </div>		            	            
 		          </div>              
@@ -116,7 +116,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码">
 		            </div>
 		          </div>
@@ -124,7 +124,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-		            	<label for="confirmPassword" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
+		            	<label for="confirmPassword" class="control-label fa-label"><i class="fa fa-lock"></i></label>
 		            	<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="确认密码">
 		            </div>
 		          </div>
@@ -132,7 +132,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">
 		          	<div class="control-wrapper">
-		            	<label for="phone" class="control-label fa-label"><i class="fa fa-phone fa-medium"></i></label>
+		            	<label for="phone" class="control-label fa-label"><i class="fa fa-phone"></i></label>
 		            	<input type="tel" class="form-control" id="phone" name="phone" placeholder="手机号">
 		            </div>
 		          </div>
@@ -142,10 +142,10 @@
 		          	<div class="control-wrapper">
 		            	<label for="phone" class="control-label fa-label"><i class="fa fa-birthday-cake"></i></label>
 						<div class='input-group date' id='datetimepicker'>
+					        <input type='text' class="form-control" id="birth" name="birth" value="" placeholder="出生年月日" />
 					        <span class="input-group-addon">
 					            <span class="fa fa-calendar"></span>
 					        </span>
-					        <input type='text' class="form-control" id="birth" name="birth" value="" placeholder="出生年月日" />
 					    </div>
 		            </div>
 		          </div>

@@ -95,6 +95,11 @@ public class AdminManagementController {
         return "";
     }
     
+    @RequestMapping(value = "/showAddDepartment")
+    public String showAddDepartment() {
+    	return "admin/addDepartment";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn
@@ -109,6 +114,9 @@ public class AdminManagementController {
     	
     	Department department = new Department();
     	department.setId();
+		do {
+	    	department.setDepartmentNo();
+		} while (departmentService.selectByDeptNo(department.getDepartmentNo()) != null);
     	department.setDepartmentNo();
     	department.setDepartmentName(name);
     	department.setIsDeleted(Constants.NOT_DELETED);

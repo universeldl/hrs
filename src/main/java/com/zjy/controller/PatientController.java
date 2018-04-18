@@ -62,6 +62,9 @@ public class PatientController {
 		DataResult dataResult = new DataResult();
 		
 		Patient patient = new Patient();
+		do {
+			patient.setPatientNo();
+		} while (patientService.selectByPatientNo(patient.getPatientNo()) != null);
 		patient.setId();
 		patient.setPatientNo();
 		patient.setPatientName(name);

@@ -15,5 +15,5 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    Department selectByDepNo(String doctorDepartmentNo);
+    Department selectByDeptNo(String doctorDepartmentNo);
 }

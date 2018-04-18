@@ -45,4 +45,8 @@ public class DepartmentService {
 		
 		return dataResult;
 	}
+	
+	public Department selectByDeptNo(String departmentNo) {
+		return departmentMapper.selectByDeptNo(departmentNo);
+	}
 }
