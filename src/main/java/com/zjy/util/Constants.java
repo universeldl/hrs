@@ -12,6 +12,8 @@ package com.zjy.util;
 public class Constants {
 	// 存放在session中用户常量
 	public static final String SESSION_USER = "hrs_session_user";
+	// 存放在session中用户类型常量
+	public static final String SESSION_TYPE = "hrs_session_type";
 	// 定义存放在Session中验证码常量
 	public final static String VERIFY_CODE = "verify_code";
 	// 定义Cookie的名字

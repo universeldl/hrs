@@ -36,6 +36,11 @@ public class LoginService {
         Doctor doctor = dMapper.selectByDoctorNo(id);
 		if (doctor.getDoctorPassword().equals(CryptographyHelper.encrypt(password, doctor.getDoctorSalt()))) {
 			request.getSession().setAttribute(Constants.SESSION_USER, doctor);
+			if ("D000001".equals(id)) {
+				request.getSession().setAttribute(Constants.SESSION_TYPE, Constants.ADMIN_TYPE);
+			} else {
+				request.getSession().setAttribute(Constants.SESSION_TYPE, Constants.DOCTOR_TYPE);
+			}
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {
@@ -53,6 +58,7 @@ public class LoginService {
         
 		if (patient.getPatientPassword().equals(CryptographyHelper.encrypt(password, patient.getPatientSalt()))) {
 			request.getSession().setAttribute(Constants.SESSION_USER, patient);
+			request.getSession().setAttribute(Constants.SESSION_TYPE, Constants.PATIENT_TYPE);
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {

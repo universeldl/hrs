@@ -25,7 +25,7 @@
 					    </a>
 				    </li>
 				    <li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/admin/showQueryDepartment" target="frame">
 					    	<span class="menu-text">科室列表</span>
 					    </a>
 				    </li>

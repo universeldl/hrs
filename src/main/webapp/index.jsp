@@ -190,26 +190,37 @@
 		$(document).ready(function(){
 	        //记住密码功能
 	        var str = getCookie("hrs_cookie");
-	        str = str.substring(1,str.length-1);
-	        var id = str.split(",")[0];
-	        var password = str.split(",")[1];
-	        var type = str.split(",")[2];
-	        //自动填充用户名和密码
-	        $("#id").val(id);
-	        $("#password").val(password);
-	        var i = parseInt(type);
-	       	if (type != null && type != "") {
-		        $("#type").val(type);
-				if (type == "0") {
+	        if (str != null && str != ""){
+		        str = str.substring(1,str.length-1);
+		        var id = str.split(",")[0];
+		        var password = str.split(",")[1];
+		        var type = str.split(",")[2];
+		        //自动填充用户名和密码
+		        $("#id").val(id);
+		        $("#password").val(password);
+		        var i = parseInt(type);
+		       	if (type != null && type != "") {
+			        $("#type").val(type);
+					if (type == "0") {
+						window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+					} else if (type == "1") {
+						window.location.href = "${pageContext.request.contextPath}/adminIndex";
+					} else if (type == "2") {
+						window.location.href = "${pageContext.request.contextPath}/patientIndex";
+					}
+		       	}
+		        if(id != null && id != ""){
+		        	$("#remFlag").attr("checked","checked");
+		        }
+	        } else {
+			   	var sessionType="<%=session.getAttribute("hrs_session_type")%>";
+				if (sessionType == "0") {
 					window.location.href = "${pageContext.request.contextPath}/doctorIndex";
-				} else if (type == "1") {
+				} else if (sessionType == "1") {
 					window.location.href = "${pageContext.request.contextPath}/adminIndex";
-				} else if (type == "2") {
+				} else if (sessionType == "2") {
 					window.location.href = "${pageContext.request.contextPath}/patientIndex";
 				}
-	       	}
-	        if(id != null && id != ""){
-	        	$("#remFlag").attr("checked","checked");
 	        }
 	        
 	        $("#verifyCode").mouseover(
