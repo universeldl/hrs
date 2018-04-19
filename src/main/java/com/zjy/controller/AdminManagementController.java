@@ -6,6 +6,7 @@ package com.zjy.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,16 @@ public class AdminManagementController {
         return "";
     }
     
+    @RequestMapping(value = "/showAddDepartment")
+    public String showAddDepartment() {
+    	return "admin/addDepartment";
+    }
+    
+    @RequestMapping(value = "/showQueryDepartment")
+    public String showQueryDepartment() {
+    	return "admin/queryDepartment";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn
@@ -109,6 +120,9 @@ public class AdminManagementController {
     	
     	Department department = new Department();
     	department.setId();
+		do {
+	    	department.setDepartmentNo();
+		} while (departmentService.selectByDeptNo(department.getDepartmentNo()) != null);
     	department.setDepartmentNo();
     	department.setDepartmentName(name);
     	department.setIsDeleted(Constants.NOT_DELETED);
@@ -128,6 +142,12 @@ public class AdminManagementController {
     	dataResult = departmentService.deleteByPrimaryKey(id);
     	
         return dataResult;
+    }
+    
+    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Department> selectList() {
+    	return departmentService.selectList();
     }
     
 }

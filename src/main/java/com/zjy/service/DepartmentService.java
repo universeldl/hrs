@@ -3,6 +3,8 @@
  */
 package com.zjy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +46,13 @@ public class DepartmentService {
 		}
 		
 		return dataResult;
+	}
+	
+	public Department selectByDeptNo(String departmentNo) {
+		return departmentMapper.selectByDeptNo(departmentNo);
+	}
+	
+	public List<Department> selectList() {
+		return departmentMapper.selectList();
 	}
 }

@@ -1,5 +1,7 @@
 package com.zjy.dao;
 
+import java.util.List;
+
 import com.zjy.entity.Department;
 
 public interface DepartmentMapper {
@@ -15,5 +17,7 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    Department selectByDepNo(String doctorDepartmentNo);
+    Department selectByDeptNo(String doctorDepartmentNo);
+    
+    List<Department> selectList();
 }

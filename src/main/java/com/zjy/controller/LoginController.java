@@ -58,6 +58,7 @@ public class LoginController {
     	DataResult dataResult = new DataResult();
 
 		request.getSession().removeAttribute(Constants.SESSION_USER);
+		request.getSession().removeAttribute(Constants.SESSION_TYPE);
     	CookieTools.removeCookie(Constants.COOKIE_NAME, response, request);
     	dataResult.setStatus(true);
     	dataResult.setTips("退出登录成功");

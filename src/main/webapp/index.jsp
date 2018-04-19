@@ -136,7 +136,7 @@
 		        <div class="form-group">
 		          <div class="col-xs-12">		            
 		            <div class="control-wrapper">
-		            	<label for="id" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
+		            	<label for="id" class="control-label fa-label"><i class="fa fa-user"></i></label>
 		            	<input type="text" class="form-control" id="id" name="id" placeholder="编号……">
 		            </div>		            	            
 		          </div>              
@@ -144,7 +144,7 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
-		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock"></i></label>
 		            	<input type="password" class="form-control" id="password" name="password" placeholder="密码……">
 		            	<font id="tip" color="red"></font>
 		            </div>
@@ -190,26 +190,37 @@
 		$(document).ready(function(){
 	        //记住密码功能
 	        var str = getCookie("hrs_cookie");
-	        str = str.substring(1,str.length-1);
-	        var id = str.split(",")[0];
-	        var password = str.split(",")[1];
-	        var type = str.split(",")[2];
-	        //自动填充用户名和密码
-	        $("#id").val(id);
-	        $("#password").val(password);
-	        var i = parseInt(type);
-	       	if (type != null && type != "") {
-		        $("#type").val(type);
-				if (type == "0") {
+	        if (str != null && str != ""){
+		        str = str.substring(1,str.length-1);
+		        var id = str.split(",")[0];
+		        var password = str.split(",")[1];
+		        var type = str.split(",")[2];
+		        //自动填充用户名和密码
+		        $("#id").val(id);
+		        $("#password").val(password);
+		        var i = parseInt(type);
+		       	if (type != null && type != "") {
+			        $("#type").val(type);
+					if (type == "0") {
+						window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+					} else if (type == "1") {
+						window.location.href = "${pageContext.request.contextPath}/adminIndex";
+					} else if (type == "2") {
+						window.location.href = "${pageContext.request.contextPath}/patientIndex";
+					}
+		       	}
+		        if(id != null && id != ""){
+		        	$("#remFlag").attr("checked","checked");
+		        }
+	        } else {
+			   	var sessionType="<%=session.getAttribute("hrs_session_type")%>";
+				if (sessionType == "0") {
 					window.location.href = "${pageContext.request.contextPath}/doctorIndex";
-				} else if (type == "1") {
+				} else if (sessionType == "1") {
 					window.location.href = "${pageContext.request.contextPath}/adminIndex";
-				} else if (type == "2") {
+				} else if (sessionType == "2") {
 					window.location.href = "${pageContext.request.contextPath}/patientIndex";
 				}
-	       	}
-	        if(id != null && id != ""){
-	        	$("#remFlag").attr("checked","checked");
 	        }
 	        
 	        $("#verifyCode").mouseover(

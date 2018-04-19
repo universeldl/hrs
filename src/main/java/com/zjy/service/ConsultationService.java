@@ -50,7 +50,7 @@ public class ConsultationService {
                 Patient patient = pMapper.selectByPatientNo(registration.getPatientNo());
                 Doctor doctor = dMapper.selectByDoctorNo(registration.getDoctorNo());
                 if(null!=doctor) {
-                    Department department = depMapper.selectByDepNo(doctor.getDoctorDepartmentNo());
+                    Department department = depMapper.selectByDeptNo(doctor.getDoctorDepartmentNo());
                     consultation.setRegistrationNo(regNo);
                     consultation.setPatientNo(registration.getPatientNo());
                     consultation.setAppointmentTime(registration.getAppointmentTime());
