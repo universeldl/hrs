@@ -24,6 +24,7 @@ import com.zjy.service.AdminService;
 import com.zjy.service.DepartmentService;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
 /**
@@ -144,10 +145,20 @@ public class AdminManagementController {
         return dataResult;
     }
     
+    /**
+     * 分页获取科室列表
+     * @author Mervyn
+     * 
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
     @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.GET)
     @ResponseBody
-    public List<Department> selectList() {
-    	return departmentService.selectList();
+    public DataGridResult selectList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber) {
+    	DataGridResult dataGridResult = departmentService.selectList(pageNumber, pageSize);
+    	return dataGridResult;
     }
     
 }

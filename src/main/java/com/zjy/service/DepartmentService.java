@@ -8,8 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DepartmentMapper;
 import com.zjy.entity.Department;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
 /**
@@ -52,7 +55,12 @@ public class DepartmentService {
 		return departmentMapper.selectByDeptNo(departmentNo);
 	}
 	
-	public List<Department> selectList() {
-		return departmentMapper.selectList();
+	public DataGridResult selectList(int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Department> departmentList = departmentMapper.selectList();
+		PageInfo<Department> pageInfo = new PageInfo<Department>(departmentList);
+		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+				pageInfo.getPageNum());
+		return dataGridResult;
 	}
 }

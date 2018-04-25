@@ -16,27 +16,17 @@
  	
  	<script type="text/javascript">
  	$(function() {
-	//根据窗口调整表格高度
-	    $(window).resize(function() {
-	        $('#departmentTable').bootstrapTable('resetView', {
-	            height: tableHeight()
-	        })
-	    })
 	//生成用户数据
 	    $('#departmentTable').bootstrapTable({
 	        method: 'get',
 	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
 	        url:"${pageContext.request.contextPath}/admin/selectDepartmentList",//要请求数据的文件路径
 	        height:tableHeight(),//高度调整
-	        /* toolbar: '#toolbar',//指定工具栏 */
+	        toolbar: '#toolbar',//指定工具栏 
 	        dataType: "json",
-	        //bootstrap table 可以前端分页也可以后端分页，这里
-	        //我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
-	        //rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
 	        pageNumber: 1, //初始化加载第一页，默认第一页
 	        pagination:true,//是否分页
-	        queryParamsType:'limit',//查询参数组织方式
-	        //queryParams:queryParams,//请求服务器时所传的参数
+	        queryParams:queryParams,//请求服务器时所传的参数
 	        sidePagination:'server',//指定服务器端分页
 	        pageSize:10,//单页记录数
 	        pageList:[5,10,20,30],//分页步进值
@@ -63,33 +53,16 @@
 	            	title:'操作',
 	                align:'center'
 	            }
-	        ],
-	        locale:'zh-CN',//中文支持,
-	        responseHandler:function(res){
-	            //在ajax获取到数据，渲染表格之前，修改数据源
-	            return res;
-	        }
+	        ]
 	    })
-	    //三个参数，value代表该列的值
-	    function operateFormatter(value,row,index){
-	        if(value==0){
-	            return '<i class="fa fa-lock" style="color:red"></i>';
-	        }else if(value==1){
-	            return '<i class="fa fa-unlock" style="color:green"></i>';
-	        }else{
-	            return '数据错误';
-	        }
-	    }
-	
-	    //请求服务数据时所传参数
-	    /* function queryParams(params){
-	        return{
-	            //每页多少条数据
-	            pageSize: params.limit,
-	            //请求第几页
-	            pageNumber:params.pageNumber,
-	        }
-	    } */
+	    function queryParams(params){  
+	        return {  
+	                limit : this.limit, // 页面大小  
+	                offset : this.offset, // 页码  
+	                pageNumber : this.pageNumber,  
+	                pageSize : this.pageSize  
+	        } 
+	    }  
 	     /* //查询按钮事件
 	    $('#search_btn').click(function(){
 	        $('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
