@@ -16,8 +16,7 @@
 	<body>
 		<form class="form-inline" role="form" action="${pageContext.request.contextPath}/admin/addDepartment" style="margin-top: 30px; margin-left: 30px" method="post">
 			<div class="form-group">
-				<label>科室名:</label> <input type="text" class="form-control" id="name"
-					name="name">
+				<label>科室名:</label> <input type="text" class="form-control" id="name" name="name">
 			</div>
 			<button type="submit" class="btn btn-default" id="add">添加</button>
 		</form>

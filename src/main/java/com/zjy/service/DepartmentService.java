@@ -56,8 +56,12 @@ public class DepartmentService {
 	}
 	
 	public DataGridResult selectList(int pageNum, int pageSize) {
+		return queryListByName(null, pageNum, pageSize);
+	}
+	
+	public DataGridResult queryListByName(Department department, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<Department> departmentList = departmentMapper.selectList();
+		List<Department> departmentList = departmentMapper.selectPageListByName(department);
 		PageInfo<Department> pageInfo = new PageInfo<Department>(departmentList);
 		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
 				pageInfo.getPageNum());

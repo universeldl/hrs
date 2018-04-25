@@ -17,7 +17,7 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    Department selectByDeptNo(String doctorDepartmentNo);
+    Department selectByDeptNo(String departmentNo);
     
-    List<Department> selectList();
+    List<Department> selectPageListByName(Department departmentName);
 }

@@ -19,17 +19,23 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectList" resultMap="BaseResultMap" >
+  <select id="selectPageListByName" resultMap="BaseResultMap" parameterType="com.zjy.entity.Department" >
     select 
     <include refid="Base_Column_List" />
     from department
+    <where>
+	    <if test="departmentName != null" >
+	      department_name like CONCAT('%',#{departmentName, jdbcType=VARCHAR},'%')
+	    </if>
+	</where>
+    order by department_no
   </select>
   
   <select id="selectByDeptNo" parameterType="String" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from department
-    where department_no = #{doctorDepartmentNo,jdbcType=VARCHAR}
+    where department_no = #{departmentNo,jdbcType=VARCHAR}
   </select>
   
   <update id="deleteByPrimaryKey" parameterType="java.lang.String" >

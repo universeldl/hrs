@@ -153,11 +153,25 @@ public class AdminManagementController {
      * @param pageNumber
      * @return
      */
-    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.POST)
     @ResponseBody
-    public DataGridResult selectList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    public DataGridResult selectDepartmentList(@RequestParam(value = "pageSize", required = true) int pageSize,
     		@RequestParam(value = "pageNumber", required = true) int pageNumber) {
     	DataGridResult dataGridResult = departmentService.selectList(pageNumber, pageSize);
+    	return dataGridResult;
+    }
+    
+    @RequestMapping(value = "/queryDepartmentList", method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridResult queryDepartmentList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value = "departmentName") String departmentName) {
+    	Department department = new Department();
+    	if (departmentName != null)
+    		department.setDepartmentName(departmentName);
+    	System.out.println(departmentName);
+    	System.out.println(department.getDepartmentName());
+    	DataGridResult dataGridResult = departmentService.queryListByName(department, pageNumber, pageSize);
     	return dataGridResult;
     }
     
