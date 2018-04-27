@@ -5,7 +5,7 @@ import java.util.List;
 import com.zjy.entity.Department;
 
 public interface DepartmentMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByDeptNo(String departmentNo);
 
     int insert(Department record);
 

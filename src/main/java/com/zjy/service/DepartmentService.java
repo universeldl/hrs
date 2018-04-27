@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DepartmentMapper;
+import com.zjy.dao.DoctorMapper;
 import com.zjy.entity.Department;
+import com.zjy.vo.BatchResult;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
@@ -22,8 +24,12 @@ import com.zjy.vo.DataResult;
 
 @Service
 public class DepartmentService {
+	
 	@Autowired
 	DepartmentMapper departmentMapper;
+	
+	@Autowired
+	DoctorMapper doctorMapper;
 	
 	public DataResult insert(Department department) {
 		DataResult dataResult = new DataResult();
@@ -38,17 +44,24 @@ public class DepartmentService {
 		return dataResult;
 	}
 	
-	public DataResult deleteByPrimaryKey(String id) {
-		DataResult dataResult = new DataResult();
-		if (departmentMapper.deleteByPrimaryKey(id) == 1) {
-			dataResult.setStatus(true);
-			dataResult.setTips("刪除部门成功");
-		} else {
-			dataResult.setStatus(false);
-			dataResult.setTips("刪除部门失败");
+	public BatchResult<Department> deleteByDeptNo(String departmentNoArray[]) {
+		BatchResult<Department> batchResult = new BatchResult<Department>();
+		for (int i = 0; i < departmentNoArray.length; ++i) {
+			if (doctorMapper.selectCountByDeptNo(departmentNoArray[i]) == 0) {
+				if (departmentMapper.deleteByDeptNo(departmentNoArray[i]) == 1) {
+					batchResult.addSuccess();
+				} else {
+					batchResult.addFail();
+					batchResult.addToFailList(departmentMapper.selectByDeptNo(departmentNoArray[i]));
+				}
+			} else {
+				batchResult.addFail();
+				batchResult.addToFailList(departmentMapper.selectByDeptNo(departmentNoArray[i]));
+				batchResult.setTips("科室下还有医生，不允许删除。");
+			}
 		}
 		
-		return dataResult;
+		return batchResult;
 	}
 	
 	public Department selectByDeptNo(String departmentNo) {

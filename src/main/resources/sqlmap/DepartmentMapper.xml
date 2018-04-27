@@ -24,8 +24,9 @@
     <include refid="Base_Column_List" />
     from department
     <where>
+    	is_deleted = 0
 	    <if test="departmentName != null" >
-	      department_name like CONCAT('%',#{departmentName, jdbcType=VARCHAR},'%')
+	    	and department_name like CONCAT('%',#{departmentName, jdbcType=VARCHAR},'%')
 	    </if>
 	</where>
     order by department_no
@@ -38,8 +39,8 @@
     where department_no = #{departmentNo,jdbcType=VARCHAR}
   </select>
   
-  <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    update department set is_deleted = 1 where id = #{id,jdbcType=VARCHAR}
+  <update id="deleteByDeptNo" parameterType="java.lang.String" >
+    update department set is_deleted = 1 where department_no = #{departmentNo,jdbcType=VARCHAR}
   </update>
   <insert id="insert" parameterType="com.zjy.entity.Department" >
     insert into department (id, department_no, department_name, 
