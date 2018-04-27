@@ -61,6 +61,12 @@
   	limit #{a},#{b}
   </select>
   
+  <select id="selectCountByDeptNo"  parameterType="java.lang.String" resultType="java.lang.Integer" >
+  	select count(id)
+  	from doctor
+  	where doctor_department_no = #{departmentNo,jdbcType=VARCHAR}
+  </select>
+  
   <select id="count" parameterType="HashMap">
   	select 
   	count(0) 

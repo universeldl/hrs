@@ -6,7 +6,6 @@ package com.zjy.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,8 @@ import com.zjy.service.AdminService;
 import com.zjy.service.DepartmentService;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.BatchResult;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
 /**
@@ -136,18 +137,53 @@ public class AdminManagementController {
     
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
     @ResponseBody
-    public DataResult deleteDepartment(@RequestParam("id") String id) {
-    	DataResult dataResult;
+    public BatchResult<Department> deleteDepartment(@RequestParam("departmentNos") String departmentNos) {
+    	BatchResult<Department> batchResult;
     	
-    	dataResult = departmentService.deleteByPrimaryKey(id);
+    	String[] departmentNoArray = departmentNos.split(",");
     	
-        return dataResult;
+    	batchResult = departmentService.deleteByDeptNo(departmentNoArray);
+    	
+        return batchResult;
     }
     
-    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.GET)
+    /**
+     * 分页获取科室列表
+     * @author Mervyn
+     * 
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
+    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.POST)
     @ResponseBody
-    public List<Department> selectList() {
-    	return departmentService.selectList();
+    public DataGridResult selectDepartmentList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber) {
+    	DataGridResult dataGridResult = departmentService.selectList(pageNumber, pageSize);
+    	return dataGridResult;
+    }
+    
+    /**
+     * 根据科室名查询部门信息并分页
+     * @author Mervyn
+     * 
+     * @param pageSize
+     * @param pageNumber
+     * @param departmentName
+     * @return
+     */
+    @RequestMapping(value = "/queryDepartmentList", method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridResult queryDepartmentList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value = "departmentName") String departmentName) {
+    	Department department = new Department();
+    	if (departmentName != null)
+    		department.setDepartmentName(departmentName);
+    	System.out.println(departmentName);
+    	System.out.println(department.getDepartmentName());
+    	DataGridResult dataGridResult = departmentService.queryListByName(department, pageNumber, pageSize);
+    	return dataGridResult;
     }
     
 }

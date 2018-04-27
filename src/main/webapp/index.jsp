@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<title>用户登录</title>
 	
 	<style type="text/css">
@@ -254,14 +255,28 @@
 		function remember(){
 		    var remFlag = $("input[type='checkbox']").is(':checked');
 		    if(remFlag==true){ //如果选中设置remFlag为1
-		        //cookie存用户名和密码,回显的是真实的用户名和密码,存在安全问题.
-		        var conFlag = confirm("为了您的账号安全，确认要在公共场合记住密码吗？");
-		        if(conFlag){ //确认标志
-		            $("#remFlag").val("1");
-		        }else{
-		            $("input[type='checkbox']").removeAttr('checked');
-		            $("#remFlag").val("0");
-		        }
+		        bootbox.confirm({
+		        	message: "为了您的账号安全，确认要在公共场合记住密码吗？",
+		            buttons: {
+		                confirm: {
+		                    label: '确认',
+		                    className: 'btn-success'
+		                },
+		                cancel: {
+		                    label: '不保存',
+		                    className: 'btn-danger'
+		                }
+		            },
+		        	callback: function(result){ 
+		        	/* result is a boolean; true = OK, false = Cancel*/ 
+		        		if (result) {
+				            $("#remFlag").val("1");
+		        		} else {
+				            $("input[type='checkbox']").removeAttr('checked');
+				            $("#remFlag").val("0");
+		        		}
+		        	}
+		        });
 		    }else{ //如果没选中设置remFlag为""
 		        $("#remFlag").val("0");
 		    }
