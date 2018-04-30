@@ -66,7 +66,7 @@ public class LoginController {
     	return dataResult;
     }
     
-	@RequestMapping(value = "/fail")
+	@RequestMapping(value = "/toLogin")
 	public String toLogin() {
 		return "forward:/index.jsp";
 	}

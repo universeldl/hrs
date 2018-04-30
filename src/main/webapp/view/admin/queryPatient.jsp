@@ -8,21 +8,19 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" />
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
- 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
  	<script type="text/javascript">
  	$(function() {
 		//获取科室列表
-	    $('#departmentTable').bootstrapTable({
+	    $('#patientTable').bootstrapTable({
 	        method: 'post',//post避免中文乱码
 	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
-	        url:"${pageContext.request.contextPath}/admin/queryDepartmentList",//要请求数据的文件路径
+	        url:"${pageContext.request.contextPath}/admin/queryPatientList",//要请求数据的文件路径
 	        //height:tableHeight(),//高度调整
 	        toolbar: '#toolbar',//指定工具栏 
 	        dataType: "json",
@@ -43,16 +41,31 @@
 	                align:'center',
 	                valign:'middle'
 	            },{
-	                title:'科室编号',
-	                field:'departmentNo',
+	                title:'编号',
+	                field:'patientNo',
 	                align:'center'
 	            },{
-	                title:'科室名',
-	                field:'departmentName',
-	                align:'center',
+	                title:'姓名',
+	                field:'patientName',
+	                align:'center'
+	            },{
+	            	title:'性别',
+	            	field:'patientSex',
+	            	align:'center',
 	                formatter: function (value, row, index) {
-	                    return "<a href=\"#\" name=\"departmentName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"科室名\" class=\"editable editable-click\">" + value + "</a>";
+	                    return formatSex(value)
 	                }
+	            },{
+	            	title:'出生年月日',
+	            	field:'patientBirth',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return changeDateFormat(value)
+	                }
+	            },{
+	            	title:'手机号',
+	            	field:'patientPhone',
+	            	align:'center'
 	            }
 // 	            ,{
 // 	            	title:'操作',
@@ -67,100 +80,66 @@
 //             var result = "<button class='btn btn-danger' name='deleteOne'><span class='glyphicon glyphicon-trash'></span></button>";
 //             return result;
 //         }
+	    function formatSex(value) {
+	    	return value==1?"男":"女";
+	    }
+ 		//转换日期格式(时间戳转换为datetime格式)
+ 	    function changeDateFormat(cellval) {
+ 	        var dateVal = cellval + "";
+ 	        if (cellval != null) {
+ 	            var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+ 	            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+ 	            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+ 	            
+//  	            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+//  	            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+//  	            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+ 	            
+//  	            return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+ 	            return date.getFullYear() + "-" + month + "-" + currentDate;
+ 	        }
+ 	    }
 	    function queryParams(params){  
 	        return {  
 	                limit : this.limit, // 页面大小  
 	                offset : this.offset, // 页码  
 	                pageNumber : this.pageNumber,  
 	                pageSize : this.pageSize,
-	                departmentName: $('#departmentName').val()
+	                patientName: $('#patientName').val(),
+	                patientSex: $('#patientSex').val(),
+	                patientMinAge: $('#patientMinAge').val(),
+	                patientMaxAge: $('#patientMaxAge').val(),
+	                patientPhone: $('#patientPhone').val()
 	        } 
 	    }  
 	    //查询按钮事件
 	    $('#search_btn').click(function(){
-	        $('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+	        $('#patientTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryPatientList'});
 	    })
 	    //tableHeight函数
 	    function tableHeight(){
 	        //可以根据自己页面情况进行调整
 	        return $(window).height() -280;
 	    }
-	    
-	    //行内编辑配置
-	    $('#edit').click(function() {
-	        $('#departmentTable .editable').editable('toggleDisabled');
-	    }); 
-	    
-	    //删除按钮点击事件
-	    $('#delete').click(function() {
-	    	var rows = $("#departmentTable").bootstrapTable('getSelections');
-	    	if (rows.length == 0) {
-	    		bootbox.alert({
-	    			  size: "small",
-	    			  message: "请选择最少一条需要删除的科室。",
-	    		});
-	    	} else {
-		        bootbox.confirm({
-	    			size: "small",
-		        	message: "确认删除所选科室？",
-		            buttons: {
-		                confirm: {
-		                    label: '确认',
-		                    className: 'btn-success'
-		                },
-		                cancel: {
-		                    label: '取消',
-		                    className: 'btn-danger'
-		                }
-		            },
-		        	callback: function(result){
-		        	/* result is a boolean; true = OK, false = Cancel*/ 
-		        		if (result) {
-//		     	    		alert(JSON.stringify(rows));
-		    	    		var departmentNos = new Array();
-		    	    		$.each(rows, function() {
-		    	    			departmentNos.push(this.departmentNo);
-		    				});
-//		     				alert(departmentIds.toString());
-				        	$.ajax({
-				        		url: "${pageContext.request.contextPath}/admin/deleteDepartment",
-				        		type: "post",
-				        		data: "departmentNos=" + departmentNos.join(","),
-				        		dataType: "json",
-				        		async: true,
-				        		success: function(data) {
-				        			if (data.numOfSuccess == departmentNos.length)
-				        	        	$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
-				        			else {
-				        				alert(data.tips);
-				        			}
-				        		},
-								error : function() {
-									bootbox.alert({
-						    			size: "small",
-							        	message: "删除出错"
-									});
-								}
-				        	});
-		        		}
-		        	}
-		        });
-	    	}
-	    });
  	});
 	</script>
 </head>
 <body>
 	<form class="form-inline" role="form" style="margin-top: 30px; margin-left: 30px">
 		<div class="form-group">
-			<label>科室名:</label> <input type="text" class="form-control" id="departmentName" name="departmentName">
+			<label>姓名:</label> <input type="text" class="form-control" id="patientName" name="patientName">
+			<label style="margin-left:20px">性别:</label>
+           	<select id="patientSex" name="patientSex" class="form-control" style="width: 100px;">
+           		<option value=null>请选择</option>
+           		<option value="0">女</option>
+           		<option value="1">男</option>
+           	</select>
+			<label style="margin-left:20px">年龄:</label> <input type="text" class="form-control" id="patientMinAge" name="patientMinAge" style="width: 100px;">
+			<label>-</label> <input type="text" class="form-control" id="patientMaxAge" name="patientMaxAge" style="width: 100px;">
+			<label style="margin-left:20px">手机号:</label> <input type="text" class="form-control" id="patientPhone" name="patientPhone">
 		</div>
 		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
 	</form>
-	<div id="toolbar">
-		<button id="edit" class="btn btn-primary">修改</button>
-		<button id="delete" class="btn btn-danger">删除</button>
-	</div>
-	<table id="departmentTable" class="table table-hover table-striped"></table>
+	<table id="patientTable" class="table table-hover table-striped"></table>
 </body>
 </html>

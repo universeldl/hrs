@@ -32,6 +32,35 @@
     where patient_no = #{id,jdbcType=VARCHAR}
   </select>
   
+  <select id="pageQueryPatientByWhere" resultMap="BaseResultMap" parameterType="HashMap">
+  	select
+    <include refid="Base_Column_List" />
+    from patient
+    <where>
+    	<if test="patientName != null">
+    		and patient_name like CONCAT('%',#{patientName, jdbcType=VARCHAR},'%')
+    	</if>
+    	<if test="patientSex != null">
+    		and patient_sex = #{patientSex, jdbcType=VARCHAR}
+    	</if>
+    	<if test="patientPhone != null">
+    		and patient_phone like CONCAT('%',#{patientPhone, jdbcType=VARCHAR},'%')
+    	</if>
+<!--     	<if test="patientMinAge != null and patientMaxAge != null"> -->
+<!--     		and TIMESTAMPDIFF(YEAR, patient_birth, CURDATE()) between #{patientMinAge, jdbcType=INTEGER} and #{patientMaxAge, jdbcType=INTEGER} -->
+<!--     	</if> -->
+    	<if test="patientMinAge != null">
+    		and TIMESTAMPDIFF(YEAR, patient_birth, CURDATE()) &gt;= #{patientMinAge, jdbcType=INTEGER}
+    	</if>
+    	<if test="patientMaxAge != null">
+    		and TIMESTAMPDIFF(YEAR, patient_birth, CURDATE()) &lt;= #{patientMaxAge, jdbcType=INTEGER}
+    	</if>
+<!--     	<if test="patientMaxAge != null"> -->
+<!--     		and TIMESTAMPDIFF(YEAR, patient_birth, CURDATE()) <![CDATA[ <= ]]> #{patientMaxAge, jdbcType=INTEGER} -->
+<!--     	</if> -->
+    </where>
+  </select>
+  
   <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
     update patient set is_deleted = 1 where id = #{id,jdbcType=VARCHAR}
   </update>
