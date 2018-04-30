@@ -65,9 +65,29 @@
 	 		</li>
 	 		<li class="panel">
 	  			<a class="panel-heading collapsed" href="#collapse4" data-toggle="collapse" data-parent="#nav_parent">
-	  				<span class="menu-text">统计</span>
+	  				<span class="menu-text">病人管理</span>
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse4">
+	  				<li>
+	   					<a href="${pageContext.request.contextPath}/admin/showQueryPatient" target="frame"><span class="menu-text">病人列表</span></a>
+	  				</li>
+	  			</ul>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">挂号列表</span>
+	 			</a>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">药品列表</span>
+	 			</a>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#collapse5" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">统计</span>
+	 			</a>
+	  			<ul class="nav submenu collapse" id="collapse5">
 	  				<li>
 	   					<a href="#" target="frame"><span class="menu-text">就诊量</span></a>
 	  				</li>

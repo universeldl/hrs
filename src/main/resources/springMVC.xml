@@ -35,7 +35,7 @@
 		    <mvc:exclude-mapping path="/verify/**"/>
 		    <mvc:exclude-mapping path="/check/**"/>
 		    <mvc:exclude-mapping path="/login"/>
-		    <mvc:exclude-mapping path="/fail"/>
+		    <mvc:exclude-mapping path="/toLogin"/>
 		    <mvc:exclude-mapping path="/patient/toRegistration"/>
 		    <mvc:exclude-mapping path="/patient/registration"/>
 		    <mvc:exclude-mapping path="/images/**"/>

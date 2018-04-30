@@ -1,5 +1,8 @@
 package com.zjy.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.zjy.entity.Patient;
 
 public interface PatientMapper {
@@ -16,4 +19,6 @@ public interface PatientMapper {
     int updateByPrimaryKey(Patient record);
 
     Patient selectByPatientNo(String id);
+    
+    List<Patient> pageQueryPatientByWhere(Map<String, String> map);
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -14,16 +14,70 @@
 	<!-- 导航 -->
 	<div class="page-sidebar">
 	    <ul class="nav panel-group sidebar-menu" id="nav_parent">
-	    	<li>
-			    <a href="#" target="frame">
-			    	<span class="menu-text">预约</span>
-			    </a>
-		    </li>
-		    <li>
-			    <a href="#" target="frame">
-			    	<span class="menu-text">就诊记录</span>
-			    </a>
-		    </li>
+	    	<li class="panel">
+	    		<a class="panel-heading collapsed" href="#collapse1" data-toggle="collapse" data-parent="#nav_parent">
+	    			<span class="menu-text"> 科室管理 </span>
+	  			</a>
+	  			<ul class="nav submenu collapse" id="collapse1">
+	  				<li>
+					    <a href="${pageContext.request.contextPath}/admin/showAddDepartment" target="frame">
+					    	<span class="menu-text">科室录入</span>
+					    </a>
+				    </li>
+				    <li>
+					    <a href="${pageContext.request.contextPath}/admin/showQueryDepartment" target="frame">
+					    	<span class="menu-text">科室列表</span>
+					    </a>
+				    </li>
+	  			</ul>
+	 		</li>
+	    	<li class="panel">
+	    		<a class="panel-heading collapsed" href="#collapse2" data-toggle="collapse" data-parent="#nav_parent">
+	    			<span class="menu-text"> 医生管理 </span>
+	  			</a>
+	  			<ul class="nav submenu collapse" id="collapse2">
+	  				<li>
+					    <a href="#" target="frame">
+					    	<span class="menu-text">医生录入</span>
+					    </a>
+				    </li>
+				    <li>
+					    <a href="${pageContext.request.contextPath}/view/admin/queryDoctor.jsp" target="frame">
+					    	<span class="menu-text">医生列表</span>
+					    </a>
+				    </li>
+	  			</ul>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#collapse3" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">排班</span>
+	 			</a>
+	  			<ul class="nav submenu collapse" id="collapse3">
+	  				<li>
+	   					<a href="#" target="frame"><span class="menu-text">排班表</span></a>
+	  				</li>
+				    <li>
+				    	<a href="#" target="frame">
+				    		<span class="menu-text">排班调整</span>
+				    	</a>
+				    </li>
+	  			</ul>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#collapse4" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">统计</span>
+	 			</a>
+	  			<ul class="nav submenu collapse" id="collapse4">
+	  				<li>
+	   					<a href="#" target="frame"><span class="menu-text">就诊量</span></a>
+	  				</li>
+				    <li>
+				    	<a href="${pageContext.request.contextPath}/view/loginerror.jsp" target="frame">
+				    		<span class="menu-text">收入</span>
+				    	</a>
+				    </li>
+	  			</ul>
+	 		</li>
 	 	</ul>
 	</div>
 	<div style="left: 250px;position: absolute;" name="div_auto" id="div_auto">
@@ -35,7 +89,27 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		
-		
+		$(function(){
+			 //点击菜单箭头变化
+			 $(".page-sidebar .sidebar-menu a").each(function(){
+				 $(this).click(function(){
+					  var Oele = $(this).children('.menu-expand');
+					  if($(Oele)){
+						  if($(Oele).hasClass('glyphicon-chevron-right')){
+						      $(Oele).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+						  }else{
+						      $(Oele).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+						  }
+					  }
+					 
+					  //选中增加active
+					  if(! $(this).hasClass('panel-heading')){
+						  $(".page-sidebar .sidebar-menu a").removeClass('active');
+						  $(this).addClass('active');
+					  }
+				 });
+			 });
+		})
 	</script>
 </body>
 </html>

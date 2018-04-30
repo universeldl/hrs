@@ -51,7 +51,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				}
 				
 			}
-	        request.getRequestDispatcher("/fail").forward(request, response);
+	        request.getRequestDispatcher("/toLogin").forward(request, response);
 			return false;
 		}
         return true;

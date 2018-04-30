@@ -3,12 +3,18 @@
  */
 package com.zjy.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.PatientMapper;
-import com.zjy.entity.Doctor;
+import com.zjy.entity.Department;
 import com.zjy.entity.Patient;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
 /**
@@ -57,4 +63,19 @@ public class PatientService {
             throw new RuntimeException("根据编号查询病人失败");
         }
     }
+    
+	public DataGridResult pageQueryPatientByWhere(Map<String, String> map, int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Patient> patientList = patientMapper.pageQueryPatientByWhere(map);
+		for (Patient p : patientList) {
+			System.out.println(p.getPatientName());
+		}
+		if(patientList == null) {
+			System.out.println("null!!!!");
+		}
+		PageInfo<Patient> pageInfo = new PageInfo<Patient>(patientList);
+		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+				pageInfo.getPageNum());
+		return dataGridResult;
+	}
 }

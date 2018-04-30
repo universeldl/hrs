@@ -166,6 +166,7 @@
 		          	<div class="control-wrapper">
 		          		<input type="submit" value="注册" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
+		          		<a href="${pageContext.request.contextPath}/toLogin" class="text-right pull-right">返回登陆</a>
 		          	</div>
 		          </div>
 		        </div>

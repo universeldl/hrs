@@ -21,6 +21,7 @@ import com.zjy.entity.Department;
 import com.zjy.entity.Doctor;
 import com.zjy.service.AdminService;
 import com.zjy.service.DepartmentService;
+import com.zjy.service.PatientService;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.BatchResult;
@@ -40,6 +41,9 @@ public class AdminManagementController {
 	
 	@Autowired
 	DepartmentService departmentService;
+	
+	@Autowired
+	PatientService patientService;
 	
     /**
      * 新增医生
@@ -107,6 +111,11 @@ public class AdminManagementController {
     	return "admin/queryDepartment";
     }
     
+    @RequestMapping(value = "/showQueryPatient")
+    public String showQueryPatient() {
+    	return "admin/queryPatient";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn
@@ -148,22 +157,6 @@ public class AdminManagementController {
     }
     
     /**
-     * 分页获取科室列表
-     * @author Mervyn
-     * 
-     * @param pageSize
-     * @param pageNumber
-     * @return
-     */
-    @RequestMapping(value = "/selectDepartmentList", method = RequestMethod.POST)
-    @ResponseBody
-    public DataGridResult selectDepartmentList(@RequestParam(value = "pageSize", required = true) int pageSize,
-    		@RequestParam(value = "pageNumber", required = true) int pageNumber) {
-    	DataGridResult dataGridResult = departmentService.selectList(pageNumber, pageSize);
-    	return dataGridResult;
-    }
-    
-    /**
      * 根据科室名查询部门信息并分页
      * @author Mervyn
      * 
@@ -178,12 +171,33 @@ public class AdminManagementController {
     		@RequestParam(value = "pageNumber", required = true) int pageNumber,
     		@RequestParam(value = "departmentName") String departmentName) {
     	Department department = new Department();
-    	if (departmentName != null)
+    	if (departmentName != null && !"".equals(departmentName))
     		department.setDepartmentName(departmentName);
-    	System.out.println(departmentName);
-    	System.out.println(department.getDepartmentName());
     	DataGridResult dataGridResult = departmentService.queryListByName(department, pageNumber, pageSize);
     	return dataGridResult;
     }
     
+    @RequestMapping(value = "/queryPatientList", method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridResult queryPatientList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value = "patientName") String patientName,
+    		@RequestParam(value = "patientSex") String patientSex,
+    		@RequestParam(value = "patientMinAge") String patientMinAge,
+    		@RequestParam(value = "patientMaxAge") String patientMaxAge,
+    		@RequestParam(value = "patientPhone") String patientPhone) {
+    	Map<String, String> map = new HashMap<String, String>();
+    	if (patientName != null && !"".equals(patientName))
+    		map.put("patientName", patientName);
+    	if (patientSex != null && !"null".equals(patientSex))
+    		map.put("patientSex", patientSex);
+    	if (patientMinAge != null && !"".equals(patientMinAge))
+    		map.put("patientMinAge", patientMinAge);
+    	if (patientMaxAge != null && !"".equals(patientMaxAge))
+    		map.put("patientMaxAge", patientMaxAge);
+    	if (patientPhone != null && !"".equals(patientPhone))
+    		map.put("patientPhone", patientPhone);
+    	DataGridResult dataGridResult = patientService.pageQueryPatientByWhere(map, pageNumber, pageSize);
+    	return dataGridResult;
+    }
 }
