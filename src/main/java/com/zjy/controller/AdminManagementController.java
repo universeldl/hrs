@@ -50,7 +50,7 @@ public class AdminManagementController {
      * @param doctor
      * @return
      */
-    @RequestMapping("/insertDoctor")
+    @RequestMapping(value="/addDoctor", method = RequestMethod.POST)
     public DataResult insertDoctor(@RequestBody Doctor doctor) {
     	DataResult dataResult;
     	doctor.setId();
@@ -60,6 +60,7 @@ public class AdminManagementController {
     	doctor.setCreateTime();
     	doctor.setUpdateTime();
         dataResult = adminService.insert(doctor);
+        
         return dataResult;
     }
     
