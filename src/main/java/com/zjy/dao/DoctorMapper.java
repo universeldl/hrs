@@ -3,6 +3,7 @@ package com.zjy.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.zjy.entity.Department;
 import com.zjy.entity.Doctor;
 
 public interface DoctorMapper {
@@ -27,4 +28,6 @@ public interface DoctorMapper {
     int selectCountByDeptNo(String departmentNo);
     
     int count(Map<String, Object> param);
+
+    int deleteByDoctorNo(String doctorNo);
 }

@@ -71,17 +71,14 @@ public class AdminManagementController {
      */
     @RequestMapping(value="/queryDoctorList", method=RequestMethod.POST)
     @ResponseBody
-    public String queryDoctorList(@RequestParam(value="name", required=false)String name,
+    public DataGridResult queryDoctorList(@RequestParam(value = "pageSize", required = true) int pageSize,
+                                  @RequestParam(value = "pageNumber", required = true) int pageNumber,
+                                  @RequestParam(value="name", required=false)String name,
                                   @RequestParam("depNo")String depNo,
                                   @RequestParam("status")String status,
                                   @RequestParam("startTime")String startTime,
-                                  @RequestParam("endTime")String endTime,
-                                  Integer pageSize,Integer pageNumber,
-                                  ModelMap model) {
-        pageSize = (pageSize==null?0:pageSize);
-        pageNumber = (pageNumber==null?1:pageNumber);
-        int a = (pageNumber-1)*pageSize;
-        int b = pageSize;
+                                  @RequestParam("endTime")String endTime) {
+       
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("name", null==name?"":name);
@@ -94,23 +91,23 @@ public class AdminManagementController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        param.put("a", a);
-        param.put("b", b);
-        Map<String, Object> map = adminService.queryDoctorByPage(param);
-        model.put("rows", map.get("rows"));
-        model.put("total", map.get("total"));
-        return "";
+        DataGridResult dataGridResult = adminService.queryDoctorByPage(param, pageNumber, pageSize);
+        return dataGridResult;
     }
     
-    @RequestMapping(value = "/showAddDepartment")
-    public String showAddDepartment() {
-    	return "admin/addDepartment";
+    
+    @RequestMapping(value = "/deleteDoctor", method = RequestMethod.POST)
+    @ResponseBody
+    public BatchResult<Doctor> deleteDoctor(@RequestParam("doctorNos") String doctorNos) {
+        BatchResult<Doctor> batchResult;
+        
+        String[] doctorNoArray = doctorNos.split(",");
+        
+        batchResult = adminService.deleteByDoctorNo(doctorNoArray);
+        
+        return batchResult;
     }
     
-    @RequestMapping(value = "/showQueryDepartment")
-    public String showQueryDepartment() {
-    	return "admin/queryDepartment";
-    }
     
     @RequestMapping(value = "/showQueryPatient")
     public String showQueryPatient() {

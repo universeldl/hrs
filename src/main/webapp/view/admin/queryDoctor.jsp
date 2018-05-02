@@ -4,20 +4,178 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>医生列表</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
+ 	
+ 	<script type="text/javascript">
+ 	$(function() {
+		//获取科室列表
+	    $('#mytab').bootstrapTable({
+	        method: 'post',//post避免中文乱码
+	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
+	        url:"${pageContext.request.contextPath}/admin/queryDoctorList",//要请求数据的文件路径
+	        //height:tableHeight(),//高度调整
+	        toolbar: '#toolbar',//指定工具栏 
+	        dataType: "json",
+	        pageNumber: 1, //初始化加载第一页，默认第一页
+	        pagination:true,//是否分页
+	        queryParams:queryParams,//请求服务器时所传的参数
+	        sidePagination:'server',//指定服务器端分页
+	        pageSize:10,//单页记录数
+	        pageList:[5,10,20,30],//分页步进值
+	        showRefresh:true,//刷新按钮
+	        showColumns:false,
+	        clickToSelect: true,//是否启用点击选中行
+	        columns:[{
+	                title:'全选',
+	                //复选框
+	                checkbox:true,
+	                width:25,
+	                align:'center',
+	                valign:'middle'
+	            },{
+	                title:'医生编号',
+	                field:'doctorNo',
+	                align:'center'
+	            },{
+	                title:'医生姓名',
+	                field:'doctorName',
+	                align:'center',
+	                formatter: function (value, row, index) {
+	                    return "<a href=\"#\" name=\"doctorName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"医生姓名\" class=\"editable editable-click\">" + value + "</a>";
+	                }
+	            },{
+	                title:'所属部门编号',
+	                field:'doctorDepartmentNo',
+	                align:'center'
+	            },{
+	                title:'医生性别',
+	                field:'doctorSex',
+	                align:'center'
+	            },{
+	                title:'出生日期',
+	                field:'doctorBirth',
+	                align:'center'
+	            },{
+	                title:'电话号码',
+	                field:'doctorPhone',
+	                align:'center'
+	            },{
+	                title:'挂号费用',
+	                field:'doctorRegistrationFee',
+	                align:'center'
+	            },{
+	                title:'入职日期',
+	                field:'doctorHireTime',
+	                align:'center'
+	            }
+	        ]
+	    })
+	    
+	    function queryParams(params){  
+	        return {  
+	                limit : this.limit, // 页面大小  
+	                offset : this.offset, // 页码  
+	                pageNumber : this.pageNumber,  
+	                pageSize : this.pageSize,
+	                departmentName: $('#departmentName').val()
+	        } 
+	    }  
+	    //查询按钮事件
+	    $('#search_btn').click(function(){
+	        $('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
+	    })
+	    //tableHeight函数
+	    function tableHeight(){
+	        //可以根据自己页面情况进行调整
+	        return $(window).height() -280;
+	    }
+	    
+	    //行内编辑配置
+	    $('#edit').click(function() {
+	        $('#mytab .editable').editable('toggleDisabled');
+	    }); 
+	    
+	    //删除按钮点击事件
+	    $('#delete').click(function() {
+	    	var rows = $("#mytab").bootstrapTable('getSelections');
+	    	if (rows.length == 0) {
+	    		bootbox.alert({
+	    			  size: "small",
+	    			  message: "请选择要离职的医生！",
+	    		});
+	    	} else {
+		        bootbox.confirm({
+	    			size: "small",
+		        	message: "确认该医生离职？",
+		            buttons: {
+		                confirm: {
+		                    label: '确认',
+		                    className: 'btn-success'
+		                },
+		                cancel: {
+		                    label: '取消',
+		                    className: 'btn-danger'
+		                }
+		            },
+		        	callback: function(result){
+		        	/* result is a boolean; true = OK, false = Cancel*/ 
+		        		if (result) {
+		    	    		var doctorNos = new Array();
+		    	    		$.each(rows, function() {
+		    	    			doctorNos.push(this.doctorNo);
+		    				});
+//		     				alert(departmentIds.toString());
+				        	$.ajax({
+				        		url: "${pageContext.request.contextPath}/admin/deleteDoctor",
+				        		type: "post",
+				        		data: "doctorNos=" + doctorNos.join(","),
+				        		dataType: "json",
+				        		async: true,
+				        		success: function(data) {
+				        			if (data.numOfSuccess == doctorNos.length)
+				        	        	$('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
+				        			else {
+				        				alert(data.tips);
+				        			}
+				        		},
+								error : function() {
+									bootbox.alert({
+						    			size: "small",
+							        	message: "离职出错"
+									});
+								}
+				        	});
+		        		}
+		        	}
+		        });
+	    	}
+	    });
+ 	});
+	</script>
 </head>
 <body>
-	<form class="form-inline" role="form" action="${pageContext.request.contextPath}/admin/queryDoctorList" style="margin-top: 30px;margin-left: 30px" method="post">
+	<form class="form-inline" role="form" style="margin-top: 30px; margin-left: 30px">>
 	  <div class="form-group">
 	    <label>姓名:</label>
 	    <input type="text" class="form-control" id="name" name="name">
 	  </div>
 	  <div class="form-group">
 	    <label>科室:</label>
-	    <input type="text" class="form-control" id="depNo" name="depNo">
+	    <select class="form-control" name="depNo" id="depNo">
+	    	<option value="D121212">待定</option>
+	    	<option value="D333333">未知</option>
+	    </select>
 	  </div>
 	  <div class="form-group">
 	    <label>状态:</label>
@@ -34,140 +192,13 @@
 	  <div class="form-group">
 	    <input type="date" class="form-control" id="endTime" name="endTime">
 	  </div>
-	  <button type="submit" class="btn btn-default" id="search_btn">查询</button>
+	  <input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
 	</form>
-	<table id="mytab" class="table table-hover"></table>
-	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
- 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
-	<script type="text/javascript">
-	//根据窗口调整表格高度
-	    $(window).resize(function() {
-	        $('#mytab').bootstrapTable('resetView', {
-	            height: tableHeight()
-	        })
-	    })
-	//生成用户数据
-	    $('#mytab').bootstrapTable({
-	        method: 'post',
-	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
-	        url:"${pageContext.request.contextPath}/admin/queryDoctorList",//要请求数据的文件路径
-	        height:tableHeight(),//高度调整
-	        /* toolbar: '#toolbar',//指定工具栏 */
-	        striped: true, //是否显示行间隔色
-	        dataType: "json",
-	        //bootstrap table 可以前端分页也可以后端分页，这里
-	        //我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
-	        //rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
-	        pageNumber: 1, //初始化加载第一页，默认第一页
-	        pagination:true,//是否分页
-	        queryParamsType:'limit',//查询参数组织方式
-	        queryParams:queryParams,//请求服务器时所传的参数
-	        sidePagination:'server',//指定服务器端分页
-	        pageSize:10,//单页记录数
-	        pageList:[5,10,20,30],//分页步进值
-	        showRefresh:true,//刷新按钮
-	        showColumns:false,
-	        clickToSelect: true,//是否启用点击选中行
-	        toolbarAlign:'right',//工具栏对齐方式
-	        columns:[{
-	                title:'全选',
-	                field:'select',
-	                //复选框
-	                checkbox:true,
-	                width:25,
-	                align:'center',
-	                valign:'middle'
-	            },{
-	            	title:'id',
-	            	field:'id',
-	            	visible:false
-	            },{
-	                title:'编号',
-	                field:'doctorNo',
-	                align:'center'
-	            },{
-	                title:'姓名',
-	                field:'doctorName',
-	                align:'center'
-	            },{
-	            	title:'性别',
-	            	field:'doctorSex',
-	            	align:'center'
-	            },{
-	            	title:'出生日期',
-	            	field:'doctorBirth',
-	            	align:'center'
-	            },{
-	            	title:'联系方式',
-	            	field:'doctorPhone',
-	            	align:'center'
-	            },{
-	            	title:'挂号费',
-	            	field:'doctorRegistrationFee',
-	            	align:'center'
-	            },{
-	            	title:'部门名称',
-	            	field:'',
-	            	align:'center'
-	            },
-	            {
-	            	title:'入职时间',
-	            	field:'doctorHireTime',
-	            	align:'center'
-	            },{
-	                title:'状态',
-	                field:'status',
-	                align:'center',
-	                //列数据格式化
-	                formatter:operateFormatter
-	            },{
-	            	title:'操作',
-	                align:'center'
-	            }
-	        ],
-	        locale:'zh-CN',//中文支持,
-	        responseHandler:function(res){
-	            //在ajax获取到数据，渲染表格之前，修改数据源
-	            return res;
-	        }
-	    })
-	    //三个参数，value代表该列的值
-	    function operateFormatter(value,row,index){
-	        if(value==0){
-	            return '<i class="fa fa-lock" style="color:red"></i>';
-	        }else if(value==1){
-	            return '<i class="fa fa-unlock" style="color:green"></i>';
-	        }else{
-	            return '数据错误';
-	        }
-	    }
-	
-	    //请求服务数据时所传参数
-	    function queryParams(params){
-	        return{
-	            //每页多少条数据
-	            pageSize: params.limit,
-	            //请求第几页
-	            pageNumber:params.pageNumber,
-	            name:$('#name').val(),
-	            depNo:$('#depNo').val(),
-	            status:$('#status').val(),
-	            startTime:$('#startTime').val(),
-	            endTime:$('#endTime').val()
-	        }
-	    }
-	     //查询按钮事件
-	    $('#search_btn').click(function(){
-	        $('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
-	    })
-	    //tableHeight函数
-	    function tableHeight(){
-	        //可以根据自己页面情况进行调整
-	        return $(window).height() -280;
-	    }
-	</script>
+	<div id="toolbar">
+		<button id="edit" class="btn btn-primary">修改</button>
+		<button id="delete" class="btn btn-danger">离职</button>
+	</div>
+	<table id="mytab" class="table table-hover table-striped"></table>
+
 </body>
 </html>

@@ -7,8 +7,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
+import com.zjy.entity.Department;
 import com.zjy.entity.Doctor;
+import com.zjy.vo.BatchResult;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
 /**
@@ -38,12 +43,29 @@ public class AdminService {
         return dataResult;
     }
     
-    public Map<String, Object> queryDoctorByPage(Map<String, Object> param) {
+    public DataGridResult queryDoctorByPage(Map<String, Object> param, int pageNumber, int pageSize) {
         // TODO Auto-generated method stub
-        Map<String, Object> result = new HashMap<String, Object>();
-        List<Doctor> rows = doctorMapper.queryDoctor(param);
-        result.put("rows", rows);
-        result.put("total", doctorMapper.count(param));
-        return result;
+        PageHelper.startPage(pageNumber, pageSize);
+        List<Doctor> doctortList = doctorMapper.queryDoctor(param);
+        PageInfo<Doctor> pageInfo = new PageInfo<Doctor>(doctortList);
+        DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+                pageInfo.getPageNum());
+        return dataGridResult;
+    }
+
+    public BatchResult<Doctor> deleteByDoctorNo(String doctorNoArray[]) {
+        // TODO Auto-generated method stub
+        BatchResult<Doctor> batchResult = new BatchResult<Doctor>();
+        for (int i = 0; i < doctorNoArray.length; ++i) {
+            if (doctorMapper.deleteByDoctorNo(doctorNoArray[i]) == 1) {
+                batchResult.addSuccess();
+            } else {
+                batchResult.addFail();
+                batchResult.addToFailList(doctorMapper.selectByDoctorNo(doctorNoArray[i]));
+                batchResult.setTips("操作失败");
+            }
+        }
+        
+        return batchResult;
     }
 }
