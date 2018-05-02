@@ -23,7 +23,7 @@ public interface MedicineMapper {
 
     int count(String medicineName);
 
-    List<Medicine> selectPageListByName(String name);
+    List<Medicine> selectPageListByName(@Param("name")String name);
 
     Medicine selectByMedicineNo(String medicineNo);
 

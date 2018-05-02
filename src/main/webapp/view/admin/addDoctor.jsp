@@ -79,7 +79,7 @@
 							message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
 						}
 					}
-				},
+				}, 
 				doctorPhone: {
 					validators: {
 						notEmpty: {
@@ -107,9 +107,9 @@
 	<body>
 		<form id="addDoctor" class="form-inline" role="form" action="${pageContext.request.contextPath}/admin/addDoctor" style="margin-top: 30px; margin-left: 30px" method="post">
 			<div class="form-group">
-				<label>医生姓名:</label> <input type="text" class="form-control" id="doctorName" name="doctorName">
+				<label>医生姓名:</label> <input type="text" class="form-control" id="doctorName" name="doctorName"><br/>
 				<label>所属部门:</label> 
-				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control" style="width: 100px;margin-left: 70px">
+				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control" style="width: 225px;">
             		<option value="D843" selected="selected">内科</option>
 			    	<option value="D215">外科</option>
 			    	<option value="D964">康复科</option>
@@ -132,32 +132,32 @@
 			    	<option value="D778">儿科</option>
 			    	<option value="D052">麻醉科</option>
 			    	<option value="D982">心理科</option>
-            	</select>
+            	</select><br/>
 				<label>医生性别:</label> 
-				<select id="doctorSex" name="doctorSex" class="form-control" style="width: 100px;margin-left: 70px">
+				<select id="doctorSex" name="doctorSex" class="form-control" style="width: 225px">
             		<option value="1" selected>男</option>
             		<option value="0">女</option>
-            	</select>
-				<label>登录密码:</label> <input type="password" class="form-control" id="doctorPassword" name="doctorPassword">
-				<label>确认密码:</label> <input type="password" class="form-control" id="doctorPassword1" name="doctorPassword1">
+            	</select><br/>
+				<label>登录密码:</label> <input type="password" class="form-control" id="doctorPassword" name="doctorPassword"><br/>
+				<label>确认密码:</label> <input type="password" class="form-control" id="doctorPassword1" name="doctorPassword1"><br/>
 				<label>出生日期:</label> 
 				<div class='input-group date' id='datetimepicker'>
-					<input type="date" class="form-control" id="doctorBirth" name="doctorBirth">
+					<input type="date" class="form-control" id="doctorBirth" name="doctorBirth" style="width: 187px">
 					<span class="input-group-addon">
 			            <span class="fa fa-calendar"></span>
 			        </span>
-		        </div>
-				<label>电话号码:</label> <input type="text" class="form-control" id="doctorPhone" name="doctorPhone">
-				<label>挂号收费:</label> <input type="text" class="form-control" id="doctorRegistrationFee" name="doctorRegistrationFee">
+		        </div><br/>
+				<label>电话号码:</label> <input type="text" class="form-control" id="doctorPhone" name="doctorPhone"><br/>
+				<label>挂号收费:</label> <input type="text" class="form-control" id="doctorRegistrationFee" name="doctorRegistrationFee"><br/>
 				<label>入职日期:</label> 
 				<div class='input-group date' id='datetimepicker'>
-					<input type="date" class="form-control" id="doctorHireTime" name="doctorHireTime">
+					<input type="date" class="form-control" id="doctorHireTime" name="doctorHireTime" style="width: 187px">
 					<span class="input-group-addon">
 			            <span class="fa fa-calendar"></span>
 			        </span>
-				</div>
-			</div>
-			<button type="submit" class="btn btn-default" id="add">添加</button>
+				</div><br/>
+			</div><br/>
+			<button type="submit" class="btn btn-default" id="add" style="margin-left: 100px;margin-top: 10px">添加</button>
 			<div id="tip"></div>
 		</form>
 		<table id="mytab" class="table table-hover"></table>

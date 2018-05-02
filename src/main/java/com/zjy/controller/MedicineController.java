@@ -32,7 +32,7 @@ public class MedicineController {
      */
     @RequestMapping(value="/addMedicine", method = RequestMethod.POST)
     @ResponseBody
-    public DataResult addMedicine(@RequestParam("medicine") Medicine medicine) {
+    public DataResult addMedicine(Medicine medicine) {
         DataResult dataResult;
         medicine.setId();
         medicine.setMedicineNo();
@@ -54,8 +54,8 @@ public class MedicineController {
     @ResponseBody
     public DataGridResult queryMedicineList(@RequestParam(value = "pageSize", required = true) int pageSize,
                                             @RequestParam(value = "pageNumber", required = true) int pageNumber,
-                                            @RequestParam(value = "name") String name) {
-        DataGridResult dataGridResult = medicineService.queryListByName(name, pageNumber, pageSize);
+                                            @RequestParam(value = "medicineName") String medicineName) {
+        DataGridResult dataGridResult = medicineService.queryListByName(medicineName, pageNumber, pageSize);
         return dataGridResult;
     }
     

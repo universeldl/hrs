@@ -51,7 +51,8 @@ public class AdminManagementController {
      * @return
      */
     @RequestMapping(value="/addDoctor", method = RequestMethod.POST)
-    public DataResult insertDoctor(@RequestBody Doctor doctor) {
+    @ResponseBody
+    public DataResult insertDoctor(Doctor doctor) {
     	DataResult dataResult;
     	doctor.setId();
     	doctor.setDoctorNo();

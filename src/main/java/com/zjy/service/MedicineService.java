@@ -42,6 +42,8 @@ public class MedicineService {
     public DataResult addMedicine(Medicine medicine) {
         // TODO Auto-generated method stub
         DataResult dataResult = new DataResult();
+        if(medicine.getMedicineLastAddAccount()==null)
+        	medicine.setMedicineLastAddAccount(0);
         try {
             if(mMapper.insertSelective(medicine)==1) {
                 dataResult.setStatus(true);

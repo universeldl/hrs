@@ -113,7 +113,7 @@
 	 	</ul>
 	</div>
 	<div style="left: 250px;position: absolute;" name="div_auto" id="div_auto">
-		<iframe name="frame" id="frame" scrolling="no" frameborder="0" style="padding: 0px; width: 1600px; height: 920px;">
+		<iframe name="frame" id="frame" scrolling="no" frameborder="0" style="padding: 0px; width: 1000px; height: 920px;">
 			
 		</iframe>
 	</div>

@@ -71,7 +71,7 @@
 	                offset : this.offset, // 页码  
 	                pageNumber : this.pageNumber,  
 	                pageSize : this.pageSize,
-	                departmentName: $('#name').val()
+	                medicineName: $('#name').val()
 	        } 
 	    }  
 	    //查询按钮事件
