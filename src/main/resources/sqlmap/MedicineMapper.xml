@@ -21,6 +21,24 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectPageListByName" resultMap="BaseResultMap" parameterType="com.zjy.entity.Medicine" >
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    <where>
+	    <if test="name != null and name != ''" >
+	    	and medicine_name like CONCAT('%',#{name, jdbcType=VARCHAR},'%')
+	    </if>
+	</where>
+  </select>
+  
+  <select id="selectByMedicineNo" parameterType="String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_no = #{medicineNo,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByMedicineName" parameterType="String" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
@@ -39,6 +57,12 @@
     delete from medicine
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="deleteByMedicineNo" parameterType="java.lang.String" >
+    delete from medicine where medicine_no = #{medicineNo,jdbcType=VARCHAR}
+  </delete>
+  
+  
   <insert id="insert" parameterType="com.zjy.entity.Medicine" >
     insert into medicine (id, medicine_no, medicine_name, 
       medicine_price, medicine_amount, medicine_last_add_account, 
@@ -92,13 +116,13 @@
         #{medicineLastAddAccount,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        date_format(#{updateTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zjy.entity.Medicine" >
     update medicine
-    <set >
+    <set>
       <if test="medicineNo != null" >
         medicine_no = #{medicineNo,jdbcType=VARCHAR},
       </if>
@@ -120,6 +144,26 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <update id="updateByNo" parameterType="com.zjy.entity.Medicine">
+  	update medicine
+  	<set>
+  	  <if test="medicineName != null and medicineName != ''" >
+        medicine_name = #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicinePrice != null and medicinePrice != ''" >
+        medicine_price = #{medicinePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="medicineAmount != null and medicineAmount != ''" >
+        medicine_amount = #{medicineAmount,jdbcType=INTEGER},
+      </if>
+      <if test="medicineLastAddAccount != null and medicineLastAddAccount != ''" >
+        medicine_last_add_account = #{medicineLastAddAccount,jdbcType=INTEGER},
+      </if>
+  	</set>
+  	where medicine_no = #{medicineNo,jdbcType=VARCHAR}
+  </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.zjy.entity.Medicine" >
     update medicine
     set medicine_no = #{medicineNo,jdbcType=VARCHAR},

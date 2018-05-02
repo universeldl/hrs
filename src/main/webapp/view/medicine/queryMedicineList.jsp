@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>科室列表</title>
+<title>药品列表</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" />
@@ -19,10 +19,10 @@
  	<script type="text/javascript">
  	$(function() {
 		//获取科室列表
-	    $('#departmentTable').bootstrapTable({
+	    $('#medicineTable').bootstrapTable({
 	        method: 'post',//post避免中文乱码
 	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
-	        url:"${pageContext.request.contextPath}/admin/queryDepartmentList",//要请求数据的文件路径
+	        url:"${pageContext.request.contextPath}/medicine/queryMedicineList",//要请求数据的文件路径
 	        //height:tableHeight(),//高度调整
 	        toolbar: '#toolbar',//指定工具栏 
 	        dataType: "json",
@@ -43,42 +43,40 @@
 	                align:'center',
 	                valign:'middle'
 	            },{
-	                title:'科室编号',
-	                field:'departmentNo',
+	                title:'药品编号',
+	                field:'medicineNo',
 	                align:'center'
 	            },{
-	                title:'科室名',
-	                field:'departmentName',
-	                align:'center',
-	                formatter: function (value, row, index) {
-	                    return "<a href=\"#\" name=\"departmentName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"科室名\" class=\"editable editable-click\">" + value + "</a>";
-	                }
+	                title:'药品名称',
+	                field:'medicineName',
+	                align:'center'
+	            },{
+	                title:'药品价格',
+	                field:'medicinePrice',
+	                align:'center'
+	            },{
+	                title:'药品剩余数量',
+	                field:'medicineAmount',
+	                align:'center'
+	            },{
+	                title:'上一次添加药品数',
+	                field:'medicineLastAddAccount',
+	                align:'center'
 	            }
-// 	            ,{
-// 	            	title:'操作',
-// 	                field:'id',
-// 	                align:'center',
-// 	                formatter: actionFormatter
-// 	            }
 	        ]
 	    })
-// 	    function actionFormatter(value, row, index) {
-//             var id = value;
-//             var result = "<button class='btn btn-danger' name='deleteOne'><span class='glyphicon glyphicon-trash'></span></button>";
-//             return result;
-//         }
 	    function queryParams(params){  
 	        return {  
 	                limit : this.limit, // 页面大小  
 	                offset : this.offset, // 页码  
 	                pageNumber : this.pageNumber,  
 	                pageSize : this.pageSize,
-	                departmentName: $('#departmentName').val()
+	                departmentName: $('#name').val()
 	        } 
 	    }  
 	    //查询按钮事件
 	    $('#search_btn').click(function(){
-	        $('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+	        $('#medicineTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/medicine/queryMedicineList'});
 	    })
 	    //tableHeight函数
 	    function tableHeight(){
@@ -88,38 +86,40 @@
 	    
 	    //行内编辑配置
 	    $('#edit').click(function() {
-	        $('#departmentTable .editable').editable('toggleDisabled');
-	       var departmentNo = $("#departmentTable").bootstrapTable('onClickRow',function(row, $element){
-	            return row.departmentNo;
+	        $('#medicineTable .editable').editable('toggleDisabled');
+	       var medicineNo = $("#medicineTable").bootstrapTable('onClickRow',function(row, $element){
+	            return row.medicineNo;
 	  		});	 
 	        $.ajax({
-        		url: "${pageContext.request.contextPath}/admin/selectByDepNo",
+        		url: "${pageContext.request.contextPath}/medicine/selectByMedicineNo",
         		type: "post",
-        		data: "departmentNo="+departmentNo,    //如何拿到该行的depNo
+        		data: "medicineNo="+medicineNo,    //如何拿到该行的medicineNo
         		dataType: "json",
         		async: true,
         		success: function(data){
-        			$("input[name=departmentNo]").val(data.departmentNo);
-        			$("input[name=depName]").val(data.departmentName);
+        			$("input[name=medicineNo]").val(data.medicineNo);
+        			$("input[name=medicineName]").val(data.medicineName);
+        			$("input[name=medicinePrice]").val(data.medicinePrice);
+        			$("input[name=medicineAmount]").val(data.medicineAmount);
+        			$("input[name=medicineLastAddAccount]").val(data.medicineLastAddAccount);
         	        //显示模态框
         	        $("#myModal").modal("show");
-        			//$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
         		}
 	        });
 	    }); 
 	    
 	    //删除按钮点击事件
 	    $('#delete').click(function() {
-	    	var rows = $("#departmentTable").bootstrapTable('getSelections');
+	    	var rows = $("#medicineTable").bootstrapTable('getSelections');
 	    	if (rows.length == 0) {
 	    		bootbox.alert({
 	    			  size: "small",
-	    			  message: "请选择最少一条需要删除的科室。",
+	    			  message: "请选择要删除的药品。",
 	    		});
 	    	} else {
 		        bootbox.confirm({
 	    			size: "small",
-		        	message: "确认删除所选科室？",
+		        	message: "确认删除所选药品吗？",
 		            buttons: {
 		                confirm: {
 		                    label: '确认',
@@ -131,23 +131,20 @@
 		                }
 		            },
 		        	callback: function(result){
-		        	/* result is a boolean; true = OK, false = Cancel*/ 
 		        		if (result) {
-//		     	    		alert(JSON.stringify(rows));
-		    	    		var departmentNos = new Array();
+		    	    		var medicineNos = new Array();
 		    	    		$.each(rows, function() {
-		    	    			departmentNos.push(this.departmentNo);
+		    	    			medicineNos.push(this.medicineNo);
 		    				});
-//		     				alert(departmentIds.toString());
 				        	$.ajax({
-				        		url: "${pageContext.request.contextPath}/admin/deleteDepartment",
+				        		url: "${pageContext.request.contextPath}/medicine/deleteMedicine",
 				        		type: "post",
-				        		data: "departmentNos=" + departmentNos.join(","),
+				        		data: "medicineNos=" + medicineNos.join(","),
 				        		dataType: "json",
 				        		async: true,
 				        		success: function(data) {
-				        			if (data.numOfSuccess == departmentNos.length)
-				        	        	$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+				        			if (data.numOfSuccess == medicineNos.length)
+				        	        	$('#medicineTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/medicine/queryMedicineList'});
 				        			else {
 				        				alert(data.tips);
 				        			}
@@ -170,7 +167,7 @@
 <body>
 	<form class="form-inline" role="form" style="margin-top: 30px; margin-left: 30px">
 		<div class="form-group">
-			<label>科室名:</label> <input type="text" class="form-control" id="departmentName" name="departmentName">
+			<label>药品名称:</label> <input type="text" class="form-control" id="name" name="name">
 		</div>
 		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
 	</form>
@@ -178,7 +175,7 @@
 		<button id="edit" class="btn btn-primary">修改</button>
 		<button id="delete" class="btn btn-danger">删除</button>
 	</div>
-	<table id="departmentTable" class="table table-hover table-striped"></table>
+	<table id="medicineTable" class="table table-hover table-striped"></table>
 	
 	<!-- 模态框 -->
    	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -186,26 +183,44 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">科室详情</h4>
+	        <h4 class="modal-title" id="myModalLabel">药品详情</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDepartment">
+	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/medicine/updateMedicine">
 			  <div class="form-group">
-			    <label for="name" class="col-sm-2 control-label">科室编号:</label>
+			    <label for="name" class="col-sm-2 control-label">药品编号:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="departmentNo" name="departmentNo" value="" disabled>
+			      <input type="text" class="form-control" id="medicineNo" name="medicineNo" value="" disabled>
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">科室名称:</label>
+			    <label for="price" class="col-sm-2 control-label">药品名称:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="depName" name="depName" value="">
+			      <input type="text" class="form-control" id="medicineName" name="medicineName" value="">
 			    </div>
 			  </div>
-		      <div class="modal-footer">
-		        <input type="submit" class="btn btn-primary" value="保存"/>
-		        <input type="reset" class="btn btn-default" data-dismiss="modal" value="取消"/> 
-		      </div>
+			  <div class="form-group">
+			    <label for="price" class="col-sm-2 control-label">药品价格:</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="medicinePrice" name="medicinePrice" value="">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="price" class="col-sm-2 control-label">药品剩余数量:</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="medicineAmount" name="medicineAmount" value="" disabled>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="price" class="col-sm-2 control-label">补充药品数量:</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="medicineLastAddAccount" name="medicineLastAddAccount" value="">
+			    </div>
+			  </div>
+			  <div class="modal-footer">
+			      <input type="submit" class="btn btn-primary" value="保存"/>
+			      <input type="reset" class="btn btn-default" data-dismiss="modal" value="取消"/> 
+			  </div>
 			</form>
 	      </div>
 	    </div>

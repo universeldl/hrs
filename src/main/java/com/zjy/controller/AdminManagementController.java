@@ -112,7 +112,20 @@ public class AdminManagementController {
         return batchResult;
     }
     
+    @RequestMapping(value = "/showAddDepartment")
+    public String showAddDepartment() {
+        return "admin/addDepartment";
+    }
     
+    @RequestMapping(value = "/showQueryDepartment")
+    public String showQueryDepartment() {
+        return "admin/queryDepartment";
+    }
+    
+    @RequestMapping(value = "/showAddDDoctor")
+    public String showAddDDoctor() {
+        return "admin/addDoctor";
+    }
     
     @RequestMapping(value = "/showQueryPatient")
     public String showQueryPatient() {
