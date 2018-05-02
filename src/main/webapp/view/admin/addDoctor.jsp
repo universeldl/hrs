@@ -110,8 +110,28 @@
 				<label>医生姓名:</label> <input type="text" class="form-control" id="doctorName" name="doctorName">
 				<label>所属部门:</label> 
 				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control" style="width: 100px;margin-left: 70px">
-            		<option value="D121212" selected>待定</option>
-            		<option value="D333333">未知</option>
+            		<option value="D843" selected="selected">内科</option>
+			    	<option value="D215">外科</option>
+			    	<option value="D964">康复科</option>
+			    	<option value="D700">眼科</option>
+			    	<option value="D507">影像科</option>
+			    	<option value="D858">骨科</option>
+			    	<option value="D873">皮肤科</option>
+			    	<option value="D886">急诊科</option>
+			    	<option value="D053">肿瘤科</option>
+			    	<option value="D572">营养科</option>
+			    	<option value="D199">妇产科</option>
+			    	<option value="D440">疼痛科</option>
+			    	<option value="D576">耳鼻咽喉科</option>
+			    	<option value="D035">药学门诊</option>
+			    	<option value="D027">针灸科</option>
+			    	<option value="D803">中医科</option>
+			    	<option value="D602">感染科</option>
+			    	<option value="D154">超声医学科</option>
+			    	<option value="D145">口腔科</option>
+			    	<option value="D778">儿科</option>
+			    	<option value="D052">麻醉科</option>
+			    	<option value="D982">心理科</option>
             	</select>
 				<label>医生性别:</label> 
 				<select id="doctorSex" name="doctorSex" class="form-control" style="width: 100px;margin-left: 70px">

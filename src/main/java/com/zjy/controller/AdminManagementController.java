@@ -95,7 +95,11 @@ public class AdminManagementController {
         return dataGridResult;
     }
     
-    
+    /**
+     * 删除医生--医生离职
+     * @param doctorNos
+     * @return
+     */
     @RequestMapping(value = "/deleteDoctor", method = RequestMethod.POST)
     @ResponseBody
     public BatchResult<Doctor> deleteDoctor(@RequestParam("doctorNos") String doctorNos) {
@@ -107,6 +111,7 @@ public class AdminManagementController {
         
         return batchResult;
     }
+    
     
     
     @RequestMapping(value = "/showQueryPatient")
@@ -142,6 +147,11 @@ public class AdminManagementController {
         return dataResult;
     }
     
+    /**
+     * 删除部门
+     * @param departmentNos
+     * @return
+     */
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
     @ResponseBody
     public BatchResult<Department> deleteDepartment(@RequestParam("departmentNos") String departmentNos) {
@@ -153,6 +163,39 @@ public class AdminManagementController {
     	
         return batchResult;
     }
+    
+
+    /**
+     * 根据编号查科室
+     * @param departmentNo
+     * @return
+     */
+    @RequestMapping(value="/selectByDepNo", method = RequestMethod.POST)
+    @ResponseBody
+    public Department selectByDepNo(@RequestParam("departmentNo") String departmentNo) {
+        Department department = departmentService.selectByDeptNo(departmentNo);
+        return department;
+    }
+    
+    
+    /**
+     * 修改科室
+     * @param departmentNo
+     * @param depName
+     * @return
+     */
+    @RequestMapping(value="/updateDepartment", method = RequestMethod.POST)
+    public DataResult updateDepartment(@RequestParam("departmentNo") String departmentNo,
+                                 @RequestParam("depName") String depName) {
+        DataResult dataResult = new DataResult();
+        if(depName==null||"".equals(depName)) {
+            dataResult.setStatus(false);
+            dataResult.setTips("修改失败,科室名称不能为空！");
+        }
+        dataResult = departmentService.updateByNo(departmentNo, depName);
+        return dataResult;
+    }
+    
     
     /**
      * 根据科室名查询部门信息并分页

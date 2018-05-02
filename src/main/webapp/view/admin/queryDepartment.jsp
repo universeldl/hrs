@@ -89,6 +89,23 @@
 	    //行内编辑配置
 	    $('#edit').click(function() {
 	        $('#departmentTable .editable').editable('toggleDisabled');
+	       var departmentNo = $("#departmentTable").bootstrapTable('onClickRow',function(row, $element){
+	            return row.departmentNo;
+	  		});	 
+	        $.ajax({
+        		url: "${pageContext.request.contextPath}/admin/selectByDepNo",
+        		type: "post",
+        		data: "departmentNo="+departmentNo,    //如何拿到该行的depNo
+        		dataType: "json",
+        		async: true,
+        		success: function(data){
+        			$("input[name=departmentNo]").val(data.departmentNo);
+        			$("input[name=depName]").val(data.departmentName);
+        	        //显示模态框
+        	        $("#myModal").modal("show");
+        			//$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+        		}
+	        });
 	    }); 
 	    
 	    //删除按钮点击事件
@@ -162,5 +179,38 @@
 		<button id="delete" class="btn btn-danger">删除</button>
 	</div>
 	<table id="departmentTable" class="table table-hover table-striped"></table>
+	
+	<!-- 模态框 -->
+   	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">科室详情</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDepartment">
+			  <div class="form-group">
+			    <label for="name" class="col-sm-2 control-label">科室编号:</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="departmentNo" name="departmentNo" value="" disabled>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="price" class="col-sm-2 control-label">科室名称:</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="depName" name="depName" value="">
+			    </div>
+			    <div class="modal-footer">
+			      <input type="submit" class="btn btn-primary" value="保存"/>
+			      <input type="reset" class="btn btn-default" data-dismiss="modal" value="取消"/> 
+			    </div>
+			  </div>
+			</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- ending -->
 </body>
 </html>
