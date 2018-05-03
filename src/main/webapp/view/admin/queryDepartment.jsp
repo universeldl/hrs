@@ -50,9 +50,9 @@
 	                title:'科室名',
 	                field:'departmentName',
 	                align:'center',
-	                formatter: function (value, row, index) {
-	                    return "<a href=\"#\" name=\"departmentName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"科室名\" class=\"editable editable-click\">" + value + "</a>";
-	                }
+// 	                formatter: function (value, row, index) {
+// 	                    return "<a href=\"#\" name=\"departmentName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"科室名\" class=\"editable editable-click\">" + value + "</a>";
+// 	                }
 	            }
 // 	            ,{
 // 	            	title:'操作',
@@ -88,7 +88,7 @@
 	    
 	    //行内编辑配置
 	    $('#edit').click(function() {
-	        $('#departmentTable .editable').editable('toggleDisabled');
+	       // $('#departmentTable .editable').editable('toggleDisabled');
 	       /* var departmentNo = $("#departmentTable").bootstrapTable('onClickRow',function(row, $element){
 	            return row.departmentNo;
 	  		});	 */
