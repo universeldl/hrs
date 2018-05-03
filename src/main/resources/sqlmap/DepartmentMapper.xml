@@ -12,6 +12,12 @@
   <sql id="Base_Column_List" >
     id, department_no, department_name, is_deleted, create_time, update_time
   </sql>
+  <select id="selectDepartment" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from department
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

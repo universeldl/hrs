@@ -41,5 +41,9 @@ public class DoctorService {
             throw new RuntimeException("查看详情失败");
         }
     }
+    
+    public List<Doctor> selectDoctorByDepartment(String departmentNo) {
+    	return doctorMapper.selectDoctorByDepartment(departmentNo);
+    }
 
 }

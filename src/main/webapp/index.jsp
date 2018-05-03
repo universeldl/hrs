@@ -203,11 +203,11 @@
 		       	if (type != null && type != "") {
 			        $("#type").val(type);
 					if (type == "0") {
-						window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+						window.location.href = "${pageContext.request.contextPath}/doctorIndex?no="+id;
 					} else if (type == "1") {
-						window.location.href = "${pageContext.request.contextPath}/adminIndex";
+						window.location.href = "${pageContext.request.contextPath}/adminIndex?no="+id;
 					} else if (type == "2") {
-						window.location.href = "${pageContext.request.contextPath}/patientIndex";
+						window.location.href = "${pageContext.request.contextPath}/patientIndex?no="+id;
 					}
 		       	}
 		        if(id != null && id != ""){

@@ -95,4 +95,8 @@ public class DepartmentService {
         }
         return dataResult;
     }
+    
+    public List<Department> selectDepartment() {
+    	return departmentMapper.selectDepartment();
+    }
 }

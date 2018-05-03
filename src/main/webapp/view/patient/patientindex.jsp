@@ -20,8 +20,13 @@
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse1">
 	  				<li>
-					    <a href="${pageContext.request.contextPath}/patient/showInformation" target="frame">
+					    <a href="${pageContext.request.contextPath}/patient/showInformation?no=${patient.patientNo}" target="frame">
 					    	<span class="menu-text">个人信息</span>
+					    </a>
+				    </li>
+	  				<li>
+					    <a href="${pageContext.request.contextPath}/patient/showUpdatePassword" target="frame">
+					    	<span class="menu-text">修改密码</span>
 					    </a>
 				    </li>
 	  			</ul>
