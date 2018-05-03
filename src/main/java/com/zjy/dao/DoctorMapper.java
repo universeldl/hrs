@@ -30,4 +30,6 @@ public interface DoctorMapper {
     int count(Map<String, Object> param);
 
     int deleteByDoctorNo(String doctorNo);
+
+    int updateByNo(Doctor doctor);
 }

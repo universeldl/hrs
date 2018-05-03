@@ -112,6 +112,29 @@ public class AdminManagementController {
         
         return batchResult;
     }
+
+    
+    /**
+     * 根据编号查医生
+     * @param doctorNo
+     * @return
+     */
+    @RequestMapping(value="/selectByDoctorNo", method = RequestMethod.POST)
+    @ResponseBody
+    public Doctor selectByDoctorNo(@RequestParam("doctorNo") String doctorNo) {
+        Doctor doctor = adminService.selectByDoctorNo(doctorNo);
+        return doctor;
+    }
+    
+    
+    @RequestMapping(value="/updateDoctor", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult updateDoctor(Doctor doctor) {
+        DataResult dataResult;
+        dataResult = adminService.updateDoctor(doctor);
+        return dataResult;
+    }
+    
     
     @RequestMapping(value = "/showAddDepartment")
     public String showAddDepartment() {
@@ -205,6 +228,7 @@ public class AdminManagementController {
         if(depName==null||"".equals(depName)) {
             dataResult.setStatus(false);
             dataResult.setTips("修改失败,科室名称不能为空！");
+            return dataResult;
         }
         dataResult = departmentService.updateByNo(departmentNo, depName);
         return dataResult;
