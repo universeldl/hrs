@@ -36,6 +36,10 @@ public class Medicine {
     public void setMedicineNo() {
         this.medicineNo = IdGenerator.generateNumber(Constants.MEDICINE_NO_PREFIX, Constants.MEDICINE_NO_DIGITS);
     }
+    
+    public void setMedicineNo(String medicineNo){
+    	this.medicineNo = medicineNo;
+    }
 
     public String getMedicineName() {
         return medicineName;

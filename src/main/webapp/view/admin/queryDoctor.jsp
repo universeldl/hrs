@@ -55,10 +55,7 @@
 	            },{
 	                title:'医生姓名',
 	                field:'doctorName',
-	                align:'center',
-	                formatter: function (value, row, index) {
-	                    return "<a href=\"#\" name=\"doctorName\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"医生姓名\" class=\"editable editable-click\">" + value + "</a>";
-	                }
+	                align:'center'
 	            },{
 	                title:'所属部门编号',
 	                field:'doctorDepartmentNo',
@@ -66,7 +63,16 @@
 	            },{
 	                title:'医生性别',
 	                field:'doctorSex',
-	                align:'center'
+	                align:'center',
+	                formatter:function(value,row,index){
+	                	var str = ''; 
+	                	if(row.doctorSex==1){
+	                		str = '男';
+	                	}else if(row.doctorSex==0){
+	                		str = '女';
+	                	}
+	                	return str
+	                }
 	            },{
 	                title:'出生日期',
 	                field:'doctorBirth',
@@ -93,7 +99,11 @@
 	                offset : this.offset, // 页码  
 	                pageNumber : this.pageNumber,  
 	                pageSize : this.pageSize,
-	                departmentName: $('#departmentName').val()
+	                name: $('#name').val(),
+	                depNo: $('#depNo').val(),
+	                status: $('#status').val(),
+	                startTime: $('#startTime').val(),
+	                endTime: $('#endTime').val()
 	        } 
 	    }  
 	    //查询按钮事件
@@ -241,7 +251,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label>入职时间:</label>
-<!-- 	    <input type="date" class="form-control" id="startTime" name="startTime"> -->
+ 	    <!-- <input type="date" class="form-control" id="startTime" name="startTime"> -->
 		<div class='input-group date' id='startTimepicker'>
 			<input type="text" class="form-control" id="startTime"name="startTime" style="width:150px">
 			<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
@@ -249,13 +259,13 @@
 	  </div>
 	  <label>-</label>
 	  <div class="form-group">
-<!-- 	    <input type="date" class="form-control" id="endTime" name="endTime"> -->
+ 	    <!-- <input type="date" class="form-control" id="endTime" name="endTime"> -->
 		<div class='input-group date' id='endTimepicker'>
 			<input type="text" class="form-control" id="endTime"name="endTime" style="width:150px">
 			<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
 		</div>
 	  </div>
-	  <input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
+	  <input class="btn btn-default" id="search_btn" value="查询" type="button" style="width: 60px;"></input>
 	</form>
 	<div id="toolbar">
 		<button id="edit" class="btn btn-primary">修改</button>
@@ -263,18 +273,7 @@
 	</div>
 	<table id="mytab" class="table table-hover table-striped"></table>
 
-	<script type="text/javascript">
-	    $(function () {
-	        $('#startTimepicker,#endTimepicker').datetimepicker({
-	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
-	            language: 'zh-CN',      //中文化
-	            endDate: new Date(),
-	            todayBtn: "linked",
-	            autoclose: true,
-	            minView: 'month'
-	        });
-	    });
-	    </script>
+	
   
 	<!-- 模态框 -->
    	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -338,6 +337,18 @@
 	  </div>
 	</div>
 	<!-- ending -->
-
+	
+	<script type="text/javascript">
+	    $(function () {
+	        $('#startTimepicker,#endTimepicker').datetimepicker({
+	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+	            language: 'zh-CN',      //中文化
+	            endDate: new Date(),
+	            todayBtn: "linked",
+	            autoclose: true,
+	            minView: 'month'
+	        });
+	    }); 
+	</script>
 </body>
 </html>

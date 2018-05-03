@@ -108,6 +108,8 @@
 	        			$("input[name=medicinePrice]").val(data.medicinePrice);
 	        			$("input[name=medicineAmount]").val(data.medicineAmount);
 	        			$("input[name=medicineLastAddAccount]").val(data.medicineLastAddAccount);
+	        			$("input[name=mNo]").val(data.medicineNo);
+	        			$("input[name=mAmount]").val(data.medicineAmount);
 	        	        //显示模态框
 	        	        $("#myModal").modal("show");
 	        		}
@@ -198,33 +200,35 @@
 	        <h4 class="modal-title" id="myModalLabel">药品详情</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/medicine/updateMedicine">
+	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/medicine/updateMedicine" method="post">
+			  <input type="hidden" name="mNo" value="">
+			  <input type="hidden" name="mAmount" value="">
 			  <div class="form-group">
-			    <label for="name" class="col-sm-2 control-label">药品编号:</label>
+			    <label for="medicineNo" class="col-sm-2 control-label">药品编号:</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="medicineNo" name="medicineNo" value="" disabled>
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">药品名称:</label>
+			    <label for="medicineName" class="col-sm-2 control-label">药品名称:</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="medicineName" name="medicineName" value="">
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">药品价格:</label>
+			    <label for="medicinePrice" class="col-sm-2 control-label">药品价格:</label>
 			    <div class="col-sm-10">
-			      <input type="number" class="form-control" id="medicinePrice" name="medicinePrice" value="">
+			      <input type="number" step="0.01" class="form-control" id="medicinePrice" name="medicinePrice" value="">
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">药品剩余数量:</label>
+			    <label for="medicineAmount" class="col-sm-2 control-label">药品剩余数量:</label>
 			    <div class="col-sm-10">
 			      <input type="number" class="form-control" id="medicineAmount" name="medicineAmount" value="" disabled>
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">补充药品数量:</label>
+			    <label for="medicineLastAddAccount" class="col-sm-2 control-label">补充药品数量:</label>
 			    <div class="col-sm-10">
 			      <input type="number" class="form-control" id="medicineLastAddAccount" name="medicineLastAddAccount" value="">
 			    </div>

@@ -97,15 +97,17 @@ public class MedicineController {
      * @return
      */
     @RequestMapping(value="/updateMedicine", method = RequestMethod.POST)
-    public DataResult updateMedicine(Medicine medicine) {
+    public DataResult updateMedicine(@RequestParam("medicineName") String medicineName,
+    		@RequestParam("medicinePrice") double medicinePrice,
+    		@RequestParam("medicineLastAddAccount") int medicineLastAddAccount,
+    		@RequestParam("mNo") String mNo,@RequestParam("mAmount") int mAmount) {
         DataResult dataResult = new DataResult();
-        //新增之前剩余的药品数量
-        int before = medicine.getMedicineAmount();
-        //新增的数量---本操作之后即为上次新增数量
-        int newAdd = medicine.getMedicineLastAddAccount();
+        Medicine medicine = new Medicine();
+        medicine.setMedicineNo(mNo);
         //新增之后药品的数量---剩余数
-        int after = before + newAdd;
+        int after = mAmount + medicineLastAddAccount;
         medicine.setMedicineAmount(after);
+        medicine.setMedicinePrice(medicinePrice);
         dataResult = medicineService.updateByNo(medicine);
         return dataResult;
     }
