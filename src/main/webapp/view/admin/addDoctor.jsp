@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	
 	<script type="text/javascript">
 		$(function() {
@@ -31,7 +32,7 @@
 					doctorName: {
 						validators: {
 							notEmpty: {
-								message: '科室名不能为空'
+								message: '医生姓名不能为空'
 							}
 						}
 					},
@@ -105,85 +106,95 @@
 	</script>
 </head>
 <body>
-	<form id="addDoctor" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/addDoctor" style="margin-top: 30px; margin-left: 30px" method="post">
+	<form id="addDoctor" class="form-horizontal col-sm-8" role="form" action="${pageContext.request.contextPath}/admin/addDoctor" style="margin-top: 30px; margin-left: 30px" method="post">
 		<div class="form-group">
-			<label>医生姓名:</label> <input type="text" class="form-control"id="doctorName" name="doctorName" style="width: 225px;">
+			<label class="col-sm-2 control-label">医生姓名:</label>
+		    <div class="col-sm-4">
+				<input type="text" class="form-control"id="doctorName" name="doctorName">
+		    </div>
 		</div>
 		<div class="form-group">
-			<label>所属部门:</label>
-			<select id="doctorDepartmentNo" name="doctorDepartmentNo"
-				class="form-control" style="width: 225px;">
-				<option value="D843" selected="selected">内科</option>
-				<option value="D215">外科</option>
-				<option value="D964">康复科</option>
-				<option value="D700">眼科</option>
-				<option value="D507">影像科</option>
-				<option value="D858">骨科</option>
-				<option value="D873">皮肤科</option>
-				<option value="D886">急诊科</option>
-				<option value="D053">肿瘤科</option>
-				<option value="D572">营养科</option>
-				<option value="D199">妇产科</option>
-				<option value="D440">疼痛科</option>
-				<option value="D576">耳鼻咽喉科</option>
-				<option value="D035">药学门诊</option>
-				<option value="D027">针灸科</option>
-				<option value="D803">中医科</option>
-				<option value="D602">感染科</option>
-				<option value="D154">超声医学科</option>
-				<option value="D145">口腔科</option>
-				<option value="D778">儿科</option>
-				<option value="D052">麻醉科</option>
-				<option value="D982">心理科</option>
-			</select>
+			<label class="col-sm-2 control-label">所属部门:</label>
+		    <div class="col-sm-4">
+				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control">
+					<option value="D843" selected="selected">内科</option>
+					<option value="D215">外科</option>
+					<option value="D964">康复科</option>
+					<option value="D700">眼科</option>
+					<option value="D507">影像科</option>
+					<option value="D858">骨科</option>
+					<option value="D873">皮肤科</option>
+					<option value="D886">急诊科</option>
+					<option value="D053">肿瘤科</option>
+					<option value="D572">营养科</option>
+					<option value="D199">妇产科</option>
+					<option value="D440">疼痛科</option>
+					<option value="D576">耳鼻咽喉科</option>
+					<option value="D035">药学门诊</option>
+					<option value="D027">针灸科</option>
+					<option value="D803">中医科</option>
+					<option value="D602">感染科</option>
+					<option value="D154">超声医学科</option>
+					<option value="D145">口腔科</option>
+					<option value="D778">儿科</option>
+					<option value="D052">麻醉科</option>
+					<option value="D982">心理科</option>
+				</select>
+		    </div>
 		</div>
 		<div class="form-group">
-			<label>医生性别:</label> <select id="doctorSex" name="doctorSex"
-				class="form-control" style="width: 225px">
-				<option value="1" selected>男</option>
-				<option value="0">女</option>
-			</select>
-		</div>
-		<div class="form-group">
-			<label>登录密码:</label> <input type="password" class="form-control"
-				id="doctorPassword" name="doctorPassword" style="width: 225px;">
-		</div>
-		<div class="form-group">
-			<label>确认密码:</label> <input type="password" class="form-control"
-				id="doctorPassword1" name="doctorPassword1" style="width: 225px;">
-		</div>
-		<div class="form-group">
-			<label>出生日期:</label>
-			<div class='input-group date' id='birthDatetimepicker'
-				style="width: 264px">
-				<input type="text" class="form-control" id="doctorBirth"
-					name="doctorBirth" value="" style="width: 225px;"> <span
-					class="input-group-addon"> <span class="fa fa-calendar"></span>
-				</span>
+			<label class="col-sm-2 control-label">医生性别:</label>
+		    <div class="col-sm-4">
+				<select id="doctorSex" name="doctorSex" class="form-control" >
+					<option value="1" selected>男</option>
+					<option value="0">女</option>
+				</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label>电话号码:</label> <input type="text" class="form-control"
-				id="doctorPhone" name="doctorPhone" style="width: 225px;">
-		</div>
-		<div class="form-group">
-			<label>挂号收费:</label> <input type="number" class="form-control"
-				id="doctorRegistrationFee" name="doctorRegistrationFee"
-				style="width: 225px;">
-		</div>
-		<div class="form-group">
-			<label>入职日期:</label>
-			<div class='input-group date' id='hireDatetimepicker'
-				style="width: 264px">
-				<input type="text" class="form-control" id="doctorHireTime"
-					name="doctorHireTime" style="width: 225px;"> <span
-					class="input-group-addon"> <span class="fa fa-calendar"></span>
-				</span>
+			<label class="col-sm-2 control-label">登录密码:</label>
+		    <div class="col-sm-4">
+				<input type="password" class="form-control"	id="doctorPassword" name="doctorPassword">
 			</div>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" id="add"
-				style="margin-top: 10px">添加</button>
+			<label class="col-sm-2 control-label">确认密码:</label>
+		    <div class="col-sm-4">
+		    	<input type="password" class="form-control" id="doctorPassword1" name="doctorPassword1">
+		    </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">出生日期:</label>
+		    <div class="col-sm-4">
+				<div class='input-group date' id='birthDatetimepicker'>
+					<input type="text" class="form-control" id="doctorBirth" name="doctorBirth" value="" style="width:192px">
+					<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">电话号码:</label>
+		    <div class="col-sm-4">
+		    	<input type="text" class="form-control" id="doctorPhone" name="doctorPhone">
+		    </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">挂号收费:</label>
+		    <div class="col-sm-4">
+		    	<input type="number" class="form-control" id="doctorRegistrationFee" name="doctorRegistrationFee">
+		    </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">入职日期:</label>
+		    <div class="col-sm-4">
+				<div class='input-group date' id='hireDatetimepicker'>
+					<input type="text" class="form-control" id="doctorHireTime"name="doctorHireTime" style="width:192px">
+					<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-default" id="add" style="margin-top: 10px">添加</button>
 		</div>
 	</form>
 	<table id="mytab" class="table table-hover"></table>
@@ -191,8 +202,23 @@
 	<script type="text/javascript">
 	    $(function () {
 	        $('#birthDatetimepicker').datetimepicker({
-	            format: 'YYYY-MM-DD',//日期格式化，只显示日期
-	            locale: 'zh-CN'      //中文化
+	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+	            language: 'zh-CN',      //中文化
+	            endDate: new Date(),
+	            todayBtn: "linked",
+	            autoclose: true,
+	            startView: 'decade',
+	            minView: 'month'
+	        });
+	    });
+	    $(function () {
+	        $('#hireDatetimepicker').datetimepicker({
+	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+	            language: 'zh-CN',      //中文化
+	            endDate: new Date(),
+	            todayBtn: "linked",
+	            autoclose: true,
+	            minView: 'month'
 	        });
 	    });
     </script>

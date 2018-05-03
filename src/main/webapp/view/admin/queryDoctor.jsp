@@ -8,7 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
+	<link href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -16,6 +18,9 @@
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
  	
  	<script type="text/javascript">
  	$(function() {
@@ -198,7 +203,7 @@
 	<form class="form-inline" role="form" style="margin-top: 30px; margin-left: 30px">
 	  <div class="form-group">
 	    <label>姓名:</label>
-	    <input type="text" class="form-control" id="name" name="name">
+	    <input type="text" class="form-control" id="name" name="name" style="width:120px">
 	  </div>
 	  <div class="form-group">
 	    <label>科室:</label>
@@ -236,11 +241,19 @@
 	  </div>
 	  <div class="form-group">
 	    <label>入职时间:</label>
-	    <input type="date" class="form-control" id="startTime" name="startTime">
+<!-- 	    <input type="date" class="form-control" id="startTime" name="startTime"> -->
+		<div class='input-group date' id='startTimepicker'>
+			<input type="text" class="form-control" id="startTime"name="startTime" style="width:150px">
+			<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+		</div>
 	  </div>
 	  <label>-</label>
 	  <div class="form-group">
-	    <input type="date" class="form-control" id="endTime" name="endTime">
+<!-- 	    <input type="date" class="form-control" id="endTime" name="endTime"> -->
+		<div class='input-group date' id='endTimepicker'>
+			<input type="text" class="form-control" id="endTime"name="endTime" style="width:150px">
+			<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+		</div>
 	  </div>
 	  <input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
 	</form>
@@ -250,6 +263,19 @@
 	</div>
 	<table id="mytab" class="table table-hover table-striped"></table>
 
+	<script type="text/javascript">
+	    $(function () {
+	        $('#startTimepicker,#endTimepicker').datetimepicker({
+	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+	            language: 'zh-CN',      //中文化
+	            endDate: new Date(),
+	            todayBtn: "linked",
+	            autoclose: true,
+	            minView: 'month'
+	        });
+	    });
+	    </script>
+  
 	<!-- 模态框 -->
    	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
