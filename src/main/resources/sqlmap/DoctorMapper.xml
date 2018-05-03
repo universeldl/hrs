@@ -120,6 +120,7 @@
       <if test="doctorDepartmentNo != null" >
         doctor_department_no = #{doctorDepartmentNo,jdbcType=VARCHAR},
       </if>
+    </set>
       where doctor_no = #{doctorNo,jdbcType=VARCHAR}
   </update>
   
