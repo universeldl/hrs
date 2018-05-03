@@ -40,6 +40,11 @@ public class PatientController {
 		return "patient/registration";
 	}
 	
+	@RequestMapping(value="/showInformation")
+	public String showInformation() {
+		return "patient/information";
+	}
+	
 	/**
 	 * 用户注册
 	 * @author Mervyn

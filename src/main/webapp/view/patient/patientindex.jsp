@@ -16,66 +16,43 @@
 	    <ul class="nav panel-group sidebar-menu" id="nav_parent">
 	    	<li class="panel">
 	    		<a class="panel-heading collapsed" href="#collapse1" data-toggle="collapse" data-parent="#nav_parent">
-	    			<span class="menu-text"> 科室管理 </span>
+	    			<span class="menu-text"> 个人信息 </span>
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse1">
 	  				<li>
-					    <a href="${pageContext.request.contextPath}/admin/showAddDepartment" target="frame">
-					    	<span class="menu-text">科室录入</span>
-					    </a>
-				    </li>
-				    <li>
-					    <a href="${pageContext.request.contextPath}/admin/showQueryDepartment" target="frame">
-					    	<span class="menu-text">科室列表</span>
+					    <a href="${pageContext.request.contextPath}/patient/showInformation" target="frame">
+					    	<span class="menu-text">个人信息</span>
 					    </a>
 				    </li>
 	  			</ul>
 	 		</li>
 	    	<li class="panel">
 	    		<a class="panel-heading collapsed" href="#collapse2" data-toggle="collapse" data-parent="#nav_parent">
-	    			<span class="menu-text"> 医生管理 </span>
+	    			<span class="menu-text"> 预约挂号 </span>
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse2">
 	  				<li>
 					    <a href="#" target="frame">
-					    	<span class="menu-text">医生录入</span>
+					    	<span class="menu-text">预约挂号</span>
 					    </a>
 				    </li>
-				    <li>
-					    <a href="${pageContext.request.contextPath}/view/admin/queryDoctor.jsp" target="frame">
-					    	<span class="menu-text">医生列表</span>
+	  				<li>
+					    <a href="#" target="frame">
+					    	<span class="menu-text">挂号历史</span>
 					    </a>
 				    </li>
 	  			</ul>
 	 		</li>
 	 		<li class="panel">
 	  			<a class="panel-heading collapsed" href="#collapse3" data-toggle="collapse" data-parent="#nav_parent">
-	  				<span class="menu-text">排班</span>
+	  				<span class="menu-text"> 病历 </span>
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse3">
 	  				<li>
-	   					<a href="#" target="frame"><span class="menu-text">排班表</span></a>
+	   					<a href="#" target="frame">
+	   						<span class="menu-text">既往病例</span>
+	   					</a>
 	  				</li>
-				    <li>
-				    	<a href="#" target="frame">
-				    		<span class="menu-text">排班调整</span>
-				    	</a>
-				    </li>
-	  			</ul>
-	 		</li>
-	 		<li class="panel">
-	  			<a class="panel-heading collapsed" href="#collapse4" data-toggle="collapse" data-parent="#nav_parent">
-	  				<span class="menu-text">统计</span>
-	 			</a>
-	  			<ul class="nav submenu collapse" id="collapse4">
-	  				<li>
-	   					<a href="#" target="frame"><span class="menu-text">就诊量</span></a>
-	  				</li>
-				    <li>
-				    	<a href="${pageContext.request.contextPath}/view/loginerror.jsp" target="frame">
-				    		<span class="menu-text">收入</span>
-				    	</a>
-				    </li>
 	  			</ul>
 	 		</li>
 	 	</ul>

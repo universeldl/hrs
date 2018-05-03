@@ -101,11 +101,11 @@
 					success : function(data) {
 						if (data.status == true) {
 							if (type == "0") {
-								window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+								window.location.href = "${pageContext.request.contextPath}/doctorIndex?no="+id;
 							} else if (type == "1") {
-								window.location.href = "${pageContext.request.contextPath}/adminIndex";
+								window.location.href = "${pageContext.request.contextPath}/adminIndex?no="+id;
 							} else if (type == "2") {
-								window.location.href = "${pageContext.request.contextPath}/patientIndex";
+								window.location.href = "${pageContext.request.contextPath}/patientIndex?no="+id;
 							}
 						} else {
 							alert(data.tips);
@@ -216,11 +216,11 @@
 	        } else {
 			   	var sessionType="<%=session.getAttribute("hrs_session_type")%>";
 				if (sessionType == "0") {
-					window.location.href = "${pageContext.request.contextPath}/doctorIndex";
+					window.location.href = "${pageContext.request.contextPath}/doctorIndex?no="+id;
 				} else if (sessionType == "1") {
-					window.location.href = "${pageContext.request.contextPath}/adminIndex";
+					window.location.href = "${pageContext.request.contextPath}/adminIndex?no="+id;
 				} else if (sessionType == "2") {
-					window.location.href = "${pageContext.request.contextPath}/patientIndex";
+					window.location.href = "${pageContext.request.contextPath}/patientIndex?no="+id;
 				}
 	        }
 	        

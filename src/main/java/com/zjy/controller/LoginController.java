@@ -1,8 +1,5 @@
 package com.zjy.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Patient;
@@ -21,7 +19,6 @@ import com.zjy.service.LoginService;
 import com.zjy.service.PatientService;
 import com.zjy.util.Constants;
 import com.zjy.util.CookieTools;
-import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.DataResult;
 
 /**
@@ -72,18 +69,27 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/doctorIndex")
-	public String toDoctorIndex() {
-		return "doctor/doctorindex";
+	public ModelAndView toDoctorIndex(@RequestParam(required=true) String no) {
+		Doctor doctor = doctorService.selectByDoctorNo(no);
+		ModelAndView m = new ModelAndView("/doctor/doctorindex");
+		m.addObject("doctor", doctor);
+		return m;
 	}
 	
 	@RequestMapping(value = "/adminIndex")
-	public String toAdminIndex() {
-		return "admin/adminindex";
+	public ModelAndView toAdminIndex(@RequestParam(required=true) String no) {
+		Doctor admin = doctorService.selectByDoctorNo(no);
+		ModelAndView m = new ModelAndView("/admin/adminindex");
+		m.addObject("admin", admin);
+		return m;
 	}
 	
 	@RequestMapping(value = "/patientIndex")
-	public String toPatientIndex() {
-		return "patient/patientindex";
+	public ModelAndView toPatientIndex(@RequestParam(required=true) String no) {
+		Patient patient = patientService.selectByPatientNo(no);
+		ModelAndView m = new ModelAndView("/patient/patientindex");
+		m.addObject("patient", patient);
+		return m;
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.POST)
