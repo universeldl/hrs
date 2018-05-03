@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	<title>用户注册</title>
 	
 	<style type="text/css">
@@ -178,13 +179,17 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(function () {
-	        $('#datetimepicker').datetimepicker({
-	            format: 'YYYY-MM-DD',//日期格式化，只显示日期
-	            locale: 'zh-CN',
-	            maxDate: new Date()
-	        });
-	    });
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+            language: 'zh-CN',      //中文化
+            endDate: new Date(),
+            todayBtn: "linked",
+            autoclose: true,
+            startView: 'decade',
+            minView: 'month'
+        });
+    });
 	</script> 
 </body>
 </html>
