@@ -3,6 +3,9 @@ package com.zjy.entity;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.zjy.util.Constants;
+import com.zjy.util.IdGenerator;
+
 public class Medicine {
     private String id;
 
@@ -22,16 +25,16 @@ public class Medicine {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId() {
+        this.id = IdGenerator.generateUUIDforPrimaryKey();
     }
 
     public String getMedicineNo() {
         return medicineNo;
     }
 
-    public void setMedicineNo(String medicineNo) {
-        this.medicineNo = medicineNo == null ? null : medicineNo.trim();
+    public void setMedicineNo() {
+        this.medicineNo = IdGenerator.generateNumber(Constants.MEDICINE_NO_PREFIX, Constants.MEDICINE_NO_DIGITS);
     }
 
     public String getMedicineName() {

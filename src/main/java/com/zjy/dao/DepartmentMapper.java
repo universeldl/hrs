@@ -20,4 +20,6 @@ public interface DepartmentMapper {
     Department selectByDeptNo(String departmentNo);
     
     List<Department> selectPageListByName(Department departmentName);
+
+    int updateByNo(String departmentNo, String depName);
 }

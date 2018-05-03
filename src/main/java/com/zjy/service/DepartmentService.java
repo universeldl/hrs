@@ -80,4 +80,19 @@ public class DepartmentService {
 				pageInfo.getPageNum());
 		return dataGridResult;
 	}
+
+    public DataResult updateByNo(String departmentNo, String depName) {
+        // TODO Auto-generated method stub
+        DataResult dataResult = new DataResult();
+        try {
+            if(departmentMapper.updateByNo(departmentNo, depName)==1) {
+                dataResult.setStatus(true);
+                dataResult.setTips("修改成功");
+            }
+        } catch (Exception e) {
+            dataResult.setStatus(false);
+            dataResult.setTips("修改失败");
+        }
+        return dataResult;
+    }
 }

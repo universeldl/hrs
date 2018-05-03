@@ -42,6 +42,11 @@
   <update id="deleteByDeptNo" parameterType="java.lang.String" >
     update department set is_deleted = 1 where department_no = #{departmentNo,jdbcType=VARCHAR}
   </update>
+  
+  <update id="updateByNo" parameterType="java.lang.String">
+  	update department set department_name = #{depName,jdbcType=VARCHAR} where department_no = #{departmentNo,jdbcType=VARCHAR}
+  </update>
+  
   <insert id="insert" parameterType="com.zjy.entity.Department" >
     insert into department (id, department_no, department_name, 
       is_deleted, create_time, update_time

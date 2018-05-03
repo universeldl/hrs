@@ -50,8 +50,9 @@ public class AdminManagementController {
      * @param doctor
      * @return
      */
-    @RequestMapping("/insertDoctor")
-    public DataResult insertDoctor(@RequestBody Doctor doctor) {
+    @RequestMapping(value="/addDoctor", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResult insertDoctor(Doctor doctor) {
     	DataResult dataResult;
     	doctor.setId();
     	doctor.setDoctorNo();
@@ -60,6 +61,7 @@ public class AdminManagementController {
     	doctor.setCreateTime();
     	doctor.setUpdateTime();
         dataResult = adminService.insert(doctor);
+        
         return dataResult;
     }
     
@@ -70,17 +72,14 @@ public class AdminManagementController {
      */
     @RequestMapping(value="/queryDoctorList", method=RequestMethod.POST)
     @ResponseBody
-    public String queryDoctorList(@RequestParam(value="name", required=false)String name,
+    public DataGridResult queryDoctorList(@RequestParam(value = "pageSize", required = true) int pageSize,
+                                  @RequestParam(value = "pageNumber", required = true) int pageNumber,
+                                  @RequestParam(value="name", required=false)String name,
                                   @RequestParam("depNo")String depNo,
                                   @RequestParam("status")String status,
                                   @RequestParam("startTime")String startTime,
-                                  @RequestParam("endTime")String endTime,
-                                  Integer pageSize,Integer pageNumber,
-                                  ModelMap model) {
-        pageSize = (pageSize==null?0:pageSize);
-        pageNumber = (pageNumber==null?1:pageNumber);
-        int a = (pageNumber-1)*pageSize;
-        int b = pageSize;
+                                  @RequestParam("endTime")String endTime) {
+       
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("name", null==name?"":name);
@@ -93,22 +92,40 @@ public class AdminManagementController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        param.put("a", a);
-        param.put("b", b);
-        Map<String, Object> map = adminService.queryDoctorByPage(param);
-        model.put("rows", map.get("rows"));
-        model.put("total", map.get("total"));
-        return "";
+        DataGridResult dataGridResult = adminService.queryDoctorByPage(param, pageNumber, pageSize);
+        return dataGridResult;
+    }
+    
+    /**
+     * 删除医生--医生离职
+     * @param doctorNos
+     * @return
+     */
+    @RequestMapping(value = "/deleteDoctor", method = RequestMethod.POST)
+    @ResponseBody
+    public BatchResult<Doctor> deleteDoctor(@RequestParam("doctorNos") String doctorNos) {
+        BatchResult<Doctor> batchResult;
+        
+        String[] doctorNoArray = doctorNos.split(",");
+        
+        batchResult = adminService.deleteByDoctorNo(doctorNoArray);
+        
+        return batchResult;
     }
     
     @RequestMapping(value = "/showAddDepartment")
     public String showAddDepartment() {
-    	return "admin/addDepartment";
+        return "admin/addDepartment";
     }
     
     @RequestMapping(value = "/showQueryDepartment")
     public String showQueryDepartment() {
-    	return "admin/queryDepartment";
+        return "admin/queryDepartment";
+    }
+    
+    @RequestMapping(value = "/showAddDDoctor")
+    public String showAddDDoctor() {
+        return "admin/addDoctor";
     }
     
     @RequestMapping(value = "/showQueryPatient")
@@ -144,6 +161,11 @@ public class AdminManagementController {
         return dataResult;
     }
     
+    /**
+     * 删除部门
+     * @param departmentNos
+     * @return
+     */
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
     @ResponseBody
     public BatchResult<Department> deleteDepartment(@RequestParam("departmentNos") String departmentNos) {
@@ -155,6 +177,39 @@ public class AdminManagementController {
     	
         return batchResult;
     }
+    
+
+    /**
+     * 根据编号查科室
+     * @param departmentNo
+     * @return
+     */
+    @RequestMapping(value="/selectByDepNo", method = RequestMethod.POST)
+    @ResponseBody
+    public Department selectByDepNo(@RequestParam("departmentNo") String departmentNo) {
+        Department department = departmentService.selectByDeptNo(departmentNo);
+        return department;
+    }
+    
+    
+    /**
+     * 修改科室
+     * @param departmentNo
+     * @param depName
+     * @return
+     */
+    @RequestMapping(value="/updateDepartment", method = RequestMethod.POST)
+    public DataResult updateDepartment(@RequestParam("departmentNo") String departmentNo,
+                                 @RequestParam("depName") String depName) {
+        DataResult dataResult = new DataResult();
+        if(depName==null||"".equals(depName)) {
+            dataResult.setStatus(false);
+            dataResult.setTips("修改失败,科室名称不能为空！");
+        }
+        dataResult = departmentService.updateByNo(departmentNo, depName);
+        return dataResult;
+    }
+    
     
     /**
      * 根据科室名查询部门信息并分页

@@ -42,23 +42,22 @@
   	<include refid="Base_Column_List" /> 
   	from doctor 
   	<where>
-  		<if test="param.name!=null and param.name!=''">
+  		<if test="name!=null and name!=''">
   			and doctor_name=#{name}
   		</if>
-  		<if test="param.depNo!=null and param.depNo!=''">
+  		<if test="depNo!=null and depNo!=''">
   			and doctor_department_no=#{depNo}
   		</if>
-  		<if test="param.status==1">
+  		<if test="status==1">
   			and doctor_quit_time is not null
   		</if>
-  		<if test="param.status==0">
+  		<if test="status==0">
   			and doctor_quit_time is null
   		</if>
-  		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
+  		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
   			and doctor_hire_time between #{startTime} and #{endTime}
   		</if>
   	</where>
-  	limit #{a},#{b}
   </select>
   
   <select id="selectCountByDeptNo"  parameterType="java.lang.String" resultType="java.lang.Integer" >
@@ -72,19 +71,19 @@
   	count(0) 
   	from doctor 
   	<where>
-  		<if test="param.name!=null and param.name!=''">
+  		<if test="name!=null and name!=''">
   			and doctor_name=#{name}
   		</if>
-  		<if test="param.depNo!=null and param.depNo!=''">
+  		<if test="depNo!=null and depNo!=''">
   			and doctor_department_no=#{depNo}
   		</if>
-  		<if test="param.status==1">
+  		<if test="status==1">
   			and doctor_quit_time is not null
   		</if>
-  		<if test="param.status==0">
+  		<if test="status==0">
   			and doctor_quit_time is null
   		</if>
-  		<if test="param.startTime!=null and param.startTime!='' and param.endTime!=null and param.endTime!=''">
+  		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
   			and doctor_hire_time between #{startTime} and #{endTime}
   		</if>
   	</where>
@@ -94,6 +93,11 @@
   	select <include refid="Base_Column_List" /> 
   	from doctor where doctor_department_no=#{depNo}
   </select>
+  
+  <update id="deleteByDoctorNo" parameterType="java.lang.String" >
+    update doctor set doctor_quit_time =date_format(now(),'%Y-%m-%d') and update_time=date_format(now(),'%Y-%m-%d %T') 
+    where doctor_no = #{doctorNo,jdbcType=VARCHAR}
+  </update>
   
   <update id="deleteByPrimaryKey" parameterType="com.zjy.entity.Doctor" >
     update doctor

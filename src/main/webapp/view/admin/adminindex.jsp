@@ -37,7 +37,7 @@
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse2">
 	  				<li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/admin/showAddDDoctor" target="frame">
 					    	<span class="menu-text">医生录入</span>
 					    </a>
 				    </li>
@@ -79,9 +79,21 @@
 	 			</a>
 	 		</li>
 	 		<li class="panel">
-	  			<a class="panel-heading collapsed" href="#" data-toggle="collapse" data-parent="#nav_parent">
-	  				<span class="menu-text">药品列表</span>
+	  			<a class="panel-heading collapsed" href="#collapse7" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">药品</span>
 	 			</a>
+	 			<ul class="nav submenu collapse" id="collapse7">
+	 				<li>
+					    <a href="${pageContext.request.contextPath}/view/medicine/addMedicine.jsp" target="frame">
+					    	<span class="menu-text">新增药品</span>
+					    </a>
+				    </li>
+				    <li>
+					    <a href="${pageContext.request.contextPath}/view/medicine/queryMedicineList.jsp" target="frame">
+					    	<span class="menu-text">药品列表</span>
+					    </a>
+				    </li>
+	 			</ul>
 	 		</li>
 	 		<li class="panel">
 	  			<a class="panel-heading collapsed" href="#collapse5" data-toggle="collapse" data-parent="#nav_parent">
@@ -101,7 +113,7 @@
 	 	</ul>
 	</div>
 	<div style="left: 250px;position: absolute;" name="div_auto" id="div_auto">
-		<iframe name="frame" id="frame" scrolling="no" frameborder="0" style="padding: 0px; width: 1600px; height: 920px;">
+		<iframe name="frame" id="frame" scrolling="no" frameborder="0" style="padding: 0px; width: 1000px; height: 920px;">
 			
 		</iframe>
 	</div>
