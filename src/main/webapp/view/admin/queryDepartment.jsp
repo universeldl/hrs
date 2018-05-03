@@ -89,23 +89,35 @@
 	    //行内编辑配置
 	    $('#edit').click(function() {
 	        $('#departmentTable .editable').editable('toggleDisabled');
-	       var departmentNo = $("#departmentTable").bootstrapTable('onClickRow',function(row, $element){
+	       /* var departmentNo = $("#departmentTable").bootstrapTable('onClickRow',function(row, $element){
 	            return row.departmentNo;
-	  		});	 
-	        $.ajax({
-        		url: "${pageContext.request.contextPath}/admin/selectByDepNo",
-        		type: "post",
-        		data: "departmentNo="+departmentNo,    //如何拿到该行的depNo
-        		dataType: "json",
-        		async: true,
-        		success: function(data){
-        			$("input[name=departmentNo]").val(data.departmentNo);
-        			$("input[name=depName]").val(data.departmentName);
-        	        //显示模态框
-        	        $("#myModal").modal("show");
-        			//$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
-        		}
-	        });
+	  		});	 */
+	  		var row = $("#departmentTable").bootstrapTable('getSelections');
+	  		if(row.length == 1) {
+	  			var departmentNo = '';
+	  			$.each(row, function() {
+	  				departmentNo = this.departmentNo;
+				});
+		        $.ajax({
+	        		url: "${pageContext.request.contextPath}/admin/selectByDepNo",
+	        		type: "post",
+	        		data: "departmentNo="+departmentNo,    //如何拿到该行的depNo
+	        		dataType: "json",
+	        		async: true,
+	        		success: function(data){
+	        			$("input[name=departmentNo]").val(data.departmentNo);
+	        			$("input[name=depName]").val(data.departmentName);
+	        	        //显示模态框
+	        	        $("#myModal").modal("show");
+	        			//$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+	        		}
+		        });
+	  		}else {
+	  			bootbox.alert({
+	    			  size: "small",
+	    			  message: "只能选择一个科室进行修改操作！",
+	    		});
+	  		}
 	    }); 
 	    
 	    //删除按钮点击事件

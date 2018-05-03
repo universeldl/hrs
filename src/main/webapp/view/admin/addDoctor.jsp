@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.fr.js"></script>
 	
 	<script type="text/javascript">
 	$(function() {
@@ -140,15 +141,17 @@
             	</select><br/>
 				<label>登录密码:</label> <input type="password" class="form-control" id="doctorPassword" name="doctorPassword"><br/>
 				<label>确认密码:</label> <input type="password" class="form-control" id="doctorPassword1" name="doctorPassword1"><br/>
-				<label>出生日期:</label> 
-				<div class='input-group date' id='datetimepicker'>
-					<input type="date" class="form-control" id="doctorBirth" name="doctorBirth" style="width: 187px">
-					<span class="input-group-addon">
-			            <span class="fa fa-calendar"></span>
-			        </span>
-		        </div><br/>
+				<div class="control-group">  
+	                <label class="control-label">出生日期:</label>  
+	                <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="doctorBirth" data-link-format="yyyy-mm-dd">  
+	                    <input size="16" type="text" value="" readonly>  
+	                    <span class="add-on"><i class="icon-remove"></i></span>  
+	                    <span class="add-on"><i class="icon-th"></i></span>  
+	                </div>  
+	                <input type="hidden" id="doctorBirth" name="doctorBirth" value="" /><br/>  
+	            </div>
 				<label>电话号码:</label> <input type="text" class="form-control" id="doctorPhone" name="doctorPhone"><br/>
-				<label>挂号收费:</label> <input type="text" class="form-control" id="doctorRegistrationFee" name="doctorRegistrationFee"><br/>
+				<label>挂号收费:</label> <input type="number" class="form-control" id="doctorRegistrationFee" name="doctorRegistrationFee"><br/>
 				<label>入职日期:</label> 
 				<div class='input-group date' id='datetimepicker'>
 					<input type="date" class="form-control" id="doctorHireTime" name="doctorHireTime" style="width: 187px">
@@ -163,13 +166,23 @@
 		<table id="mytab" class="table table-hover"></table>
 		
 		<script type="text/javascript">
-		$(function () {
-	        $('#datetimepicker').datetimepicker({
-	            format: 'YYYY-MM-DD',//日期格式化，只显示日期
-	            locale: 'zh-CN',
-	            maxDate: new Date()
-	        });
-	    });
+			$('.form_date').datetimepicker({  
+		        language:  'fr',  
+		        weekStart: 1,  
+		        todayBtn:  1,  
+		        autoclose: 1,  
+		        todayHighlight: 1,  
+		        startView: 2,  
+		        minView: 2,  
+		        forceParse: 0  
+		    });
+			$(function () {
+		        $('#datetimepicker').datetimepicker({
+		            format: 'YYYY-MM-DD',//日期格式化，只显示日期
+		            locale: 'zh-CN',
+		            maxDate: new Date()
+		        });
+		    });
 	</script>
 	</body>
 </html>

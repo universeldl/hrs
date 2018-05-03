@@ -87,25 +87,37 @@
 	    //行内编辑配置
 	    $('#edit').click(function() {
 	        $('#medicineTable .editable').editable('toggleDisabled');
-	       var medicineNo = $("#medicineTable").bootstrapTable('onClickRow',function(row, $element){
+	       /* var medicineNo = $("#medicineTable").bootstrapTable('onClickRow',function(row, $element){
 	            return row.medicineNo;
-	  		});	 
-	        $.ajax({
-        		url: "${pageContext.request.contextPath}/medicine/selectByMedicineNo",
-        		type: "post",
-        		data: "medicineNo="+medicineNo,    //如何拿到该行的medicineNo
-        		dataType: "json",
-        		async: true,
-        		success: function(data){
-        			$("input[name=medicineNo]").val(data.medicineNo);
-        			$("input[name=medicineName]").val(data.medicineName);
-        			$("input[name=medicinePrice]").val(data.medicinePrice);
-        			$("input[name=medicineAmount]").val(data.medicineAmount);
-        			$("input[name=medicineLastAddAccount]").val(data.medicineLastAddAccount);
-        	        //显示模态框
-        	        $("#myModal").modal("show");
-        		}
-	        });
+	  		});	 */ 
+	  		var row = $("#medicineTable").bootstrapTable('getSelections');
+	  		if(row.length == 1) {
+	  			var medicineNo = '';
+	  			$.each(row, function() {
+	  				medicineNo = this.medicineNo;
+				});
+		        $.ajax({
+	        		url: "${pageContext.request.contextPath}/medicine/selectByMedicineNo",
+	        		type: "post",
+	        		data: "medicineNo="+medicineNo,    //如何拿到该行的medicineNo
+	        		dataType: "json",
+	        		async: true,
+	        		success: function(data){
+	        			$("input[name=medicineNo]").val(data.medicineNo);
+	        			$("input[name=medicineName]").val(data.medicineName);
+	        			$("input[name=medicinePrice]").val(data.medicinePrice);
+	        			$("input[name=medicineAmount]").val(data.medicineAmount);
+	        			$("input[name=medicineLastAddAccount]").val(data.medicineLastAddAccount);
+	        	        //显示模态框
+	        	        $("#myModal").modal("show");
+	        		}
+		        });
+	  		}else {
+	  			bootbox.alert({
+	    			  size: "small",
+	    			  message: "只能选择一种药品进行修改操作！",
+	    		});
+	  		}
 	    }); 
 	    
 	    //删除按钮点击事件
@@ -202,19 +214,19 @@
 			  <div class="form-group">
 			    <label for="price" class="col-sm-2 control-label">药品价格:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="medicinePrice" name="medicinePrice" value="">
+			      <input type="number" class="form-control" id="medicinePrice" name="medicinePrice" value="">
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="price" class="col-sm-2 control-label">药品剩余数量:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="medicineAmount" name="medicineAmount" value="" disabled>
+			      <input type="number" class="form-control" id="medicineAmount" name="medicineAmount" value="" disabled>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="price" class="col-sm-2 control-label">补充药品数量:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="medicineLastAddAccount" name="medicineLastAddAccount" value="">
+			      <input type="number" class="form-control" id="medicineLastAddAccount" name="medicineLastAddAccount" value="">
 			    </div>
 			  </div>
 			  <div class="modal-footer">

@@ -97,7 +97,7 @@ public class MedicineController {
      * @return
      */
     @RequestMapping(value="/updateMedicine", method = RequestMethod.POST)
-    public DataResult updateMedicine(@RequestParam("medicine") Medicine medicine) {
+    public DataResult updateMedicine(Medicine medicine) {
         DataResult dataResult = new DataResult();
         //新增之前剩余的药品数量
         int before = medicine.getMedicineAmount();
