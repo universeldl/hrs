@@ -137,7 +137,7 @@ public class Doctor {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType() {
         this.type = Constants.DOCTOR_TYPE;
     }
 

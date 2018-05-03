@@ -56,10 +56,10 @@
   		<if test="depNo!=null and depNo!=''">
   			and doctor_department_no=#{depNo}
   		</if>
-  		<if test="status==1">
+  		<if test="status==0">
   			and doctor_quit_time is not null
   		</if>
-  		<if test="status==0">
+  		<if test="status==1">
   			and doctor_quit_time is null
   		</if>
   		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">

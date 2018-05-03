@@ -54,10 +54,10 @@
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse3">
 	  				<li>
-	   					<a href="#" target="frame"><span class="menu-text">排班表</span></a>
+	   					<a href="${pageContext.request.contextPath}/view/duty/showDuty.jsp" target="frame"><span class="menu-text">排班表</span></a>
 	  				</li>
 				    <li>
-				    	<a href="#" target="frame">
+				    	<a href="${pageContext.request.contextPath}/view/duty/adjustDuty.jsp" target="frame">
 				    		<span class="menu-text">排班调整</span>
 				    	</a>
 				    </li>

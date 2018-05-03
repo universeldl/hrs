@@ -5,13 +5,12 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,14 +51,25 @@ public class AdminManagementController {
      */
     @RequestMapping(value="/addDoctor", method = RequestMethod.POST)
     @ResponseBody
-    public DataResult insertDoctor(Doctor doctor) {
+    public DataResult insertDoctor(Doctor doctor,
+    		@RequestParam("birth")String birth,
+    		@RequestParam("hireTime")String hireTime) {
     	DataResult dataResult;
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     	doctor.setId();
     	doctor.setDoctorNo();
     	doctor.setDoctorSalt(CryptographyHelper.getRandomSalt());
     	doctor.setDoctorPassword(CryptographyHelper.encrypt(doctor.getDoctorPassword(), doctor.getDoctorSalt()));
     	doctor.setCreateTime();
     	doctor.setUpdateTime();
+    	doctor.setType();
+    	try {
+			doctor.setDoctorBirth(sdf.parse(birth));
+			doctor.setDoctorHireTime(sdf.parse(hireTime));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         dataResult = adminService.insert(doctor);
         
         return dataResult;
@@ -74,7 +84,7 @@ public class AdminManagementController {
     @ResponseBody
     public DataGridResult queryDoctorList(@RequestParam(value = "pageSize", required = true) int pageSize,
                                   @RequestParam(value = "pageNumber", required = true) int pageNumber,
-                                  @RequestParam(value="name", required=false)String name,
+                                  @RequestParam(value="name")String name,
                                   @RequestParam("depNo")String depNo,
                                   @RequestParam("status")String status,
                                   @RequestParam("startTime")String startTime,
