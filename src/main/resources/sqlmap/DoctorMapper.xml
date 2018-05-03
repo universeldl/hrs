@@ -23,6 +23,14 @@
     doctor_phone, doctor_registration_fee, doctor_hire_time, doctor_department_no, doctor_quit_time, 
     type, create_time, update_time
   </sql>
+  
+  <select id="selectDoctorByDepartment" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctor_department_no = #{departmentNo,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
