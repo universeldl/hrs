@@ -47,6 +47,11 @@ public class PatientController {
 		return m;
 	}
 	
+	@RequestMapping(value="/showUpdatePassword")
+	public String showUpdatePassword() {
+		return "patient/updatePassword";
+	}
+	
 	/**
 	 * 用户注册
 	 * @author Mervyn
@@ -111,12 +116,25 @@ public class PatientController {
 		DataResult dataResult;
 		
 		Patient patient = (Patient) request.getSession().getAttribute(Constants.SESSION_USER);
-		patient.setPatientPhone(phone);
-		patient.setUpdateTime();
 		
-		dataResult = patientService.updateByPrimaryKeySelective(patient);
+		dataResult = patientService.updatePhone(patient, phone);
 		
 		return dataResult;
 		
+	}
+	
+	@RequestMapping(value="/updatePassword", method=RequestMethod.POST)
+	@ResponseBody
+	public DataResult updatePhone(@RequestParam(value="oldPassword") String oldPassword,
+			@RequestParam(value="newPassword") String newPassword,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		DataResult dataResult;
+
+		Patient patient = (Patient) request.getSession().getAttribute(Constants.SESSION_USER);
+
+		dataResult = patientService.updatePassword(patient, oldPassword, newPassword);
+		
+		return dataResult;
 	}
 }

@@ -24,6 +24,11 @@
 					    	<span class="menu-text">个人信息</span>
 					    </a>
 				    </li>
+	  				<li>
+					    <a href="${pageContext.request.contextPath}/patient/showUpdatePassword" target="frame">
+					    	<span class="menu-text">修改密码</span>
+					    </a>
+				    </li>
 	  			</ul>
 	 		</li>
 	    	<li class="panel">
