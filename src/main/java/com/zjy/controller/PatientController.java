@@ -2,8 +2,6 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.zjy.entity.Patient;
 import com.zjy.service.PatientService;
@@ -41,8 +40,11 @@ public class PatientController {
 	}
 	
 	@RequestMapping(value="/showInformation")
-	public String showInformation() {
-		return "patient/information";
+	public ModelAndView showInformation(@RequestParam(required=true) String no) {
+		Patient patient = patientService.selectByPatientNo(no);
+		ModelAndView m = new ModelAndView("/patient/information");
+		m.addObject("patient", patient);
+		return m;
 	}
 	
 	/**
@@ -103,7 +105,7 @@ public class PatientController {
 	 */
 	@RequestMapping(value="/updatePhone", method=RequestMethod.POST)
 	@ResponseBody
-	public DataResult editPatient(@RequestParam(value = "phone", required = true) String phone,
+	public DataResult updatePhone(@RequestParam(value = "phone", required = true) String phone,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		DataResult dataResult;
