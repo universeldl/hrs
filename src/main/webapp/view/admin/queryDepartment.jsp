@@ -203,13 +203,13 @@
 	      <div class="modal-body">
 	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDepartment">
 			  <div class="form-group">
-			    <label for="name" class="col-sm-2 control-label">科室编号:</label>
+			    <label for="departmentNo" class="col-sm-2 control-label">科室编号:</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="departmentNo" name="departmentNo" value="" disabled>
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="price" class="col-sm-2 control-label">科室名称:</label>
+			    <label for="depName" class="col-sm-2 control-label">科室名称:</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="depName" name="depName" value="">
 			    </div>

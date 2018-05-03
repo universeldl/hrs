@@ -99,6 +99,30 @@
     where doctor_no = #{doctorNo,jdbcType=VARCHAR}
   </update>
   
+  <update id="updateByNo" parameterType="com.zjy.entity.Doctor">
+  	update doctor
+    <set >
+      <if test="doctorName != null" >
+        doctor_name = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorSex != null" >
+        doctor_sex = #{doctorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorBirth != null" >
+        doctor_birth = #{doctorBirth,jdbcType=DATE},
+      </if>
+      <if test="doctorPhone != null" >
+        doctor_phone = #{doctorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRegistrationFee != null" >
+        doctor_registration_fee = #{doctorRegistrationFee,jdbcType=DOUBLE},
+      </if>
+      <if test="doctorDepartmentNo != null" >
+        doctor_department_no = #{doctorDepartmentNo,jdbcType=VARCHAR},
+      </if>
+      where doctor_no = #{doctorNo,jdbcType=VARCHAR}
+  </update>
+  
   <update id="deleteByPrimaryKey" parameterType="com.zjy.entity.Doctor" >
     update doctor
     <set >

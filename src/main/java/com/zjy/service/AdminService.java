@@ -68,4 +68,24 @@ public class AdminService {
         
         return batchResult;
     }
+
+    public Doctor selectByDoctorNo(String doctorNo) {
+        // TODO Auto-generated method stub
+        return doctorMapper.selectByDoctorNo(doctorNo);
+    }
+
+    public DataResult updateDoctor(Doctor doctor) {
+        // TODO Auto-generated method stub
+        DataResult dataResult = new DataResult();
+        try {
+            if(doctorMapper.updateByNo(doctor)==1) {
+                dataResult.setStatus(true);
+                dataResult.setTips("修改成功");
+            }
+        } catch (Exception e) {
+            dataResult.setStatus(false);
+            dataResult.setTips("修改失败");
+        }
+        return dataResult;
+    }
 }
