@@ -24,6 +24,18 @@
  	
  	<script type="text/javascript">
  	$(function() {
+ 		$.ajax({
+            url: "/department/loadDepartment",
+            dataType: "json",
+            success: function (data) {
+            	$('#depNo').append("<option value=" + data[0].departmentNo + " selected>" + data[0].departmentName + "</option>");
+                for (var i = 1; i < data.length; i++) {
+                    $('#depNo').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
+                    $('#depNo').selectpicker('refresh');//必须要有
+                }
+            }
+        });
+ 		
 		//获取科室列表
 	    $('#mytab').bootstrapTable({
 	        method: 'post',//post避免中文乱码
@@ -218,7 +230,7 @@
 	  <div class="form-group">
 	    <label>科室:</label>
 	    <select class="form-control" name="depNo" id="depNo">
-	    	<option value="D843" selected="selected">内科</option>
+	    	<!-- <option value="D843" selected="selected">内科</option>
 	    	<option value="D215">外科</option>
 	    	<option value="D964">康复科</option>
 	    	<option value="D700">眼科</option>
@@ -239,7 +251,7 @@
 	    	<option value="D145">口腔科</option>
 	    	<option value="D778">儿科</option>
 	    	<option value="D052">麻醉科</option>
-	    	<option value="D982">心理科</option>
+	    	<option value="D982">心理科</option> -->
 	    </select>
 	  </div>
 	  <div class="form-group">
