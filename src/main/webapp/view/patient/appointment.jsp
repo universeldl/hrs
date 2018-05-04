@@ -17,7 +17,6 @@
             url: "/department/loadDepartment",
             dataType: "json",
             success: function (data) {
-            	$('#selectDepartment').append("<option disabled>请选择</option>");
                 for (var i = 0; i < data.length; i++) {
                     $('#selectDepartment').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
                     $('#selectDepartment').selectpicker('refresh');//必须要有
