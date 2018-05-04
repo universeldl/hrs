@@ -101,17 +101,6 @@ public class LoginController {
             HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model) {
-    	
-        /**
-         * 记住我
-         * 将用户名和密码保存在本地cookie中，周期为7天
-         */
-        // "1"表示用户勾选记住密码
-        if("1".equals(remFlag)){ 
-            String loginInfo = id+","+password+","+type;
-            System.out.println(loginInfo);
-            CookieTools.addCookie(Constants.COOKIE_NAME, loginInfo, Constants.MAX_AGE, response, request);
-        }
         
     	DataResult dataResult = null;
     	
@@ -122,6 +111,17 @@ public class LoginController {
     	} else if (Constants.PATIENT_TYPE.equals(type)) {
     		dataResult = loginService.PLogin(id, password, request);
     	}
+    	
+        /**
+         * 记住我
+         * 将用户名和密码保存在本地cookie中，周期为7天
+         */
+        // "1"表示用户勾选记住密码
+        if("1".equals(remFlag) && dataResult.isStatus()){ 
+            String loginInfo = id+","+password+","+type;
+            System.out.println(loginInfo);
+            CookieTools.addCookie(Constants.COOKIE_NAME, loginInfo, Constants.MAX_AGE, response, request);
+        }
     	
         return dataResult;
     }
