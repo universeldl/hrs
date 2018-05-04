@@ -52,6 +52,11 @@ public class PatientController {
 		return "patient/updatePassword";
 	}
 	
+	@RequestMapping(value = "/showAppointment")
+	public String showAppointment() {
+		return "patient/appointment";
+	}
+	
 	/**
 	 * 用户注册
 	 * @author Mervyn
@@ -123,6 +128,16 @@ public class PatientController {
 		
 	}
 	
+	/**
+	 * 修改密码
+	 * @author Mervyn
+	 * 
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/updatePassword", method=RequestMethod.POST)
 	@ResponseBody
 	public DataResult updatePhone(@RequestParam(value="oldPassword") String oldPassword,

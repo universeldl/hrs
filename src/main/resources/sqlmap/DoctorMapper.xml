@@ -31,6 +31,22 @@
     where doctor_department_no = #{departmentNo,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectDoctorByDepartmentAndDuty" resultMap="BaseResultMap" parameterType="HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    <where>
+	    doctor_department_no = #{departmentNo,jdbcType=VARCHAR}
+	    <if test="doctorNos != null">
+		    and doctor_no in 
+			<foreach item="item" index="index" collection="doctorNos"
+			    open="(" separator="," close=")">
+			      #{item}
+			</foreach>
+		</if>
+	</where>
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

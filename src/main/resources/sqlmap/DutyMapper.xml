@@ -37,6 +37,35 @@
     where doctor_no = #{id,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectDoctorByDuty" resultType="java.lang.String" parameterType="com.zjy.entity.Duty">
+  	select 
+    doctor_no
+    from duty
+    <where>
+      <if test="monday != null" >
+        and Monday = #{monday,jdbcType=VARCHAR} and Monday_rest &gt; 0
+      </if>
+      <if test="tuesday != null" >
+        and Tuesday = #{tuesday,jdbcType=VARCHAR} and Tuesday_rest &gt; 0
+      </if>
+      <if test="wednesday != null" >
+        and Wednesday = #{wednesday,jdbcType=VARCHAR} and Wednesday_rest &gt; 0
+      </if>
+      <if test="thursday != null" >
+        and Thursday = #{thursday,jdbcType=VARCHAR} and Thursday_rest &gt; 0
+      </if>
+      <if test="friday != null" >
+        and Friday = #{friday,jdbcType=VARCHAR} and Friday_rest &gt; 0
+      </if>
+      <if test="saturday != null" >
+        and Saturday = #{saturday,jdbcType=VARCHAR} and Saturday_rest &gt; 0
+      </if>
+      <if test="sunday != null" >
+        and Sunday = #{sunday,jdbcType=VARCHAR} and Sunday_rest &gt; 0
+      </if>
+    </where>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from duty
     where id = #{id,jdbcType=VARCHAR}

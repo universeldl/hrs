@@ -37,7 +37,7 @@
 	  			</a>
 	  			<ul class="nav submenu collapse" id="collapse2">
 	  				<li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/patient/showAppointment" target="frame">
 					    	<span class="menu-text">预约挂号</span>
 					    </a>
 				    </li>

@@ -6,10 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>预约挂号</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		//异步获取可是列表并动态填充select
@@ -24,23 +28,52 @@
             }
         });
 		$('#selectDepartment').change(function() {
+			$('#viewDate').val("");
+		});
+		$('#viewDate').change(function() {
+			$('#selectDoctor').empty();
 			$.ajax({
 	            url: "/doctor/loadDoctor",
 	            dataType: "json",
-	            data: {departmentNo: $('#selectDepartment').val()},
+	            data: {
+	            	departmentNo: $('#selectDepartment').val(),
+	            	viewDate: $('#viewDate').val()
+	            },
 	            success: function (data) {
+	            	if (data.length == 0) {
+	                    $('#selectDoctor').append("<option disabled>没有值班医生或医生挂号已满 </option>");
+	                    $('#selectDoctor').selectpicker('refresh');//必须要有
+	                    return;
+	            	}
 	                for (var i = 0; i < data.length; i++) {
-	                    $('#selectDepartment').append("<option value=" + data[i].doctorNo + ">" + data[i].doctorName + "</option>");
-	                    $('#selectDepartment').selectpicker('refresh');//必须要有
+	                    $('#selectDoctor').append("<option value=" + data[i].doctorNo + ">" + data[i].doctorName + "</option>");
+	                    $('#selectDoctor').selectpicker('refresh');//必须要有
 	                }
 	            }
 	        });
 		});
+        $('#datetimepicker').datetimepicker({
+            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+            language: 'zh-CN',      //中文化
+            startDate: new Date(),
+            endDate: new Date(new Date().valueOf() + 6*86400000),
+            todayBtn: "linked",
+            autoclose: true,
+            minView: 'month'
+        });
 	});
 </script>
 </head>
 <body>
-	<select id="selectDepartment" class="selectpicker" title="请选择"></select>
-	<select id="selectDoctor" class="selectpicker" title="请选择"></select>
+	<form class="form-inline" style="margin-top: 30px; margin-left: 30px" >
+		<select id="selectDepartment" class="selectpicker" title="选择科室"></select>
+		<div class='input-group date' id='datetimepicker'>
+	        <input type='text' class="form-control" id="viewDate" name="viewDate" value="" placeholder="就诊日期" />
+	        <span class="input-group-addon">
+	            <span class="fa fa-calendar"></span>
+	        </span>
+	    </div>
+		<select id="selectDoctor" class="selectpicker" title="选择医生"></select>
+	</form>
 </body>
 </html>
