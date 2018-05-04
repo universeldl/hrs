@@ -52,6 +52,10 @@ public class Doctor {
     public void setDoctorNo() {
         this.doctorNo = IdGenerator.generateNumber(this.getDoctorDepartmentNo(), Constants.DOCTOR_NO_DIGITS);
     }
+    
+    public void setDoctorNo(String doctorNo){
+    	this.doctorNo = doctorNo;
+    }
 
     public String getDoctorName() {
         return doctorName;

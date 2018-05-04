@@ -81,6 +81,9 @@ public class AdminService {
             if(doctorMapper.updateByNo(doctor)==1) {
                 dataResult.setStatus(true);
                 dataResult.setTips("修改成功");
+            } else {
+                dataResult.setStatus(false);
+                dataResult.setTips("这？");
             }
         } catch (Exception e) {
             dataResult.setStatus(false);

@@ -2,6 +2,8 @@ package com.zjy.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.zjy.entity.Department;
 
 public interface DepartmentMapper {
@@ -13,7 +15,7 @@ public interface DepartmentMapper {
 
     Department selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Department record);
+    int updateByNoSelective(Department record);
 
     int updateByPrimaryKey(Department record);
 
@@ -23,5 +25,5 @@ public interface DepartmentMapper {
     
     List<Department> selectDepartment();
 
-    int updateByNo(String departmentNo, String depName);
+    int updateByNo(@Param("departmentNo")String departmentNo, @Param("depName")String depName);
 }

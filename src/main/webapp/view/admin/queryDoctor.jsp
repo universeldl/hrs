@@ -163,7 +163,7 @@
 	        			$("input[name=doctorName]").val(data.doctorName);
 	        			$("#doctorSex").val(data.doctorSex);
 	        			$('#doctorSex').selectpicker('refresh');
-	        			$("input[name=doctorBirth]").val(timestampToTime(data.doctorBirth));
+	        			$("input[name=birth]").val(timestampToTime(data.doctorBirth));
 	        			$("input[name=doctorPhone]").val(data.doctorPhone);
 	        			$("#doctorDepartmentNo").val(data.doctorDepartmentNo);
 	        			$("#doctorDepartmentNo").selectpicker('refresh');
@@ -322,10 +322,10 @@
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label for="doctorBirth" class="col-sm-2 control-label">出生日期:</label>
+			    <label for="birth" class="col-sm-2 control-label">出生日期:</label>
 			    <div class="col-sm-10">
 					<div class='input-group date' id='datetimepicker'>
-						<input type="text" class="form-control" id="doctorBirth" name="doctorBirth" value="">
+						<input type="text" class="form-control" id="birth" name="birth" value="">
 						<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
 					</div>
 			    </div>
