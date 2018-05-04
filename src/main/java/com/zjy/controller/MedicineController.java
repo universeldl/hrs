@@ -97,6 +97,7 @@ public class MedicineController {
      * @return
      */
     @RequestMapping(value="/updateMedicine", method = RequestMethod.POST)
+    @ResponseBody
     public DataResult updateMedicine(@RequestParam("medicineName") String medicineName,
     		@RequestParam("medicinePrice") double medicinePrice,
     		@RequestParam("medicineLastAddAccount") int medicineLastAddAccount,
@@ -108,6 +109,7 @@ public class MedicineController {
         int after = mAmount + medicineLastAddAccount;
         medicine.setMedicineAmount(after);
         medicine.setMedicinePrice(medicinePrice);
+        medicine.setMedicineLastAddAccount(medicineLastAddAccount);
         dataResult = medicineService.updateByNo(medicine);
         return dataResult;
     }

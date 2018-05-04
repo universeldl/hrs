@@ -5,9 +5,10 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +68,6 @@ public class AdminManagementController {
 			doctor.setDoctorBirth(sdf.parse(birth));
 			doctor.setDoctorHireTime(sdf.parse(hireTime));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         dataResult = adminService.insert(doctor);
@@ -99,7 +99,6 @@ public class AdminManagementController {
             param.put("startTime", null==startTime||"".equals(startTime)?"":sdf.parse(startTime));
             param.put("endTime", null==endTime||"".equals(endTime)?"":sdf.parse(endTime));
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         DataGridResult dataGridResult = adminService.queryDoctorByPage(param, pageNumber, pageSize);
@@ -136,11 +135,24 @@ public class AdminManagementController {
         return doctor;
     }
     
-    
+    /**
+     * 修改医生
+     * @author Mervyn
+     * 
+     * @param doctor
+     * @param birth
+     * @param request
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping(value="/updateDoctor", method = RequestMethod.POST)
     @ResponseBody
-    public DataResult updateDoctor(Doctor doctor) {
+    public DataResult updateDoctor(Doctor doctor,
+    		@RequestParam(value="birth")String birth,
+    		HttpServletRequest request) throws ParseException {
         DataResult dataResult;
+        doctor.setDoctorNo(request.getParameter("doctorNo"));
+        doctor.setDoctorBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birth));
         dataResult = adminService.updateDoctor(doctor);
         return dataResult;
     }
@@ -232,6 +244,7 @@ public class AdminManagementController {
      * @return
      */
     @RequestMapping(value="/updateDepartment", method = RequestMethod.POST)
+    @ResponseBody
     public DataResult updateDepartment(@RequestParam("departmentNo") String departmentNo,
                                  @RequestParam("depName") String depName) {
         DataResult dataResult = new DataResult();
@@ -266,6 +279,19 @@ public class AdminManagementController {
     	return dataGridResult;
     }
     
+    /**
+     * 根据条件获取病人信息
+     * @author Mervyn
+     * 
+     * @param pageSize
+     * @param pageNumber
+     * @param patientName
+     * @param patientSex
+     * @param patientMinAge
+     * @param patientMaxAge
+     * @param patientPhone
+     * @return
+     */
     @RequestMapping(value = "/queryPatientList", method = RequestMethod.POST)
     @ResponseBody
     public DataGridResult queryPatientList(@RequestParam(value = "pageSize", required = true) int pageSize,
