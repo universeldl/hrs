@@ -15,14 +15,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
-import com.zjy.service.DoctorService;
 import com.zjy.service.DutyService;
 import com.zjy.util.Constants;
+import com.zjy.entity.Prescription;
+import com.zjy.service.DoctorService;
+import com.zjy.service.MedicineService;
+import com.zjy.service.PrescriptionService;
+import com.zjy.vo.DataGridResult;
+import com.zjy.vo.DataResult;
 
 /**
  * @author Mervyn
@@ -38,7 +44,13 @@ public class DoctorController {
 	@Autowired
 	DutyService dutyService;
 	
-	/**
+  @Autowired
+  MedicineService medicineService;
+  
+	@Autowired
+	PrescriptionService preService
+    
+  /**
 	 * 根据部门和值班时间获取医生
 	 * @author Mervyn
 	 * 
@@ -86,6 +98,38 @@ public class DoctorController {
 			return new ArrayList<Doctor>();
 		param.put("doctorNos", doctorNos);
 		return doctorService.selectDoctorByDepartmentAndDuty(param);
+	}
+	
+	/**
+	 * 开药时药品查询列表
+	 * @param pageSize
+	 * @param pageNumber
+	 * @param medicineName
+	 * @return
+	 */
+	@RequestMapping("/queryMedicine")
+	@ResponseBody
+	public DataGridResult queryMedicine(@RequestParam(value = "pageSize", required = true) int pageSize,
+	                                    @RequestParam(value = "pageNumber", required = true) int pageNumber,
+	                                    @RequestParam("medicineName") String medicineName) {
+	    
+	    DataGridResult dataGridResult = medicineService.queryListByName(medicineName, pageNumber, pageSize);
+        return dataGridResult;
+	}
+	
+	
+	/**
+	 * 开药时的记录，添加到处方表
+	 * @param prescription
+	 * @return
+	 */
+	@RequestMapping(value="/addMedicine", method=RequestMethod.POST)
+	@ResponseBody
+	public DataResult addMedicine(Prescription prescription) {
+	    DataResult dataResult;
+	    prescription.setId();
+	    dataResult = preService.insertPrescription(prescription);
+	    return dataResult;
 	}
 	
 }
