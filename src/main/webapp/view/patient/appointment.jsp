@@ -46,11 +46,15 @@
 	                    return;
 	            	}
 	                for (var i = 0; i < data.length; i++) {
-	                    $('#selectDoctor').append("<option value=" + data[i].doctorNo + ">" + data[i].doctorName + "</option>");
+	                    $('#selectDoctor').append("<option value=" + data[i].doctorNo + ">" + data[i].doctorName + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[i].doctorRegistrationFee + "元" + "</option>");
 	                    $('#selectDoctor').selectpicker('refresh');//必须要有
 	                }
 	            }
 	        });
+		});
+		$('#selectDoctor').change(function() {
+			var select = $('#selectDoctor').val();
+			
 		});
         $('#datetimepicker').datetimepicker({
             format: 'yyyy-mm-dd',//日期格式化，只显示日期
@@ -74,6 +78,7 @@
 	        </span>
 	    </div>
 		<select id="selectDoctor" class="selectpicker" title="选择医生"></select>
+		<label id="feeLabel"></label>
 	</form>
 </body>
 </html>
