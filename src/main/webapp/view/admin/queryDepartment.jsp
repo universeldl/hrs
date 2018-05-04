@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -16,6 +17,7 @@
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
  	<script type="text/javascript">
  	$(function() {
 		//获取科室列表
@@ -176,6 +178,24 @@
 		        });
 	    	}
 	    });
+
+		$("#editForm").bootstrapValidator({
+			message: 'This value is not valid',
+			feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				depName: {
+					validators: {
+						notEmpty: {
+							message: '科室名不能为空'
+						}
+					}
+				}
+			}
+		});
  	});
 	</script>
 </head>
@@ -201,11 +221,11 @@
 	        <h4 class="modal-title" id="myModalLabel">科室详情</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDepartment">
+	        <form id="editForm" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDepartment" method="post">
 			  <div class="form-group">
 			    <label for="departmentNo" class="col-sm-2 control-label">科室编号:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="departmentNo" name="departmentNo" value="" disabled>
+			      <input type="text" class="form-control" id="departmentNo" name="departmentNo" value="" readonly>
 			    </div>
 			  </div>
 			  <div class="form-group">

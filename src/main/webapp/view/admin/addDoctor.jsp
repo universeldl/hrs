@@ -6,14 +6,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>医生录入</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" />
 	<link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-	<link href="${pageContext.request.contextPath}/css/templatemo_style.css" rel="stylesheet" type="text/css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
@@ -25,8 +25,7 @@
 	            url: "/department/loadDepartment",
 	            dataType: "json",
 	            success: function (data) {
-	            	$('#doctorDepartmentNo').append("<option value=" + data[0].departmentNo + " selected>" + data[0].departmentName + "</option>");
-	                for (var i = 1; i < data.length; i++) {
+	                for (var i = 0; i < data.length; i++) {
 	                    $('#doctorDepartmentNo').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
 	                    $('#doctorDepartmentNo').selectpicker('refresh');//必须要有
 	                }
@@ -129,30 +128,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">所属部门:</label>
 		    <div class="col-sm-4">
-				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control">
-					<!-- <option value="D843" selected="selected">内科</option>
-					<option value="D215">外科</option>
-					<option value="D964">康复科</option>
-					<option value="D700">眼科</option>
-					<option value="D507">影像科</option>
-					<option value="D858">骨科</option>
-					<option value="D873">皮肤科</option>
-					<option value="D886">急诊科</option>
-					<option value="D053">肿瘤科</option>
-					<option value="D572">营养科</option>
-					<option value="D199">妇产科</option>
-					<option value="D440">疼痛科</option>
-					<option value="D576">耳鼻咽喉科</option>
-					<option value="D035">药学门诊</option>
-					<option value="D027">针灸科</option>
-					<option value="D803">中医科</option>
-					<option value="D602">感染科</option>
-					<option value="D154">超声医学科</option>
-					<option value="D145">口腔科</option>
-					<option value="D778">儿科</option>
-					<option value="D052">麻醉科</option>
-					<option value="D982">心理科</option> -->
-				</select>
+				<select class="selectpicker form-control" id="doctorDepartmentNo" name="doctorDepartmentNo" title="请选择"></select>
 		    </div>
 		</div>
 		<div class="form-group">

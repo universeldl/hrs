@@ -9,18 +9,18 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
 	<link href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" />
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
- 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
  	
  	<script type="text/javascript">
  	$(function() {
@@ -28,10 +28,20 @@
             url: "/department/loadDepartment",
             dataType: "json",
             success: function (data) {
-            	$('#depNo').append("<option value=" + data[0].departmentNo + " selected>" + data[0].departmentName + "</option>");
-                for (var i = 1; i < data.length; i++) {
+            	$('#depNo').append("<option value=\"\">请选择</option>");
+                for (var i = 0; i < data.length; i++) {
                     $('#depNo').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
                     $('#depNo').selectpicker('refresh');//必须要有
+                }
+            }
+        });
+ 		$.ajax({
+            url: "/department/loadDepartment",
+            dataType: "json",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $('#doctorDepartmentNo').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
+                    $('#doctorDepartmentNo').selectpicker('refresh');//必须要有
                 }
             }
         });
@@ -88,7 +98,10 @@
 	            },{
 	                title:'出生日期',
 	                field:'doctorBirth',
-	                align:'center'
+	                align:'center',
+	                formatter:function(value,row,index){
+	                	return timestampToTime(value)
+	                }
 	            },{
 	                title:'电话号码',
 	                field:'doctorPhone',
@@ -100,7 +113,10 @@
 	            },{
 	                title:'入职日期',
 	                field:'doctorHireTime',
-	                align:'center'
+	                align:'center',
+	                formatter:function(value,row,index){
+	                	return timestampToTime(value)
+	                }
 	            }
 	        ]
 	    })
@@ -130,7 +146,6 @@
 	    
 	    //行内编辑配置
 	    $('#edit').click(function() {
-	        $('#mytab .editable').editable('toggleDisabled');
 	        var row = $("#mytab").bootstrapTable('getSelections');
 	  		if(row.length == 1) {
 	  			var doctorNo = '';
@@ -146,10 +161,12 @@
 	        		success: function(data){
 	        			$("input[name=doctorNo]").val(data.doctorNo);
 	        			$("input[name=doctorName]").val(data.doctorName);
-	        			$("input[name=doctorSex]").val(data.doctorSex);
-	        			$("input[name=doctorBirth]").val(data.doctorBirth);
+	        			$("#doctorSex").val(data.doctorSex);
+	        			$('#doctorSex').selectpicker('refresh');
+	        			$("input[name=doctorBirth]").val(timestampToTime(data.doctorBirth));
 	        			$("input[name=doctorPhone]").val(data.doctorPhone);
-	        			$("input[name=doctorDepartmentNo]").val(data.doctorDepartmentNo);
+	        			$("#doctorDepartmentNo").val(data.doctorDepartmentNo);
+	        			$("#doctorDepartmentNo").selectpicker('refresh');
 	        			$("input[name=doctorRegistrationFee]").val(data.doctorRegistrationFee);
 	        	        //显示模态框
 	        	        $("#myModal").modal("show");
@@ -162,6 +179,14 @@
 	    		});
 	  		}
 	    }); 
+	    
+	    function timestampToTime(timestamp) {
+	        var date = new Date(timestamp);
+	        Y = date.getFullYear() + '-';
+	        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	        D = (date.getDate()<10? '0'+date.getDate(): date.getDate()) + ' ';
+	        return Y+M+D;
+	    }
 	    
 	    //删除按钮点击事件
 	    $('#delete').click(function() {
@@ -229,30 +254,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label>科室:</label>
-	    <select class="form-control" name="depNo" id="depNo">
-	    	<!-- <option value="D843" selected="selected">内科</option>
-	    	<option value="D215">外科</option>
-	    	<option value="D964">康复科</option>
-	    	<option value="D700">眼科</option>
-	    	<option value="D507">影像科</option>
-	    	<option value="D858">骨科</option>
-	    	<option value="D873">皮肤科</option>
-	    	<option value="D886">急诊科</option>
-	    	<option value="D053">肿瘤科</option>
-	    	<option value="D572">营养科</option>
-	    	<option value="D199">妇产科</option>
-	    	<option value="D440">疼痛科</option>
-	    	<option value="D576">耳鼻咽喉科</option>
-	    	<option value="D035">药学门诊</option>
-	    	<option value="D027">针灸科</option>
-	    	<option value="D803">中医科</option>
-	    	<option value="D602">感染科</option>
-	    	<option value="D154">超声医学科</option>
-	    	<option value="D145">口腔科</option>
-	    	<option value="D778">儿科</option>
-	    	<option value="D052">麻醉科</option>
-	    	<option value="D982">心理科</option> -->
-	    </select>
+	    <select class="form-control selectpicker" name="depNo" id="depNo" title="请选择"></select>
 	  </div>
 	  <div class="form-group">
 	    <label>状态:</label>
@@ -296,11 +298,11 @@
 	        <h4 class="modal-title" id="myModalLabel">医生个人信息</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDoctor">
+	        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/admin/updateDoctor" method="post">
 			  <div class="form-group">
 			    <label for="doctorNo" class="col-sm-2 control-label">医生编号:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="doctorNo" name="doctorNo" value="" disabled>
+			      <input type="text" class="form-control" id="doctorNo" name="doctorNo" value="" readonly>
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -312,13 +314,20 @@
 			  <div class="form-group">
 			    <label for="doctorSex" class="col-sm-2 control-label">医生性别:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="doctorSex" name="doctorSex" value="">
+			    	<select id="doctorSex" name="doctorSex" class="selectpicker">
+			    		<option value="1">男</option>
+			    		<option value="0">女</option>
+			    	</select>
+<!-- 			      <input type="text" class="form-control" id="doctorSex" name="doctorSex" value=""> -->
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="doctorBirth" class="col-sm-2 control-label">出生日期:</label>
 			    <div class="col-sm-10">
-			      <input type="date" class="form-control" id="doctorBirth" name="doctorBirth" value="">
+					<div class='input-group date' id='datetimepicker'>
+						<input type="text" class="form-control" id="doctorBirth" name="doctorBirth" value="">
+						<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+					</div>
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -330,7 +339,7 @@
 			  <div class="form-group">
 			    <label for="doctorDepartmentNo" class="col-sm-2 control-label">所属部门:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="doctorDepartmentNo" name="doctorDepartmentNo" value="">
+					<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="selectpicker" title="请选择"></select>
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -361,6 +370,17 @@
 	            minView: 'month'
 	        });
 	    }); 
+	    $(function () {
+	        $('#datetimepicker').datetimepicker({
+	            format: 'yyyy-mm-dd',//日期格式化，只显示日期
+	            language: 'zh-CN',      //中文化
+	            endDate: new Date(),
+	            todayBtn: "linked",
+	            autoclose: true,
+	            startView: 'decade',
+	            minView: 'month'
+	        });
+	    });
 	</script>
 </body>
 </html>

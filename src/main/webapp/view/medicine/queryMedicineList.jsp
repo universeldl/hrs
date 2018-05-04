@@ -8,13 +8,11 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" />
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-editable.css" />
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
- 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
  	<script type="text/javascript">
  	$(function() {
@@ -86,7 +84,6 @@
 	    
 	    //行内编辑配置
 	    $('#edit').click(function() {
-	        $('#medicineTable .editable').editable('toggleDisabled');
 	       /* var medicineNo = $("#medicineTable").bootstrapTable('onClickRow',function(row, $element){
 	            return row.medicineNo;
 	  		});	 */ 
@@ -206,7 +203,7 @@
 			  <div class="form-group">
 			    <label for="medicineNo" class="col-sm-2 control-label">药品编号:</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="medicineNo" name="medicineNo" value="" disabled>
+			      <input type="text" class="form-control" id="medicineNo" name="medicineNo" value="" readonly>
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -224,7 +221,7 @@
 			  <div class="form-group">
 			    <label for="medicineAmount" class="col-sm-2 control-label">药品剩余数量:</label>
 			    <div class="col-sm-10">
-			      <input type="number" class="form-control" id="medicineAmount" name="medicineAmount" value="" disabled>
+			      <input type="number" class="form-control" id="medicineAmount" name="medicineAmount" value="" readonly>
 			    </div>
 			  </div>
 			  <div class="form-group">
