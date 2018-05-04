@@ -21,6 +21,19 @@
 	
 	<script type="text/javascript">
 		$(function() {
+			$.ajax({
+	            url: "/department/loadDepartment",
+	            dataType: "json",
+	            success: function (data) {
+	            	$('#doctorDepartmentNo').append("<option value=" + data[0].departmentNo + " selected>" + data[0].departmentName + "</option>");
+	                for (var i = 1; i < data.length; i++) {
+	                    $('#doctorDepartmentNo').append("<option value=" + data[i].departmentNo + ">" + data[i].departmentName + "</option>");
+	                    $('#doctorDepartmentNo').selectpicker('refresh');//必须要有
+	                }
+	            }
+	        });
+			
+			
 			$("#addDoctor").bootstrapValidator({
 				message: 'This value is not valid',
 				feedbackIcons: {
@@ -117,7 +130,7 @@
 			<label class="col-sm-2 control-label">所属部门:</label>
 		    <div class="col-sm-4">
 				<select id="doctorDepartmentNo" name="doctorDepartmentNo" class="form-control">
-					<option value="D843" selected="selected">内科</option>
+					<!-- <option value="D843" selected="selected">内科</option>
 					<option value="D215">外科</option>
 					<option value="D964">康复科</option>
 					<option value="D700">眼科</option>
@@ -138,7 +151,7 @@
 					<option value="D145">口腔科</option>
 					<option value="D778">儿科</option>
 					<option value="D052">麻醉科</option>
-					<option value="D982">心理科</option>
+					<option value="D982">心理科</option> -->
 				</select>
 		    </div>
 		</div>
