@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.zjy.dao.PrescriptionMapper;
 import com.zjy.entity.Prescription;
+import com.zjy.vo.DataResult;
 
 /**
  * @author Mervyn
@@ -31,6 +32,22 @@ public class PrescriptionService {
             // TODO: handle exception
             throw new RuntimeException("处方批量插入失败");
         }
+    }
+
+    public DataResult insertPrescription(Prescription prescription) {
+        // TODO Auto-generated method stub
+        DataResult dataResult = new DataResult();
+        try {
+            if(preMapper.insert(prescription)==1) {
+                dataResult.setStatus(true);
+                dataResult.setTips("插入成功");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            dataResult.setStatus(false);
+            dataResult.setTips("插入失败");
+        }
+        return dataResult;
     }
 
 }
