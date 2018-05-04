@@ -44,11 +44,11 @@ public class DoctorController {
 	@Autowired
 	DutyService dutyService;
 	
-  @Autowired
-  MedicineService medicineService;
+	@Autowired
+	MedicineService medicineService;
   
 	@Autowired
-	PrescriptionService preService
+	PrescriptionService preService;
     
   /**
 	 * 根据部门和值班时间获取医生
