@@ -1,5 +1,7 @@
 package com.zjy.dao;
 
+import java.util.List;
+
 import com.zjy.entity.Duty;
 
 public interface DutyMapper {
@@ -16,4 +18,6 @@ public interface DutyMapper {
     int updateByPrimaryKey(Duty record);
 
     Duty selectDutyByNo(String id);
+    
+    List<String> selectDoctorByDuty(Duty duty);
 }

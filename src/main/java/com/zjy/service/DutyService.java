@@ -15,6 +15,7 @@ import com.zjy.dao.DoctorMapper;
 import com.zjy.dao.DutyMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
+import com.zjy.util.Constants;
 
 /**
  * @author Mervyn
@@ -25,7 +26,7 @@ import com.zjy.entity.Duty;
 public class DutyService {
 
     @Autowired
-    private DutyMapper dutymapper;
+    private DutyMapper dutyMapper;
     
     @Autowired
     private DoctorMapper doctorMapper;
@@ -33,7 +34,7 @@ public class DutyService {
     public Duty queryDutyById(String id) {
         // TODO Auto-generated method stub
         try {
-            return dutymapper.selectDutyByNo(id);
+            return dutyMapper.selectDutyByNo(id);
         } catch (Exception e) {
             // TODO: handle exception
             throw new RuntimeException("医生编号"+id+"有误，查找值班信息失败");
@@ -62,26 +63,26 @@ public class DutyService {
             List<String> Saturday = new ArrayList<String>();
             List<String> Sunday = new ArrayList<String>();
             for(Doctor doctor : list) {
-               Duty duty = dutymapper.selectDutyByNo(doctor.getDoctorDepartmentNo());
-               if("1".equals(duty.getMonday())) {
+               Duty duty = dutyMapper.selectDutyByNo(doctor.getDoctorDepartmentNo());
+               if(Constants.ON_DUTY.equals(duty.getMonday())) {
                    Monday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getTuesday())) {
+               if(Constants.ON_DUTY.equals(duty.getTuesday())) {
                    Tuesday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getWednesday())) {
+               if(Constants.ON_DUTY.equals(duty.getWednesday())) {
                    Wednesday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getThursday())) {
+               if(Constants.ON_DUTY.equals(duty.getThursday())) {
                    Thursday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getFriday())) {
+               if(Constants.ON_DUTY.equals(duty.getFriday())) {
                    Friday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getSaturday())) {
+               if(Constants.ON_DUTY.equals(duty.getSaturday())) {
                    Saturday.add(doctor.getDoctorName());
                }
-               if("1".equals(duty.getSunday())) {
+               if(Constants.ON_DUTY.equals(duty.getSunday())) {
                    Sunday.add(doctor.getDoctorName());
                }
             }
@@ -96,6 +97,10 @@ public class DutyService {
         }catch(Exception e) {
             throw new RuntimeException("查看科室值班表失败");
         }
+    }
+    
+    public List<String> selectDoctorByDuty(Duty duty) {
+    	return dutyMapper.selectDoctorByDuty(duty);
     }
 
 }

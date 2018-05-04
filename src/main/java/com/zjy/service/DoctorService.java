@@ -38,12 +38,16 @@ public class DoctorService {
         try {
             return doctorMapper.selectByDoctorNo(id);
         }catch(Exception e) {
-            throw new RuntimeException("查看详情失败");
+        	throw new RuntimeException("根据编号查询医生失败");
         }
     }
     
     public List<Doctor> selectDoctorByDepartment(String departmentNo) {
     	return doctorMapper.selectDoctorByDepartment(departmentNo);
+    }
+    
+    public List<Doctor> selectDoctorByDepartmentAndDuty(Map<String, Object> param){
+    	return doctorMapper.selectDoctorByDepartmentAndDuty(param);
     }
 
 }

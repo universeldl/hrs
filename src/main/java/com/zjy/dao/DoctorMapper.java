@@ -26,6 +26,8 @@ public interface DoctorMapper {
     List<Doctor> queryDoctorByDepNo(String depNo);
     
     List<Doctor> selectDoctorByDepartment(String departmentNo);
+    
+    List<Doctor> selectDoctorByDepartmentAndDuty(Map<String, Object> param);
 
     int selectCountByDeptNo(String departmentNo);
     
