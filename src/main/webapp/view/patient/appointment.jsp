@@ -31,16 +31,16 @@
             }
         });
 		$('#selectDepartment').change(function() {
-			$('#viewTime').val("");
+			$('#viewDate').val("");
 		});
-		$('#viewTime').change(function() {
+		$('#viewDate').change(function() {
 			$('#selectDoctor').empty();
 			$.ajax({
 	            url: "/doctor/loadDoctor",
 	            dataType: "json",
 	            data: {
 	            	departmentNo: $('#selectDepartment').val(),
-	            	viewTime: $('#viewTime').val()
+	            	viewDate: $('#viewDate').val()
 	            },
 	            success: function (data) {
 	            	if (data.length == 0) {
@@ -59,14 +59,13 @@
 			var select = $('#selectDoctor').val();
 		});
         $('#datetimepicker').datetimepicker({
-            format: 'yyyy-mm-dd hh:00',//日期格式化，只显示日期
+            format: 'yyyy-mm-dd',//日期格式化，只显示日期
             language: 'zh-CN',      //中文化
             startDate: new Date(),
             endDate: new Date(new Date().valueOf() + 6*86400000),
             todayBtn: "linked",
             autoclose: true,
-            minView: 'day',
-            minuteStep: 30
+            minView: 'month',
         });
 	});
 </script>
@@ -75,7 +74,7 @@
 	<form id="appointmentForm" class="form-inline" style="margin-top: 30px; margin-left: 30px" action="/patient/appointment" method="post" >
 		<select id="selectDepartment" name="department" class="selectpicker" title="选择科室"></select>
 		<div class='input-group date' id='datetimepicker'>
-	        <input type='text' class="form-control" id="viewTime" name=viewTime value="" placeholder="就诊日期" />
+	        <input type='text' class="form-control" id="viewDate" name=viewDate value="" placeholder="就诊日期" />
 	        <span class="input-group-addon">
 	            <span class="fa fa-calendar"></span>
 	        </span>

@@ -162,7 +162,7 @@ public class PatientController {
 	@RequestMapping(value = "/appointment", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult appointment(@RequestParam(value="doctor") String doctorNo,
-			@RequestParam(value="viewTime") String viewTime,
+			@RequestParam(value="viewDate") String viewDate,
 			HttpServletRequest request) throws ParseException {
 		
 		DataResult dataResult;
@@ -173,7 +173,7 @@ public class PatientController {
 		registration.setDoctorNo(doctorNo);
 		registration.setPatientNo(((Patient) request.getSession().getAttribute(Constants.SESSION_USER)).getPatientNo());
 		registration.setAppointmentTime(new Date());
-		registration.setVisitTime(new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(viewTime));
+		registration.setVisitTime(new SimpleDateFormat("yyyy-MM-dd").parse(viewDate));
 		registration.setStatus(Constants.APPOINT_TYPE);
 		registration.setCreateTime();
 		registration.setUpdateTime();

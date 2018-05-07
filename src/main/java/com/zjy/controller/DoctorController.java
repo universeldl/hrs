@@ -62,8 +62,8 @@ public class DoctorController {
 	@RequestMapping("/loadDoctor")
 	@ResponseBody
 	public List<Doctor> loadDoctor(@RequestParam(value="departmentNo") String departmentNo,
-			@RequestParam(value="viewTime") String viewTime) throws ParseException {
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(viewTime);
+			@RequestParam(value="viewDate") String viewDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(viewDate);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
