@@ -25,7 +25,8 @@
  	<script type="text/javascript">
  	$(function() {
  		$.ajax({
-            url: "/department/loadDepartment",
+            url: "${pageContext.request.contextPath}/department/loadDepartment",
+            type:"post",
             dataType: "json",
             success: function (data) {
             	$('#depNo').append("<option value=\"\">请选择</option>");
@@ -35,8 +36,9 @@
                 }
             }
         });
- 		$.ajax({
-            url: "/department/loadDepartment",
+ 		/* $.ajax({
+            url: "${pageContext.request.contextPath}/department/loadDepartment",
+            type:"post",
             dataType: "json",
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
@@ -44,7 +46,7 @@
                     $('#doctorDepartmentNo').selectpicker('refresh');//必须要有
                 }
             }
-        });
+        }); */
  		
 		//获取科室列表
 	    $('#mytab').bootstrapTable({

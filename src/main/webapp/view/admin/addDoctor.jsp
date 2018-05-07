@@ -22,7 +22,8 @@
 	<script type="text/javascript">
 		$(function() {
 			$.ajax({
-	            url: "/department/loadDepartment",
+	            url: "${pageContext.request.contextPath}/department/loadDepartment",
+	            type:"post",
 	            dataType: "json",
 	            success: function (data) {
 	                for (var i = 0; i < data.length; i++) {

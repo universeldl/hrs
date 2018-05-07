@@ -3,6 +3,8 @@ package com.zjy.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,10 +51,10 @@ public class ConsultationController {
      * @return
      */
     @RequestMapping("/consultationQueryDetail")
-    public String consultationQueryDetail(@RequestParam("regNo") String regNo) {
+    public String consultationQueryDetail(@RequestParam("regNo") String regNo, HttpServletRequest request) {
         Consultation consultation = service.queryConsultationByNo(regNo);
-        
-        return "";
+        request.getSession().setAttribute("consultation", consultation);
+        return "doctor/visitDetail";
     }
     
     /**
