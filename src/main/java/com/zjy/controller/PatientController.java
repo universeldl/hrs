@@ -63,6 +63,14 @@ public class PatientController {
 		return "patient/appointment";
 	}
 	
+	@RequestMapping(value="/showQueryRegistration")
+	public ModelAndView showQueryRegistration(@RequestParam(required=true) String no) {
+		Patient patient = patientService.selectByPatientNo(no);
+		ModelAndView m = new ModelAndView("/patient/queryRegistration");
+		m.addObject("patient", patient);
+		return m;
+	}
+	
 	/**
 	 * 用户注册
 	 * @author Mervyn
@@ -161,7 +169,8 @@ public class PatientController {
 	
 	@RequestMapping(value = "/appointment", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult appointment(@RequestParam(value="doctor") String doctorNo,
+	public DataResult appointment(@RequestParam(value="department") String departmentNo,
+			@RequestParam(value="doctor") String doctorNo,
 			@RequestParam(value="viewDate") String viewDate,
 			HttpServletRequest request) throws ParseException {
 		
@@ -170,6 +179,7 @@ public class PatientController {
 		Registration registration = new Registration();
 		registration.setId();
 		registration.setRegistrationNo();
+		registration.setDepartmentNo(departmentNo);
 		registration.setDoctorNo(doctorNo);
 		registration.setPatientNo(((Patient) request.getSession().getAttribute(Constants.SESSION_USER)).getPatientNo());
 		registration.setAppointmentTime(new Date());

@@ -23,6 +23,32 @@
     from registration
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectRegistrationInfoByPage" resultType="com.zjy.vo.RegistrationResult" parameterType="HashMap">
+  	select
+  		r.registration_no as registrationNo, dept.department_name as departmentName, 
+  		do.doctor_name as doctorName, r.visit_time as visitTime, r.status as status
+  	from registration r
+  	left join doctor do on r.doctor_no = do.doctor_no
+  	left join department dept on r.department_no = dept.department_no
+    <where>
+    	<if test="patientNo != null">
+    		and patient_no = #{patientNo, jdbcType=VARCHAR}
+    	</if>
+    	<if test="departmentNo != null">
+    		and department_no = #{departmentNo, jdbcType=VARCHAR}
+    	</if>
+    	<if test="status != null">
+    		and status = #{status, jdbcType=VARCHAR}
+    	</if>
+    	<if test="beginDate != null">
+    		and visit_time &gt;= #{beginDate, jdbcType=INTEGER}
+    	</if>
+    	<if test="endDate != null">
+    		and visit_time &lt;= #{endDate, jdbcType=INTEGER}
+    	</if>
+    </where>
+    order by visit_time
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from registration
     where id = #{id,jdbcType=VARCHAR}

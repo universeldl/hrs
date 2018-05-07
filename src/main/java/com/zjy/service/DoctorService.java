@@ -30,6 +30,7 @@ public class DoctorService {
         try{
         	return doctorMapper.deleteByPrimaryKey(id);
         }catch (Exception e) {
+        	e.printStackTrace();
             throw new RuntimeException("删除医生失败");
         }
     }
@@ -38,6 +39,7 @@ public class DoctorService {
         try {
             return doctorMapper.selectByDoctorNo(id);
         }catch(Exception e) {
+        	e.printStackTrace();
         	throw new RuntimeException("根据编号查询医生失败");
         }
     }
