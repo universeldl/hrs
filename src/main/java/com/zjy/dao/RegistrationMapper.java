@@ -22,4 +22,6 @@ public interface RegistrationMapper {
     Registration selectRegistrationByNo(String regNo);
     
     List<RegistrationResult> selectRegistrationInfoByPage(Map<String, Object> map);
+    
+    int cancelRegistration(String registrationNo);
 }

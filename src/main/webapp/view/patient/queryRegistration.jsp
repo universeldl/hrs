@@ -66,15 +66,23 @@
 	                formatter: function (value, row, index) {
 	                    return formatStatus(value)
 	                }
+	            },{
+	            	title:'操作',
+	                field:'registrationNo',
+	                align:'center',
+	                formatter: actionFormatter
 	            }
-// 	            ,{
-// 	            	title:'操作',
-// 	                field:'id',
-// 	                align:'center',
-// 	                formatter: actionFormatter
-// 	            }
 	        ]
 	    });
+	  	//操作栏的格式化
+        function actionFormatter(value, row, index) {
+            var no = value;
+            if (row.status == "1")
+            	return "<a href='#' class='btn btn-danger' onclick=\"cancelById('" + no + "')\" type='button'><span class='fa fa-remove'></span></a>";
+           	else
+           		return "-";
+        }
+		//状态格式化
 	    function formatStatus(value) {
 	    	if ("0" == value)
 	    		return "取消";
@@ -148,9 +156,52 @@
         });
  	});
 	</script>
+	<script>
+		function cancelById(no) {
+	        bootbox.confirm({
+    			size: "small",
+	        	message: "确认取消这个预约？",
+	            buttons: {
+	                confirm: {
+	                    label: '确认',
+	                    className: 'btn-success'
+	                },
+	                cancel: {
+	                    label: '取消',
+	                    className: 'btn-danger'
+	                }
+	            },
+	        	callback: function(result){
+	        	/* result is a boolean; true = OK, false = Cancel*/ 
+	        		if (result) {
+			        	$.ajax({
+			        		url: "${pageContext.request.contextPath}/registration/cancelRegistration",
+			        		type: "post",
+			        		data: "registrationNo=" + no,
+			        		dataType: "json",
+			        		async: true,
+			        		success: function(data) {
+			        			if (data.status)
+			        		        $('#registrationTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/registration/queryRegistrationList'});
+			        			else {
+			        				alert(data.tips);
+			        			}
+			        		},
+							error : function() {
+								bootbox.alert({
+					    			size: "small",
+						        	message: "删除出错"
+								});
+							}
+			        	});
+	        		}
+	        	}
+	        });
+		}
+	</script>
 </head>
 <body>
-	<form class="form-inline" style="margin-top: 30px; margin-left: 30px">
+	<form class="form-inline" style="margin-top: 30px;">
 		<div class="form-group">
 			<label for="department">科室：</label>
 			<select id="department" name="department" class="selectpicker" title="选择科室"></select>
