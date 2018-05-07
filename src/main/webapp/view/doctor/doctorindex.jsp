@@ -9,6 +9,29 @@
 		
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript">
+			$(function() {
+				$("#visitForm").bootstrapValidator({
+			        container: '#tip',
+					message: 'This value is not valid',
+					feedbackIcons: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						regNo: {
+							validators: {
+								notEmpty: {
+									message: '挂号编号不能为空'
+								}
+							}
+						}
+					}
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<div class="panel panel-default">
@@ -38,8 +61,8 @@
 		  </div>
 		  <hr width="100%"/>
 		  <div class="panel-body">
-		    <form class="form-horizontal" role="form" action="#">
-			  <div class="form-group">
+		    <form class="form-horizontal" id="visitForm" role="form" action="${pageContext.request.contextPath}/consultationQueryDetail">
+		      <div class="form-group">
 			    <label for="regNo" class="col-sm-4 control-label">挂号编号：</label>
 			    <div class="col-sm-2">
 			      <input type="text" class="form-control" id="regNo" name="regNo" />
