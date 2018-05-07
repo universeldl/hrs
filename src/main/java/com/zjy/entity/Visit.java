@@ -13,6 +13,8 @@ public class Visit {
 
     private String patientNo;
 
+    private String departmentNo;
+
     private String doctorNo;
 
     private Date appointmentTime;
@@ -49,6 +51,14 @@ public class Visit {
 
     public void setPatientNo(String patientNo) {
         this.patientNo = patientNo == null ? null : patientNo.trim();
+    }
+
+    public String getDepartmentNo() {
+        return departmentNo;
+    }
+
+    public void setDepartmentNo(String departmentNo) {
+        this.departmentNo = departmentNo == null ? null : departmentNo.trim();
     }
 
     public String getDoctorNo() {

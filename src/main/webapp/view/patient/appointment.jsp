@@ -9,8 +9,11 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" />
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css">
+	<link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -54,7 +57,6 @@
 		});
 		$('#selectDoctor').change(function() {
 			var select = $('#selectDoctor').val();
-			
 		});
         $('#datetimepicker').datetimepicker({
             format: 'yyyy-mm-dd',//日期格式化，只显示日期
@@ -63,22 +65,23 @@
             endDate: new Date(new Date().valueOf() + 6*86400000),
             todayBtn: "linked",
             autoclose: true,
-            minView: 'month'
+            minView: 'month',
         });
 	});
 </script>
 </head>
 <body>
-	<form class="form-inline" style="margin-top: 30px; margin-left: 30px" >
-		<select id="selectDepartment" class="selectpicker" title="选择科室"></select>
+	<form id="appointmentForm" class="form-inline" style="margin-top: 30px; margin-left: 30px" action="/patient/appointment" method="post" >
+		<select id="selectDepartment" name="department" class="selectpicker" title="选择科室"></select>
 		<div class='input-group date' id='datetimepicker'>
-	        <input type='text' class="form-control" id="viewDate" name="viewDate" value="" placeholder="就诊日期" />
+	        <input type='text' class="form-control" id="viewDate" name=viewDate value="" placeholder="就诊日期" />
 	        <span class="input-group-addon">
 	            <span class="fa fa-calendar"></span>
 	        </span>
 	    </div>
-		<select id="selectDoctor" class="selectpicker" title="选择医生"></select>
+		<select id="selectDoctor" name="doctor" class="selectpicker" title="选择医生"></select>
 		<label id="feeLabel"></label>
+		<input type="submit" value="预约" class="btn btn-info">
 	</form>
 </body>
 </html>

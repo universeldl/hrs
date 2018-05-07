@@ -2,6 +2,7 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.zjy.entity.Patient;
+import com.zjy.entity.Registration;
 import com.zjy.service.PatientService;
+import com.zjy.service.RegistrationService;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.DataResult;
@@ -33,6 +36,9 @@ public class PatientController {
 
 	@Autowired
 	PatientService patientService;
+	
+	@Autowired
+	RegistrationService registrationService;
 	
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String toRegistrate() {
@@ -150,6 +156,29 @@ public class PatientController {
 
 		dataResult = patientService.updatePassword(patient, oldPassword, newPassword);
 		
+		return dataResult;
+	}
+	
+	@RequestMapping(value = "/appointment", method = RequestMethod.POST)
+	@ResponseBody
+	public DataResult appointment(@RequestParam(value="doctor") String doctorNo,
+			@RequestParam(value="viewDate") String viewDate,
+			HttpServletRequest request) throws ParseException {
+		
+		DataResult dataResult;
+		
+		Registration registration = new Registration();
+		registration.setId();
+		registration.setRegistrationNo();
+		registration.setDoctorNo(doctorNo);
+		registration.setPatientNo(((Patient) request.getSession().getAttribute(Constants.SESSION_USER)).getPatientNo());
+		registration.setAppointmentTime(new Date());
+		registration.setVisitTime(new SimpleDateFormat("yyyy-MM-dd").parse(viewDate));
+		registration.setStatus(Constants.APPOINT_TYPE);
+		registration.setCreateTime();
+		registration.setUpdateTime();
+		
+		dataResult = registrationService.insert(registration);		
 		return dataResult;
 	}
 }
