@@ -67,7 +67,7 @@
   	from doctor 
   	<where>
   		<if test="name!=null and name!=''">
-  			and doctor_name=#{name}
+	    	and doctor_name like CONCAT('%',#{name},'%')
   		</if>
   		<if test="depNo!=null and depNo!=''">
   			and doctor_department_no=#{depNo}

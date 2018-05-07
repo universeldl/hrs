@@ -82,6 +82,10 @@
 	    $('#search_btn').click(function(){
 	        $('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
 	    })
+	    $('#reset_btn').click(function() {
+	    	$('#departmentName').val("");
+	        $('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
+	    });
 	    //tableHeight函数
 	    function tableHeight(){
 	        //可以根据自己页面情况进行调整
@@ -204,7 +208,8 @@
 		<div class="form-group">
 			<label>科室名:</label> <input type="text" class="form-control" id="departmentName" name="departmentName">
 		</div>
-		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
+		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
 	</form>
 	<div id="toolbar">
 		<button id="edit" class="btn btn-primary">修改</button>

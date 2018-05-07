@@ -185,8 +185,8 @@
 			<label for="patientNo">病人编号：</label>
 			<input type="text" class="form-control" id="patientNo" name="patientNo" value=${patient.patientNo}>
 		</div>
-		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;"></input>
-		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
+		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
 	</form>
 	<table id="registrationTable" class="table table-hover table-striped"></table>
 </body>

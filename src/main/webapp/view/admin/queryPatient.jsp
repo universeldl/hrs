@@ -116,6 +116,14 @@
 	    $('#search_btn').click(function(){
 	        $('#patientTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryPatientList'});
 	    })
+	    $('#reset_btn').click(function(){
+	    	$('#patientName').val("");
+	    	$('#patientSex').val("");
+	    	$('#patientMinAge').val("");
+	    	$('#patientMaxAge').val("");
+	    	$('#patientPhone').val("");
+	        $('#patientTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryPatientList'});
+	    })
 	    //tableHeight函数
 	    function tableHeight(){
 	        //可以根据自己页面情况进行调整
@@ -130,7 +138,7 @@
 			<label>姓名:</label> <input type="text" class="form-control" id="patientName" name="patientName">
 			<label style="margin-left:20px">性别:</label>
            	<select id="patientSex" name="patientSex" class="form-control" style="width: 100px;">
-           		<option value=null>请选择</option>
+           		<option value="">请选择</option>
            		<option value="0">女</option>
            		<option value="1">男</option>
            	</select>
@@ -138,7 +146,8 @@
 			<label>-</label> <input type="text" class="form-control" id="patientMaxAge" name="patientMaxAge" style="width: 100px;">
 			<label style="margin-left:20px">手机号:</label> <input type="text" class="form-control" id="patientPhone" name="patientPhone">
 		</div>
-		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
+		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
 	</form>
 	<table id="patientTable" class="table table-hover table-striped"></table>
 </body>
