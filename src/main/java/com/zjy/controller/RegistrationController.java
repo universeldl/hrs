@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.service.RegistrationService;
 import com.zjy.vo.DataGridResult;
+import com.zjy.vo.DataResult;
 
 /**
  * @author Mervyn
@@ -68,5 +69,11 @@ public class RegistrationController {
 		DataGridResult dataGridResult = registrationService.queryListByName(map, pageNumber, pageSize);
 		
 		return dataGridResult;
+	}
+	
+	@RequestMapping(value="/cancelRegistration", method=RequestMethod.POST)
+	@ResponseBody
+	public DataResult cancelRegistration(@RequestParam(value="registrationNo") String registrationNo) {
+		return registrationService.cancelRegistration(registrationNo);
 	}
 }

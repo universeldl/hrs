@@ -54,4 +54,24 @@ public class RegistrationService {
 				pageInfo.getPageNum());
 		return dataGridResult;
 	}
+	
+	public DataResult cancelRegistration(String registrationNo) {
+		DataResult dataResult = new DataResult();
+		
+		try {
+			if (registrationMapper.cancelRegistration(registrationNo)==1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("取消成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("取消失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			dataResult.setStatus(false);
+			dataResult.setTips("取消失败");
+		}
+		
+		return dataResult;
+	}
 }
