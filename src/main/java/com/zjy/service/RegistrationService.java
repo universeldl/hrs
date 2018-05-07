@@ -3,12 +3,19 @@
  */
 package com.zjy.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.RegistrationMapper;
 import com.zjy.entity.Registration;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
+import com.zjy.vo.RegistrationResult;
 
 /**
  * @author Mervyn
@@ -39,4 +46,12 @@ public class RegistrationService {
 		return dataResult;
 	}
 	
+	public DataGridResult queryListByName(Map<String, Object> map, int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<RegistrationResult> registrationList = registrationMapper.selectRegistrationInfoByPage(map);
+		PageInfo<RegistrationResult> pageInfo = new PageInfo<RegistrationResult>(registrationList);
+		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+				pageInfo.getPageNum());
+		return dataGridResult;
+	}
 }

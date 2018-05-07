@@ -1,6 +1,10 @@
 package com.zjy.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.zjy.entity.Registration;
+import com.zjy.vo.RegistrationResult;
 
 public interface RegistrationMapper {
     int deleteByPrimaryKey(String id);
@@ -16,4 +20,6 @@ public interface RegistrationMapper {
     int updateByPrimaryKey(Registration record);
 
     Registration selectRegistrationByNo(String regNo);
+    
+    List<RegistrationResult> selectRegistrationInfoByPage(Map<String, Object> map);
 }

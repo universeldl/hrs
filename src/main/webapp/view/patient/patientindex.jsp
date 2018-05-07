@@ -42,7 +42,7 @@
 					    </a>
 				    </li>
 	  				<li>
-					    <a href="#" target="frame">
+					    <a href="${pageContext.request.contextPath}/patient/showQueryRegistration?no=${patient.patientNo}" target="frame">
 					    	<span class="menu-text">挂号历史</span>
 					    </a>
 				    </li>

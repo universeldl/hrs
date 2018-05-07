@@ -80,7 +80,6 @@
 	        </span>
 	    </div>
 		<select id="selectDoctor" name="doctor" class="selectpicker" title="选择医生"></select>
-		<label id="feeLabel"></label>
 		<input type="submit" value="预约" class="btn btn-info">
 	</form>
 </body>
