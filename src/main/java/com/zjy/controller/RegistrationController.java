@@ -29,6 +29,20 @@ public class RegistrationController {
 	@Autowired
 	RegistrationService registrationService;
 	
+	/**
+	 * 根据条件查询挂号列表
+	 * @author Mervyn
+	 * 
+	 * @param pageSize
+	 * @param pageNumber
+	 * @param patientNo
+	 * @param departmentNo
+	 * @param beginDateStr
+	 * @param endDateStr
+	 * @param status
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/queryRegistrationList", method = RequestMethod.POST)
 	@ResponseBody
 	public DataGridResult queryRegistrationList(@RequestParam(value = "pageSize", required = true) int pageSize,

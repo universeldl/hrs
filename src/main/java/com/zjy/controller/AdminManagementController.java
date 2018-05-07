@@ -304,7 +304,7 @@ public class AdminManagementController {
     	Map<String, String> map = new HashMap<String, String>();
     	if (patientName != null && !"".equals(patientName))
     		map.put("patientName", patientName);
-    	if (patientSex != null && !"null".equals(patientSex))
+    	if (patientSex != null && !"".equals(patientSex))
     		map.put("patientSex", patientSex);
     	if (patientMinAge != null && !"".equals(patientMinAge))
     		map.put("patientMinAge", patientMinAge);

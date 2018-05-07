@@ -154,6 +154,10 @@
 	    $('#search_btn').click(function(){
 	        $('#dutyTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/duty/queryDutyByNo'});
 	    })
+	    $('#reset_btn').click(function(){
+	    	$('#doctorNo').val("");
+	        $('#dutyTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/duty/queryDutyByNo'});
+	    })
 	    //tableHeight函数
 	    function tableHeight(){
 	        //可以根据自己页面情况进行调整
@@ -200,7 +204,8 @@
 		<div class="form-group">
 			<label>医生编号:</label> <input type="text" class="form-control" id="doctorNo" name="doctorNo">
 		</div>
-		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;"></input>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
+		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
 	</form>
 	<div id="toolbar">
 		<button id="save" class="btn btn-primary">保存</button>

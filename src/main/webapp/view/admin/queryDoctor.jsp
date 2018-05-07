@@ -140,6 +140,15 @@
 	    $('#search_btn').click(function(){
 	        $('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
 	    })
+	    $('#reset_btn').click(function() {
+	    	$('#name').val("");
+	    	$('#depNo').val("");
+	    	$('#status').val("1");
+	    	$('#startTime').val("");
+	    	$('#endTime').val("");
+            $('#status').selectpicker('refresh');//必须要有
+	        $('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
+	    });
 	    //tableHeight函数
 	    function tableHeight(){
 	        //可以根据自己页面情况进行调整
@@ -281,6 +290,7 @@
 			<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
 		</div>
 	  </div>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
 	  <input class="btn btn-default" id="search_btn" value="查询" type="button" style="width: 60px;"></input>
 	</form>
 	<div id="toolbar">
