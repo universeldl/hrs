@@ -74,4 +74,12 @@ public class RegistrationService {
 		
 		return dataResult;
 	}
+	
+	public List<Registration> selectByDate(String time) {
+		return registrationMapper.selectByDate(time);
+	}
+	
+	public int updateByPrimaryKeySelective(Registration registration) {
+		return registrationMapper.updateByPrimaryKeySelective(registration);
+	}
 }

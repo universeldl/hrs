@@ -20,4 +20,6 @@ public interface DutyMapper {
     Duty selectDutyByNo(String id);
     
     List<String> selectDoctorByDuty(Duty duty);
+    
+    int updateDuty(Duty duty);
 }

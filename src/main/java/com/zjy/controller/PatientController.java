@@ -2,6 +2,7 @@ package com.zjy.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.zjy.entity.Duty;
 import com.zjy.entity.Patient;
 import com.zjy.entity.Registration;
+import com.zjy.service.DoctorService;
+import com.zjy.service.DutyService;
 import com.zjy.service.PatientService;
 import com.zjy.service.RegistrationService;
 import com.zjy.util.Constants;
@@ -39,6 +43,12 @@ public class PatientController {
 	
 	@Autowired
 	RegistrationService registrationService;
+	
+	@Autowired
+	DoctorService doctorService;
+	
+	@Autowired
+	DutyService dutyService;
 	
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String toRegistrate() {
@@ -167,6 +177,17 @@ public class PatientController {
 		return dataResult;
 	}
 	
+	/**
+	 * 预约挂号
+	 * @author Mervyn
+	 * 
+	 * @param departmentNo
+	 * @param doctorNo
+	 * @param viewDate
+	 * @param request
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/appointment", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult appointment(@RequestParam(value="department") String departmentNo,
@@ -188,7 +209,38 @@ public class PatientController {
 		registration.setCreateTime();
 		registration.setUpdateTime();
 		
-		dataResult = registrationService.insert(registration);		
+		dataResult = registrationService.insert(registration);
+		if (dataResult.isStatus()) {
+			Duty duty = dutyService.selectDutyByNo(doctorNo);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(viewDate));
+			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+			switch (dayOfWeek) {
+			case 1:
+				duty.setSundayRest(duty.getSundayRest()-1);
+				break;
+			case 2:
+				duty.setMondayRest(duty.getMondayRest()-1);
+				break;
+			case 3:
+				duty.setTuesdayRest(duty.getTuesdayRest()-1);
+				break;
+			case 4:
+				duty.setWednesdayRest(duty.getWednesdayRest()-1);
+				break;
+			case 5:
+				duty.setThursdayRest(duty.getThursdayRest()-1);
+				break;
+			case 6:
+				duty.setFridayRest(duty.getFridayRest()-1);
+				break;
+			case 7:
+				duty.setSaturdayRest(duty.getSaturdayRest()-1);
+				break;
+			}
+			dutyService.updateByPrimaryKeySelective(duty);
+		}
 		return dataResult;
 	}
 }
