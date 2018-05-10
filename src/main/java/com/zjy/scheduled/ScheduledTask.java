@@ -3,15 +3,19 @@
  */
 package com.zjy.scheduled;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.zjy.dao.DutyMapper;
 import com.zjy.entity.Duty;
+import com.zjy.entity.Registration;
+import com.zjy.service.DutyService;
+import com.zjy.service.RegistrationService;
 import com.zjy.util.Constants;
 
 /**
@@ -23,7 +27,10 @@ import com.zjy.util.Constants;
 public class ScheduledTask {
 	
 	@Autowired
-	DutyMapper dutyMapper;
+	DutyService dutyService;
+	
+	@Autowired
+	RegistrationService registrationService;
 	
 	/**
 	 * 每天将值班表中前一天有值班的医生的剩余挂号数更新为最大可预约挂号数
@@ -59,6 +66,21 @@ public class ScheduledTask {
 			duty.setFridayRest(Constants.MAX_APPOINTMENT);
 			break;
 		}
-		System.out.println(dutyMapper.updateDuty(duty));
-	} 
+		dutyService.updateDuty(duty);
+	}
+
+	/**
+	 * 过期未就诊的预约挂号从预约状态置为未就诊状态
+	 * @author Mervyn
+	 *
+	 */
+	@Scheduled(cron = "0 0 0 * * ? ")//每天0点执行
+	public void expiredRegistration() {
+		List<Registration> registrationList = registrationService.selectByDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		for (Registration registration: registrationList) {
+			registration.setStatus(Constants.UN_VISIT_TYPE);
+			registration.setUpdateTime();
+			registrationService.updateByPrimaryKeySelective(registration);
+		}
+	}
 }

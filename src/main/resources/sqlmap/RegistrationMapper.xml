@@ -23,6 +23,12 @@
     from registration
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByDate" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where visit_time &lt; #{time, jdbcType=DATE} and status = "1"
+  </select>
   <select id="selectRegistrationInfoByPage" resultType="com.zjy.vo.RegistrationResult" parameterType="HashMap">
   	select
   		r.registration_no as registrationNo, dept.department_name as departmentName, 

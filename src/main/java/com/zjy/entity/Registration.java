@@ -88,7 +88,7 @@ public class Registration {
     }
 
     public void setStatus(String status) {
-        this.status = Constants.APPOINT_TYPE;
+        this.status = status;
     }
 
     public Date getCreateTime() {

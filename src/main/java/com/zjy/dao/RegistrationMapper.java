@@ -24,4 +24,6 @@ public interface RegistrationMapper {
     List<RegistrationResult> selectRegistrationInfoByPage(Map<String, Object> map);
     
     int cancelRegistration(String registrationNo);
+    
+    List<Registration> selectByDate(String time);
 }
