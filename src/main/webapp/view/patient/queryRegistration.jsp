@@ -184,7 +184,10 @@
 			        			if (data.status)
 			        		        $('#registrationTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/registration/queryRegistrationList'});
 			        			else {
-			        				alert(data.tips);
+									bootbox.alert({
+						    			size: "small",
+							        	message: data.tips
+									});
 			        			}
 			        		},
 							error : function() {

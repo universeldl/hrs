@@ -20,6 +20,8 @@ public class Constants {
 	public static final String COOKIE_NAME = "hrs_cookie";
 	// 定义Cookie的生命周期7天
 	public static final int MAX_AGE = 60 * 60 * 24 * 7;
+	// 值班最大可预约挂号数
+	public static final int MAX_APPOINTMENT = 30;
 	
 	//各实体编号随机数位数
 	public static final int DEPARTMENT_NO_DIGITS = 3;

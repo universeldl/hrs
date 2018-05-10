@@ -103,4 +103,15 @@ public class DutyService {
     	return dutyMapper.selectDoctorByDuty(duty);
     }
 
+    public int updateDuty(Duty duty) {
+    	return dutyMapper.updateDuty(duty); 
+    }
+    
+    public Duty selectDutyByNo(String id) {
+    	return dutyMapper.selectDutyByNo(id);
+    }
+    
+    public int updateByPrimaryKeySelective(Duty duty) {
+    	return dutyMapper.updateByPrimaryKeySelective(duty);
+    }
 }
