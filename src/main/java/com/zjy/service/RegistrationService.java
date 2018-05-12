@@ -46,7 +46,7 @@ public class RegistrationService {
 		return dataResult;
 	}
 	
-	public DataGridResult queryListByName(Map<String, Object> map, int pageNum, int pageSize) {
+	public DataGridResult selectRegistrationInfoByPage(Map<String, Object> map, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		List<RegistrationResult> registrationList = registrationMapper.selectRegistrationInfoByPage(map);
 		PageInfo<RegistrationResult> pageInfo = new PageInfo<RegistrationResult>(registrationList);

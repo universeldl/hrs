@@ -15,6 +15,8 @@ public class RegistrationResult {
 	
 	private String departmentName;
 	
+	private String patientName;
+
 	private String doctorName;
 	
 	private Date visitTime;
@@ -35,6 +37,14 @@ public class RegistrationResult {
 
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+	
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
 	public String getDoctorName() {

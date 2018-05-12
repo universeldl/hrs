@@ -74,9 +74,16 @@
 	  			</ul>
 	 		</li>
 	 		<li class="panel">
-	  			<a class="panel-heading collapsed" href="#" data-toggle="collapse" data-parent="#nav_parent">
+	  			<a class="panel-heading collapsed" href="#collapse6" data-toggle="collapse" data-parent="#nav_parent">
 	  				<span class="menu-text">挂号列表</span>
 	 			</a>
+	 			<ul class="nav submenu collapse" id="collapse6">
+	 				<li>
+					    <a href="${pageContext.request.contextPath}/admin/showQueryAppointment" target="frame">
+					    	<span class="menu-text">挂号列表</span>
+					    </a>
+				    </li>
+	 			</ul>
 	 		</li>
 	 		<li class="panel">
 	  			<a class="panel-heading collapsed" href="#collapse7" data-toggle="collapse" data-parent="#nav_parent">

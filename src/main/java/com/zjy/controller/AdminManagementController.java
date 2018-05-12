@@ -178,6 +178,11 @@ public class AdminManagementController {
     	return "admin/queryPatient";
     }
     
+    @RequestMapping(value = "/showQueryAppointment")
+    public String showQueryAppointment() {
+    	return "admin/queryAppointment";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn
