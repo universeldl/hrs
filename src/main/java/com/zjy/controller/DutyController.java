@@ -1,5 +1,8 @@
 package com.zjy.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Duty;
 import com.zjy.service.DutyService;
+import com.zjy.vo.DataGridResult;
 
 /**
  * 医生排班功能
@@ -20,11 +26,12 @@ import com.zjy.service.DutyService;
  * @author zhoujiayi
  * @version $Id: SchedulingController.java, v 0.1 2018年3月21日 上午10:54:01 zhoujiayi Exp $
  */
+@RequestMapping("/duty")
 @Controller
 public class DutyController {
     
     @Autowired
-    private DutyService service;
+    private DutyService dutyService;
     
     /**
      * 排班调整
@@ -37,7 +44,7 @@ public class DutyController {
      */
     @RequestMapping("/changeScheduling")
     public String viewScheduling(@RequestParam("id")String id, ModelMap model) {
-        Duty duty = service.queryDutyById(id);
+        Duty duty = dutyService.queryDutyById(id);
         model.put("duty", duty);
         return "";
     }
@@ -49,8 +56,23 @@ public class DutyController {
      */
     @RequestMapping("/schedulingList")
     public String schedulingList(@RequestParam("depNo")String depNo) {
-        Map<String,List<String>> map = service.queryscheduling(depNo);
+        Map<String,List<String>> map = dutyService.queryscheduling(depNo);
         
         return "";
     }
+    
+    
+	@RequestMapping(value = "/queryDutyList", method = RequestMethod.POST)
+	@ResponseBody
+	public DataGridResult queryDutyList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value="doctorName") String doctorName) throws ParseException {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		if (doctorName != null && !"".equals(doctorName))
+			map.put("doctorName", doctorName);
+		DataGridResult dataGridResult = dutyService.selectDutyByPage(map, pageNumber, pageSize);
+		
+		return dataGridResult;
+	}
 }

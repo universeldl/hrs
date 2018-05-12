@@ -5,8 +5,138 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>排班表</title>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.min.css">
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+ 	<script type="text/javascript">
+ 	$(function() {
+		//获取挂号列表
+	    $('#DutyTable').bootstrapTable({
+	        method: 'post',//post避免中文乱码
+	        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
+	        url:"${pageContext.request.contextPath}/duty/queryDutyList",//要请求数据的文件路径
+	        //height:tableHeight(),//高度调整
+	        toolbar: '#toolbar',//指定工具栏 
+	        dataType: "json",
+	        pageNumber: 1, //初始化加载第一页，默认第一页
+	        pagination:true,//是否分页
+	        queryParams:queryParams,//请求服务器时所传的参数
+	        sidePagination:'server',//指定服务器端分页
+	        pageSize:10,//单页记录数
+	        pageList:[5,10,20,30],//分页步进值
+	        showRefresh:true,//刷新按钮
+	        showColumns:false,
+	        clickToSelect: false,//是否启用点击选中行
+	        columns:[{
+	                title:'医生',
+	                field:'doctorName',
+	                align:'center'
+	            },{
+	            	title:'周一',
+	            	field:'monday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	                title:'周二',
+	                field:'tuesday',
+	                align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	            	title:'周三',
+	            	field:'wednesday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	            	title:'周四',
+	            	field:'thursday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	            	title:'周五',
+	            	field:'friday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	            	title:'周六',
+	            	field:'saturday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            },{
+	            	title:'周日',
+	            	field:'sunday',
+	            	align:'center',
+	                formatter: function (value, row, index) {
+	                    return formatDuty(value)
+	                }
+	            }
+	        ]
+	    });
+		//状态格式化
+	    function formatDuty(value) {
+	    	if ("0" == value)
+	    		return "-";
+	    	else if ("1" == value)
+	    		return "值班";
+	    }
+	    function queryParams(params){  
+	        return {  
+	                limit : this.limit, // 页面大小  
+	                offset : this.offset, // 页码  
+	                pageNumber : this.pageNumber,  
+	                pageSize : this.pageSize,
+	                doctorName: $('#doctorName').val()
+	        } 
+	    }  
+	    //查询按钮事件
+	    $('#search_btn').click(function(){
+	        $('#DutyTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/duty/queryDutyList'});
+	    })
+	    $('#reset_btn').click(function() {
+	    	$('#doctorName').val("");
+	        $('#DutyTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/duty/queryDutyList'});
+	    });
+	    //tableHeight函数
+	    function tableHeight(){
+	        //可以根据自己页面情况进行调整
+	        return $(window).height() -280;
+	    }
+ 	});
+	</script>
 </head>
 <body>
-
+	<form class="form-inline" style="margin-top: 30px;">
+		<div class="form-group">
+			<label for="doctorName">医生：</label>
+			<input id="doctorName" name="doctorName" class="form-control"></input>
+		</div>
+		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
+		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
+	</form>
+	<table id="DutyTable" class="table table-hover table-striped"></table>
 </body>
 </html>
