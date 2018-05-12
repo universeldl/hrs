@@ -29,7 +29,15 @@
     from duty
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  
+  <select id="selectDutyByPage" resultType="com.zjy.vo.DutyResult" parameterType="HashMap">
+  	select do.doctor_name as doctorName, du.* from duty du 
+  	left join doctor do on du.doctor_no = do.doctor_no 
+  	<where>
+  		<if test="doctorName != null">
+    		and doctor_name like CONCAT('%',#{doctorName, jdbcType=VARCHAR},'%')
+  		</if>
+  	</where>
+  </select>
   <select id="selectDutyByNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
   	select 
     <include refid="Base_Column_List" />
@@ -70,6 +78,11 @@
     delete from duty
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByDoctorNo" parameterType="java.lang.String" >
+    delete from duty
+    where doctor_no = #{doctorNo,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.zjy.entity.Duty" >
     insert into duty (id, doctor_no, Monday, 
       Monday_rest, Tuesday, Tuesday_rest, 

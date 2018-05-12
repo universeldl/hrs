@@ -24,6 +24,14 @@
     type, create_time, update_time
   </sql>
   
+  <select id="selectDoctorNoDuty" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctor_no not in (select doctor_no from duty)
+    and doctor_name != "admin"
+  </select>
+  
   <select id="selectDoctorByDepartment" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

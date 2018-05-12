@@ -45,6 +45,10 @@
 	                field:'registrationNo',
 	                align:'center'
 	            },{
+	            	title:'病人',
+	            	field:'patientName',
+	            	align:'center'
+	            },{
 	                title:'科室',
 	                field:'departmentName',
 	                align:'center'
@@ -66,22 +70,9 @@
 	                formatter: function (value, row, index) {
 	                    return formatStatus(value)
 	                }
-	            },{
-	            	title:'操作',
-	                field:'registrationNo',
-	                align:'center',
-	                formatter: actionFormatter
 	            }
 	        ]
 	    });
-	  	//操作栏的格式化
-        function actionFormatter(value, row, index) {
-            var no = value;
-            if (row.status == "1")
-            	return "<a href='#' class='btn btn-danger' onclick=\"cancelById('" + no + "')\" type='button'><span class='fa fa-remove'></span></a>";
-           	else
-           		return "-";
-        }
 		//状态格式化
 	    function formatStatus(value) {
 	    	if ("0" == value)
@@ -109,7 +100,6 @@
 	                offset : this.offset, // 页码  
 	                pageNumber : this.pageNumber,  
 	                pageSize : this.pageSize,
-	                patientNo: $('#patientNo').val(),
 	                department: $('#department').val(),
 	                beginDate: $('#beginDate').val(),
 	                endDate: $('#endDate').val(),
@@ -234,10 +224,6 @@
 				<option value="2">就诊</option>
 				<option value="3">过时未就诊</option>
 			</select>
-		</div>
-		<div class="form-group hidden">
-			<label for="patientNo">病人编号：</label>
-			<input type="text" class="form-control" id="patientNo" name="patientNo" value=${patient.patientNo}>
 		</div>
 		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
 		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>

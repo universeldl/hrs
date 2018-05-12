@@ -48,7 +48,7 @@ public class RegistrationController {
 	@ResponseBody
 	public DataGridResult queryRegistrationList(@RequestParam(value = "pageSize", required = true) int pageSize,
     		@RequestParam(value = "pageNumber", required = true) int pageNumber,
-    		@RequestParam(value="patientNo") String patientNo,
+    		@RequestParam(value="patientNo", required=false) String patientNo,
 			@RequestParam(value="department") String departmentNo,
 			@RequestParam(value="beginDate") String beginDateStr,
 			@RequestParam(value="endDate") String endDateStr,
@@ -66,7 +66,7 @@ public class RegistrationController {
 		if (endDateStr != null && !"".equals(endDateStr))
 			map.put("endDate", new SimpleDateFormat("yyyy-MM-dd").parse(endDateStr));
 		
-		DataGridResult dataGridResult = registrationService.queryListByName(map, pageNumber, pageSize);
+		DataGridResult dataGridResult = registrationService.selectRegistrationInfoByPage(map, pageNumber, pageSize);
 		
 		return dataGridResult;
 	}

@@ -1,6 +1,5 @@
 package com.zjy.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
-import com.zjy.entity.Department;
+import com.zjy.dao.DutyMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.vo.BatchResult;
 import com.zjy.vo.DataGridResult;
@@ -28,6 +27,9 @@ public class AdminService {
     
     @Autowired
     private DoctorMapper doctorMapper;
+    
+    @Autowired
+    private DutyMapper dutyMapper;
 
     public DataResult insert(Doctor doctor) {
     	DataResult dataResult = new DataResult();
@@ -59,6 +61,7 @@ public class AdminService {
         for (int i = 0; i < doctorNoArray.length; ++i) {
             if (doctorMapper.deleteByDoctorNo(doctorNoArray[i]) == 1) {
                 batchResult.addSuccess();
+                dutyMapper.deleteByDoctorNo(doctorNoArray[i]);
             } else {
                 batchResult.addFail();
                 batchResult.addToFailList(doctorMapper.selectByDoctorNo(doctorNoArray[i]));

@@ -29,7 +29,7 @@ public class BatchResult<T> {
 	}
 	
 	public void addFail() {
-		this.numOfSuccess++;
+		this.numOfFail++;
 	}
 	
 	public void addToFailList(T failEntity) {

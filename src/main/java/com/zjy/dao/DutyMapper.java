@@ -1,11 +1,15 @@
 package com.zjy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zjy.entity.Duty;
+import com.zjy.vo.DutyResult;
 
 public interface DutyMapper {
     int deleteByPrimaryKey(String id);
+    
+    int deleteByDoctorNo(String doctorNo);
 
     int insert(Duty record);
 
@@ -22,4 +26,6 @@ public interface DutyMapper {
     List<String> selectDoctorByDuty(Duty duty);
     
     int updateDuty(Duty duty);
+    
+    List<DutyResult> selectDutyByPage(Map<String, String> map);
 }

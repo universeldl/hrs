@@ -167,7 +167,10 @@
 				        			if (data.numOfSuccess == departmentNos.length)
 				        	        	$('#departmentTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDepartmentList'});
 				        			else {
-				        				alert(data.tips);
+										bootbox.alert({
+							    			size: "small",
+								        	message: data.tips
+										});
 				        			}
 				        		},
 								error : function() {

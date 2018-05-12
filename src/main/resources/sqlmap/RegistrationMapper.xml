@@ -31,17 +31,18 @@
   </select>
   <select id="selectRegistrationInfoByPage" resultType="com.zjy.vo.RegistrationResult" parameterType="HashMap">
   	select
-  		r.registration_no as registrationNo, dept.department_name as departmentName, 
+  		r.registration_no as registrationNo,p.patient_name as patientName , dept.department_name as departmentName, 
   		do.doctor_name as doctorName, r.visit_time as visitTime, r.status as status
   	from registration r
   	left join doctor do on r.doctor_no = do.doctor_no
   	left join department dept on r.department_no = dept.department_no
+  	left join patient p on r.patient_no = p.patient_no
     <where>
     	<if test="patientNo != null">
-    		and patient_no = #{patientNo, jdbcType=VARCHAR}
+    		and r.patient_no = #{patientNo, jdbcType=VARCHAR}
     	</if>
     	<if test="departmentNo != null">
-    		and department_no = #{departmentNo, jdbcType=VARCHAR}
+    		and r.department_no = #{departmentNo, jdbcType=VARCHAR}
     	</if>
     	<if test="status != null">
     		and status = #{status, jdbcType=VARCHAR}

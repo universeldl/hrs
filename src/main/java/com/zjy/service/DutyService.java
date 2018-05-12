@@ -11,11 +11,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
 import com.zjy.dao.DutyMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
 import com.zjy.util.Constants;
+import com.zjy.vo.DataGridResult;
+import com.zjy.vo.DataResult;
+import com.zjy.vo.DutyResult;
 
 /**
  * @author Mervyn
@@ -114,4 +119,49 @@ public class DutyService {
     public int updateByPrimaryKeySelective(Duty duty) {
     	return dutyMapper.updateByPrimaryKeySelective(duty);
     }
+    
+	public DataGridResult selectDutyByPage(Map<String, String> map, int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<DutyResult> dutyList = dutyMapper.selectDutyByPage(map);
+		PageInfo<DutyResult> pageInfo = new PageInfo<DutyResult>(dutyList);
+		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+				pageInfo.getPageNum());
+		return dataGridResult;
+	}
+	
+	public DataResult insertSelective(Duty duty) {
+		DataResult dataResult = new DataResult();
+		try {
+			if (dutyMapper.insertSelective(duty) == 1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("新建排班成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("新建排班失败");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			dataResult.setStatus(false);
+			dataResult.setTips("新建排班失败");
+		}
+		return dataResult;
+	}
+	
+	public DataResult deleteByDoctorNo(String doctorNo) {
+		DataResult dataResult = new DataResult();
+		try {
+			if (dutyMapper.deleteByDoctorNo(doctorNo) == 1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("删除排班成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("删除排班失败");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			dataResult.setStatus(false);
+			dataResult.setTips("删除排班失败");
+		}
+		return dataResult;
+	}
 }
