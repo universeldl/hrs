@@ -146,4 +146,22 @@ public class DutyService {
 		}
 		return dataResult;
 	}
+	
+	public DataResult deleteByDoctorNo(String doctorNo) {
+		DataResult dataResult = new DataResult();
+		try {
+			if (dutyMapper.deleteByDoctorNo(doctorNo) == 1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("删除排班成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("删除排班失败");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			dataResult.setStatus(false);
+			dataResult.setTips("删除排班失败");
+		}
+		return dataResult;
+	}
 }

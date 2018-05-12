@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-table-zh-CN.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
+ 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/icheck.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
@@ -93,9 +94,19 @@
 	                formatter: function (value, row, index) {
 	                    return formatDuty(value)
 	                }
+	            },{
+	            	title:'操作',
+	                field:'doctorNo',
+	                align:'center',
+	                formatter: actionFormatter
 	            }
 	        ]
 	    });
+	  	//操作栏的格式化
+        function actionFormatter(value, row, index) {
+            var no = value;
+            return "<a href='#' class='btn btn-info' onclick=\"editByNo('" + no + "')\" type='button'><span class='fa fa-pencil'></span></a>";
+        }
 		//状态格式化
 	    function formatDuty(value) {
 	    	if ("0" == value)
@@ -141,11 +152,11 @@
 	                }
 	            }
 	        });
-	        $("#myModal").modal("show");
+	        $("#addModal").modal("show");
 	    });
 	    $('#save').click(function() {
 	    	var dutyTime = new Array();
-	    	$("input[name='ckbx']:checked").each(function(i){
+	    	$("input[name='ckbx1']:checked").each(function(i){
 	    		dutyTime.push($(this).val());
 	    	});
         	$.ajax({
@@ -165,12 +176,90 @@
 				error : function() {
 					bootbox.alert({
 		    			size: "small",
-			        	message: "删除出错"
+			        	message: "添加出错"
+					});
+				}
+        	});
+	    });
+	    $('#saveAlter').click(function() {
+	    	var dutyTime = new Array();
+	    	$("input[name='ckbx2']:checked").each(function(i){
+	    		dutyTime.push($(this).val());
+	    	});
+        	$.ajax({
+        		url: "${pageContext.request.contextPath}/duty/editDuty",
+        		type: "post",
+        		data:{dutyTime:dutyTime.join(",") ,doctorNo:$('#editForm #doctorNo').val()},
+        		dataType: "json",
+        		async: true,
+        		success: function(data) {
+        			if (data.status == false) {
+    					bootbox.alert({
+    		    			size: "small",
+    			        	message: data.tips
+    					});
+        			}
+        		},
+				error : function() {
+					bootbox.alert({
+		    			size: "small",
+			        	message: "修改出错"
 					});
 				}
         	});
 	    });
  	});
+	</script>
+	<script>
+	function editByNo(no) {
+    	$.ajax({
+    		url: "${pageContext.request.contextPath}/duty/selectDuty",
+    		type: "get",
+    		data:{doctorNo:no},
+    		dataType: "json",
+    		async: true,
+    		success: function(data) {
+    			var duty = new Array();
+    			if (data.duty.monday == "1") {
+    				duty.push("1");
+    			}
+    			if (data.duty.tuesday == "1") {
+    				duty.push("2");
+    			}
+    			if (data.duty.wednesday == "1") {
+    				duty.push("3");
+    			}
+    			if (data.duty.thursday == "1") {
+    				duty.push("4");
+    			}
+    			if (data.duty.friday == "1") {
+    				duty.push("5");
+    			}
+    			if (data.duty.saturday == "1") {
+    				duty.push("6");
+    			}
+    			if (data.duty.sunday == "1") {
+    				duty.push("7");
+    			}
+	            $("input[name='ckbx2']").each(function (i) {
+	                for (var i = 0; i < duty.length; i++) {
+	                    if ($(this).val() == duty[i]) {
+	                    	$(this).iCheck('check');
+	                    }
+	                }
+	            }); 
+	            $('#editForm #doctorName').val(data.doctorName);
+	            $('#editForm #doctorNo').val(no);
+    		},
+			error : function() {
+				bootbox.alert({
+	    			size: "small",
+		        	message: "网络出错"
+				});
+			}
+    	});
+        $("#editModal").modal("show");
+	}
 	</script>
 </head>
 <body>
@@ -188,7 +277,7 @@
 	<table id="DutyTable" class="table table-hover table-striped"></table>
 	
 	<!-- 模态框 -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -207,42 +296,115 @@
 						<div style="margin-left:40px">
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="1"> 周一
+									<input name="ckbx1" type="checkbox" value="1"> 周一
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="2"> 周二
+									<input name="ckbx1" type="checkbox" value="2"> 周二
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="3"> 周三
+									<input name="ckbx1" type="checkbox" value="3"> 周三
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="4"> 周四
+									<input name="ckbx1" type="checkbox" value="4"> 周四
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="5"> 周五
+									<input name="ckbx1" type="checkbox" value="5"> 周五
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="6"> 周六
+									<input name="ckbx1" type="checkbox" value="6"> 周六
 								</label>
 							</div>
 							<div class="checkbox-inline">
 								<label>
-									<input name="ckbx" type="checkbox" value="7"> 周日
+									<input name="ckbx1" type="checkbox" value="7"> 周日
 								</label>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<input id="save" type="submit" class="btn btn-primary" value="保存" />
+							<input type="reset" class="btn btn-default" data-dismiss="modal" value="取消" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ending -->
+	
+	<!-- 模态框 -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">修改排班</h4>
+				</div>
+				<div class="modal-body">
+					<form id="editForm" class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="doctorName" class="col-sm-2 control-label">医生:</label>
+			    			<div class="col-sm-10">
+			      				<input type="text" class="form-control" id="doctorName" name="doctorName" value="" readonly>
+			      			</div>
+						</div>
+						<div class="form-group hidden">
+							<label for="doctorNo" class="col-sm-2 control-label">医生编号:</label>
+			    			<div class="col-sm-10">
+			      				<input type="text" class="form-control" id="doctorNo" name="doctorNo" value="" readonly>
+			      			</div>
+						</div>
+						<div style="margin-left:40px">
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="1"> 周一
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="2"> 周二
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="3"> 周三
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="4"> 周四
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="5"> 周五
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="6"> 周六
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx2" type="checkbox" value="7"> 周日
+								</label>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input id="saveAlter" type="submit" class="btn btn-primary" value="保存" />
 							<input type="reset" class="btn btn-default" data-dismiss="modal" value="取消" />
 						</div>
 					</form>

@@ -1,21 +1,21 @@
 package com.zjy.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
+import com.zjy.service.DoctorService;
 import com.zjy.service.DutyService;
 import com.zjy.util.Constants;
 import com.zjy.vo.DataGridResult;
@@ -34,6 +34,9 @@ public class DutyController {
     
     @Autowired
     private DutyService dutyService;
+    
+    @Autowired
+    private DoctorService doctorService;
     
     /**
      * 排班调整
@@ -87,6 +90,14 @@ public class DutyController {
 		return dataGridResult;
 	}
 	
+	/**
+	 * 添加排班
+	 * @author Mervyn
+	 * 
+	 * @param dutyTime
+	 * @param doctorNo
+	 * @return
+	 */
 	@RequestMapping(value = "/addDuty", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult addDuty(@RequestParam(value="dutyTime") String dutyTime,
@@ -124,5 +135,43 @@ public class DutyController {
 		}
 		dataResult = dutyService.insertSelective(duty);
 		return dataResult;
+	}
+	
+	/**
+	 * 根据医生查找排班
+	 * @author Mervyn
+	 * 
+	 * @param doctorNo
+	 * @return
+	 */
+	@RequestMapping(value = "/selectDuty", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> selectDuty(@RequestParam(value="doctorNo") String doctorNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Doctor doctor = doctorService.selectByDoctorNo(doctorNo);
+		Duty duty = dutyService.selectDutyByNo(doctorNo);
+		map.put("doctorName", doctor.getDoctorName());
+		map.put("duty", duty);
+		return map;
+	}
+	
+	/**
+	 * 根据医生修改排班，因为update有点问题，所以先删再添加
+	 * @author Mervyn
+	 * 
+	 * @param dutyTime
+	 * @param doctorNo
+	 * @return
+	 */
+	@RequestMapping(value = "/editDuty", method = RequestMethod.POST)
+	@ResponseBody
+	public DataResult editDuty(@RequestParam(value="dutyTime") String dutyTime,
+			@RequestParam(value="doctorNo") String doctorNo) {
+
+		Duty dTemp = dutyService.selectDutyByNo(doctorNo);
+		if (dTemp != null) {
+			dutyService.deleteByDoctorNo(doctorNo);
+		}
+		return addDuty(dutyTime, doctorNo);
 	}
 }

@@ -56,11 +56,6 @@
 	  				<li>
 	   					<a href="${pageContext.request.contextPath}/view/duty/showDuty.jsp" target="frame"><span class="menu-text">排班表</span></a>
 	  				</li>
-				    <li>
-				    	<a href="${pageContext.request.contextPath}/view/duty/adjustDuty.jsp" target="frame">
-				    		<span class="menu-text">排班调整</span>
-				    	</a>
-				    </li>
 	  			</ul>
 	 		</li>
 	 		<li class="panel">
