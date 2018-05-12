@@ -239,7 +239,10 @@
 				        			if (data.numOfSuccess == doctorNos.length)
 				        	        	$('#mytab').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/admin/queryDoctorList'});
 				        			else {
-				        				alert(data.tips);
+										bootbox.alert({
+							    			size: "small",
+								        	message: data.tips
+										});
 				        			}
 				        		},
 								error : function() {

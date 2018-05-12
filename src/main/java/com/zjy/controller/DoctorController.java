@@ -132,4 +132,15 @@ public class DoctorController {
 	    return dataResult;
 	}
 	
+	/**
+	 * 列出所有未排班的医生
+	 * @author Mervyn
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="/selectDoctorNoDuty", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Doctor> selectDoctorNoDuty() {
+		return doctorService.selectDoctorNoDuty();
+	}
 }

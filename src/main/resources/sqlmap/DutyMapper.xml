@@ -78,6 +78,11 @@
     delete from duty
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByDoctorNo" parameterType="java.lang.String" >
+    delete from duty
+    where doctor_no = #{doctorNo,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.zjy.entity.Duty" >
     insert into duty (id, doctor_no, Monday, 
       Monday_rest, Tuesday, Tuesday_rest, 

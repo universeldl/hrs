@@ -19,8 +19,8 @@ import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
 import com.zjy.util.Constants;
 import com.zjy.vo.DataGridResult;
+import com.zjy.vo.DataResult;
 import com.zjy.vo.DutyResult;
-import com.zjy.vo.RegistrationResult;
 
 /**
  * @author Mervyn
@@ -119,6 +119,7 @@ public class DutyService {
     public int updateByPrimaryKeySelective(Duty duty) {
     	return dutyMapper.updateByPrimaryKeySelective(duty);
     }
+    
 	public DataGridResult selectDutyByPage(Map<String, String> map, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		List<DutyResult> dutyList = dutyMapper.selectDutyByPage(map);
@@ -126,5 +127,23 @@ public class DutyService {
 		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
 				pageInfo.getPageNum());
 		return dataGridResult;
+	}
+	
+	public DataResult insertSelective(Duty duty) {
+		DataResult dataResult = new DataResult();
+		try {
+			if (dutyMapper.insertSelective(duty) == 1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("新建排班成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("新建排班失败");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			dataResult.setStatus(false);
+			dataResult.setTips("新建排班失败");
+		}
+		return dataResult;
 	}
 }

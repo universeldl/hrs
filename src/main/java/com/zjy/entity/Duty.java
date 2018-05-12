@@ -1,5 +1,6 @@
 package com.zjy.entity;
 
+import com.zjy.util.Constants;
 import com.zjy.util.IdGenerator;
 
 public class Duty {
@@ -35,6 +36,16 @@ public class Duty {
 
     private Integer sundayRest;
 
+    public void init() {
+    	this.monday = Constants.NOT_ON_DUTY;
+    	this.tuesday = Constants.NOT_ON_DUTY;
+    	this.wednesday = Constants.NOT_ON_DUTY;
+    	this.thursday = Constants.NOT_ON_DUTY;
+    	this.friday = Constants.NOT_ON_DUTY;
+    	this.saturday = Constants.NOT_ON_DUTY;
+    	this.sunday = Constants.NOT_ON_DUTY;
+    }
+    
     public String getId() {
         return id;
     }

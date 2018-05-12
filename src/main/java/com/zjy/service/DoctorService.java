@@ -51,5 +51,9 @@ public class DoctorService {
     public List<Doctor> selectDoctorByDepartmentAndDuty(Map<String, Object> param){
     	return doctorMapper.selectDoctorByDepartmentAndDuty(param);
     }
+    
+    public List<Doctor> selectDoctorNoDuty() {
+    	return doctorMapper.selectDoctorNoDuty();
+    }
 
 }

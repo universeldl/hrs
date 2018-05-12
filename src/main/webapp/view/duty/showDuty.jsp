@@ -125,6 +125,51 @@
 	        //可以根据自己页面情况进行调整
 	        return $(window).height() -280;
 	    }
+	    $('#add').click(function() {
+			//异步获取可是列表并动态填充select
+			$.ajax({
+	            url: "/doctor/selectDoctorNoDuty",
+	            dataType: "json",
+	            success: function (data) {
+	            	if (data.length == 0) {
+	                    $('#doctor').append("<option value=\"\">没有未排班医生</option>");
+	                    $('#doctor').selectpicker('refresh');//必须要有
+	            	}
+	                for (var i = 0; i < data.length; i++) {
+	                    $('#doctor').append("<option value=" + data[i].doctorNo + ">" + data[i].doctorName + "</option>");
+	                    $('#doctor').selectpicker('refresh');//必须要有
+	                }
+	            }
+	        });
+	        $("#myModal").modal("show");
+	    });
+	    $('#save').click(function() {
+	    	var dutyTime = new Array();
+	    	$("input[name='ckbx']:checked").each(function(i){
+	    		dutyTime.push($(this).val());
+	    	});
+        	$.ajax({
+        		url: "${pageContext.request.contextPath}/duty/addDuty",
+        		type: "post",
+        		data:{dutyTime:dutyTime.join(",") ,doctorNo:$(doctor).val()},
+        		dataType: "json",
+        		async: true,
+        		success: function(data) {
+        			if (data.status == false) {
+    					bootbox.alert({
+    		    			size: "small",
+    			        	message: data.tips
+    					});
+        			}
+        		},
+				error : function() {
+					bootbox.alert({
+		    			size: "small",
+			        	message: "删除出错"
+					});
+				}
+        	});
+	    });
  	});
 	</script>
 </head>
@@ -137,6 +182,74 @@
 		<input class="btn btn-default" id="reset_btn" value="重置" style="width: 60px;" type="button"></input>
 		<input class="btn btn-default" id="search_btn" value="查询" style="width: 60px;" type="button"></input>
 	</form>
+	<div id="toolbar">
+		<input class="btn btn-success" id="add" value="添加" style="width: 60px;" type="button"></input>
+	</div>
 	<table id="DutyTable" class="table table-hover table-striped"></table>
+	
+	<!-- 模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加排班</h4>
+				</div>
+				<div class="modal-body">
+					<form id="addForm" class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="doctor" class="col-sm-2 control-label">医生:</label>
+							<select id="doctor" name="doctor" class="selectpicker" title="选择医生"></select>
+						</div>
+						<div style="margin-left:40px">
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="1"> 周一
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="2"> 周二
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="3"> 周三
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="4"> 周四
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="5"> 周五
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="6"> 周六
+								</label>
+							</div>
+							<div class="checkbox-inline">
+								<label>
+									<input name="ckbx" type="checkbox" value="7"> 周日
+								</label>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input id="save" type="submit" class="btn btn-primary" value="保存" />
+							<input type="reset" class="btn btn-default" data-dismiss="modal" value="取消" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ending -->
 </body>
 </html>

@@ -8,6 +8,8 @@ import com.zjy.vo.DutyResult;
 
 public interface DutyMapper {
     int deleteByPrimaryKey(String id);
+    
+    int deleteByDoctorNo(String doctorNo);
 
     int insert(Duty record);
 

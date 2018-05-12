@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Duty;
 import com.zjy.service.DutyService;
+import com.zjy.util.Constants;
 import com.zjy.vo.DataGridResult;
+import com.zjy.vo.DataResult;
 
 /**
  * 医生排班功能
@@ -61,7 +63,16 @@ public class DutyController {
         return "";
     }
     
-    
+    /**
+     * 根据医生姓名查询值班表
+     * @author Mervyn
+     * 
+     * @param pageSize
+     * @param pageNumber
+     * @param doctorName
+     * @return
+     * @throws ParseException
+     */
 	@RequestMapping(value = "/queryDutyList", method = RequestMethod.POST)
 	@ResponseBody
 	public DataGridResult queryDutyList(@RequestParam(value = "pageSize", required = true) int pageSize,
@@ -74,5 +85,44 @@ public class DutyController {
 		DataGridResult dataGridResult = dutyService.selectDutyByPage(map, pageNumber, pageSize);
 		
 		return dataGridResult;
+	}
+	
+	@RequestMapping(value = "/addDuty", method = RequestMethod.POST)
+	@ResponseBody
+	public DataResult addDuty(@RequestParam(value="dutyTime") String dutyTime,
+			@RequestParam(value="doctorNo") String doctorNo) {
+		DataResult dataResult;
+		
+		String[] dutyTimeArr = dutyTime.split(",");
+		Duty duty = new Duty();
+		duty.setDoctorNo(doctorNo);
+		duty.setId();
+		duty.init();
+		for (String s : dutyTimeArr) {
+			if ("1".equals(s)) {
+				duty.setMonday(Constants.ON_DUTY);
+				duty.setMondayRest(Constants.MAX_APPOINTMENT);
+			} else if ("2".equals(s)) {
+				duty.setTuesday(Constants.ON_DUTY);
+				duty.setTuesdayRest(Constants.MAX_APPOINTMENT);
+			} else if ("3".equals(s)) {
+				duty.setWednesday(Constants.ON_DUTY);
+				duty.setWednesdayRest(Constants.MAX_APPOINTMENT);
+			} else if ("4".equals(s)) {
+				duty.setThursday(Constants.ON_DUTY);
+				duty.setThursdayRest(Constants.MAX_APPOINTMENT);
+			} else if ("5".equals(s)) {
+				duty.setFriday(Constants.ON_DUTY);
+				duty.setFridayRest(Constants.MAX_APPOINTMENT);
+			} else if ("6".equals(s)) {
+				duty.setSaturday(Constants.ON_DUTY);
+				duty.setSaturdayRest(Constants.MAX_APPOINTMENT);
+			} else if ("7".equals(s)) {
+				duty.setSunday(Constants.ON_DUTY);
+				duty.setSundayRest(Constants.MAX_APPOINTMENT);
+			}
+		}
+		dataResult = dutyService.insertSelective(duty);
+		return dataResult;
 	}
 }
