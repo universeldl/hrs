@@ -24,13 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
-import com.zjy.entity.Patient;
-import com.zjy.service.DutyService;
-import com.zjy.util.Constants;
 import com.zjy.entity.Prescription;
 import com.zjy.service.DoctorService;
+import com.zjy.service.DutyService;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
+import com.zjy.util.Constants;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
@@ -172,4 +171,14 @@ public class DoctorController {
 		
 		return dataResult;
 	}
+	
+	
+	@RequestMapping(value = "/queryRegisterList", method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridResult queryRegisterList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value = "regNo") String regNo) {
+    	DataGridResult dataGridResult = doctorService.queryListByRegNo(regNo, pageNumber, pageSize);
+    	return dataGridResult;
+    }
 }

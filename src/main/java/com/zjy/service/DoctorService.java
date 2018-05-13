@@ -6,11 +6,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
 import com.zjy.entity.Doctor;
-import com.zjy.entity.Patient;
 import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
+import com.zjy.vo.RegistrationResult;
 
 @Service
 public class DoctorService {
@@ -85,6 +88,16 @@ public class DoctorService {
         }
         
 		return dataResult;
+	}
+
+	public DataGridResult queryListByRegNo(String regNo, int pageNumber,
+			int pageSize) {
+		PageHelper.startPage(pageNumber, pageSize);
+		List<RegistrationResult> departmentList = doctorMapper.queryListByRegNo(regNo);
+		PageInfo<RegistrationResult> pageInfo = new PageInfo<RegistrationResult>(departmentList);
+		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
+				pageInfo.getPageNum());
+		return dataGridResult;
 	}
 
 }

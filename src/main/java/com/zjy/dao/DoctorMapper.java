@@ -3,8 +3,10 @@ package com.zjy.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.zjy.entity.Department;
+import org.apache.ibatis.annotations.Param;
+
 import com.zjy.entity.Doctor;
+import com.zjy.vo.RegistrationResult;
 
 public interface DoctorMapper {
     int deleteByPrimaryKey(String id);
@@ -38,4 +40,6 @@ public interface DoctorMapper {
     int deleteByDoctorNo(String doctorNo);
 
     int updateByNo(Doctor doctor);
+
+	List<RegistrationResult> queryListByRegNo(@Param("regNo")String regNo);
 }
