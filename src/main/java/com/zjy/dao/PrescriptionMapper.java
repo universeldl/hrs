@@ -3,6 +3,7 @@ package com.zjy.dao;
 import java.util.List;
 
 import com.zjy.entity.Prescription;
+import com.zjy.vo.PrescriptionResult;
 
 public interface PrescriptionMapper {
     int deleteByPrimaryKey(String id);
@@ -18,4 +19,6 @@ public interface PrescriptionMapper {
     int updateByPrimaryKey(Prescription record);
 
     void addPrescriptions(List<Prescription> list);
+    
+    List<PrescriptionResult> selectByRegistrationNo(String registrationNo);
 }
