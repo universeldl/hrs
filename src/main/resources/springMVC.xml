@@ -43,6 +43,7 @@
 		    <mvc:exclude-mapping path="/toLogin"/>
 		    <mvc:exclude-mapping path="/patient/toRegistration"/>
 		    <mvc:exclude-mapping path="/patient/registration"/>
+		    <mvc:exclude-mapping path="/patient/register"/>
 		    <mvc:exclude-mapping path="/images/**"/>
 		    <mvc:exclude-mapping path="/fonts/**"/>
 		    <mvc:exclude-mapping path="/css/**"/>
