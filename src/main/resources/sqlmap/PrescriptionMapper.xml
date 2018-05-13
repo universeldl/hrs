@@ -16,6 +16,13 @@
     from prescription
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByRegistrationNo" resultType="com.zjy.vo.PrescriptionResult" parameterType="java.lang.String" >
+    select 
+    m.medicine_name as medicineName, p.medicine_amount as medicineAmount
+    from prescription p
+    left join medicine m on p.medicine_no = m.medicine_no
+    where registration_no = #{registrationNo,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from prescription
     where id = #{id,jdbcType=VARCHAR}

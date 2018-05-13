@@ -31,6 +31,27 @@
     from visit
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByPatientNo" resultType="com.zjy.vo.VisitResult" parameterType="HashMap">
+  	select
+  		v.registration_no as registrationNo, dept.department_name as departmentName, doc.doctor_name as doctorName,
+  		v.visit_time as visitTime, v.diagnostic_description as diagnosticDescription
+  	from visit v
+  	left join department dept on v.department_no = dept.department_no
+  	left join doctor doc on v.doctor_no = doc.doctor_no
+    <where>
+    	v.patient_no = #{patientNo,jdbcType=VARCHAR}
+    	<if test="departmentNo != null">
+    		and v.department_no = #{departmentNo, jdbcType=VARCHAR}
+    	</if>
+    	<if test="beginDate != null">
+    		and v.visit_time &gt;= #{beginDate, jdbcType=INTEGER}
+    	</if>
+    	<if test="endDate != null">
+    		and v.visit_time &lt;= #{endDate, jdbcType=INTEGER}
+    	</if>
+    </where>
+    order by visit_time desc
+  </select>
   <update id="updateDiagnostic" parameterType="String">
   	update visit set diagnostic_description=#{diagnostic,jdbcType=LONGVARCHAR} where patient_no=#{patientNo,jdbcType=VARCHAR}
   </update>

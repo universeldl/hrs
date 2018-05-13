@@ -81,6 +81,14 @@ public class PatientController {
 		return m;
 	}
 	
+	@RequestMapping(value="/showQueryCases")
+	public ModelAndView showQueryCases(@RequestParam(required=true) String no) {
+		Patient patient = patientService.selectByPatientNo(no);
+		ModelAndView m = new ModelAndView("/patient/queryCases");
+		m.addObject("patient", patient);
+		return m;
+	}
+	
 	/**
 	 * 用户注册
 	 * @author Mervyn

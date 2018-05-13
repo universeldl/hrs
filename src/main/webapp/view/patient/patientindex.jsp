@@ -54,7 +54,7 @@
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse3">
 	  				<li>
-	   					<a href="#" target="frame">
+	   					<a href="${pageContext.request.contextPath}/patient/showQueryCases?no=${patient.patientNo}" target="frame">
 	   						<span class="menu-text">既往病例</span>
 	   					</a>
 	  				</li>
