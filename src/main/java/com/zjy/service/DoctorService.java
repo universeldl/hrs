@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.zjy.dao.DoctorMapper;
 import com.zjy.entity.Doctor;
+import com.zjy.entity.Patient;
+import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.DataResult;
 
 @Service
 public class DoctorService {
@@ -55,5 +58,33 @@ public class DoctorService {
     public List<Doctor> selectDoctorNoDuty() {
     	return doctorMapper.selectDoctorNoDuty();
     }
+
+	public DataResult updatePassword(Doctor doctor, String oldPassword, String newPassword) {
+		DataResult dataResult = new DataResult();
+		
+		if (!doctor.getDoctorPassword().equals(CryptographyHelper.encrypt(oldPassword, doctor.getDoctorSalt()))) {
+			dataResult.setStatus(false);
+			dataResult.setTips("旧密码错误");
+			return dataResult;
+		}
+		
+		doctor.setDoctorSalt(CryptographyHelper.getRandomSalt());
+		doctor.setDoctorPassword(CryptographyHelper.encrypt(newPassword, doctor.getDoctorSalt()));
+		
+        try {
+    		if (doctorMapper.updateByPrimaryKeySelective(doctor)==1) {
+    			dataResult.setStatus(true);
+    			dataResult.setTips("修改密码成功");
+    		} else {
+    			dataResult.setStatus(false);
+    			dataResult.setTips("修改密码失败");
+    		}
+        }catch(Exception e) {
+			dataResult.setStatus(false);
+			dataResult.setTips("修改密码失败");
+        }
+        
+		return dataResult;
+	}
 
 }

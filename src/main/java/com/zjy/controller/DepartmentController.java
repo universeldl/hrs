@@ -23,7 +23,7 @@ import com.zjy.service.DepartmentService;
 public class DepartmentController {
 
 	@Autowired
-	DepartmentService departmentService;
+	private DepartmentService departmentService;
 	
 	/**
 	 * 获取科室列表

@@ -26,7 +26,7 @@ import com.zjy.vo.RegistrationResult;
 public class RegistrationService {
 
 	@Autowired
-	RegistrationMapper registrationMapper;
+	private RegistrationMapper registrationMapper;
 	
 	public DataResult insert(Registration registration) {
 		DataResult dataResult = new DataResult();

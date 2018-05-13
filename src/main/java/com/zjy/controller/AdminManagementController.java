@@ -37,13 +37,13 @@ import com.zjy.vo.DataResult;
 public class AdminManagementController {
 
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 	
 	@Autowired
-	DepartmentService departmentService;
+	private DepartmentService departmentService;
 	
 	@Autowired
-	PatientService patientService;
+	private PatientService patientService;
 	
     /**
      * 新增医生

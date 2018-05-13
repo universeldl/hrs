@@ -23,7 +23,7 @@ import com.zjy.vo.DataResult;
 public class MedicineController {
     
     @Autowired
-    MedicineService medicineService;
+    private MedicineService medicineService;
     
     /**
      * 新增药品

@@ -27,7 +27,7 @@ import com.zjy.vo.DataResult;
 public class PatientService {
 
 	@Autowired
-	PatientMapper patientMapper;
+	private PatientMapper patientMapper;
 	
 	public DataResult insert(Patient patient) {
 		DataResult dataResult = new DataResult();
