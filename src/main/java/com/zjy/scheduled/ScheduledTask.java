@@ -27,10 +27,10 @@ import com.zjy.util.Constants;
 public class ScheduledTask {
 	
 	@Autowired
-	DutyService dutyService;
+	private DutyService dutyService;
 	
 	@Autowired
-	RegistrationService registrationService;
+	private RegistrationService registrationService;
 	
 	/**
 	 * 每天将值班表中前一天有值班的医生的剩余挂号数更新为最大可预约挂号数

@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
+import com.zjy.entity.Patient;
 import com.zjy.service.DutyService;
 import com.zjy.util.Constants;
 import com.zjy.entity.Prescription;
@@ -39,16 +43,16 @@ import com.zjy.vo.DataResult;
 public class DoctorController {
 
 	@Autowired
-	DoctorService doctorService;
+	private DoctorService doctorService;
 	
 	@Autowired
-	DutyService dutyService;
+	private DutyService dutyService;
 	
 	@Autowired
-	MedicineService medicineService;
+	private MedicineService medicineService;
   
 	@Autowired
-	PrescriptionService preService;
+	private PrescriptionService preService;
     
   /**
 	 * 根据部门和值班时间获取医生
@@ -142,5 +146,30 @@ public class DoctorController {
 	@ResponseBody
 	public List<Doctor> selectDoctorNoDuty() {
 		return doctorService.selectDoctorNoDuty();
+	}
+	
+	/**
+	 * 修改密码
+	 * @author Mervyn
+	 * 
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/updatePassword", method=RequestMethod.POST)
+	@ResponseBody
+	public DataResult updatePhone(@RequestParam(value="oldPassword") String oldPassword,
+			@RequestParam(value="newPassword") String newPassword,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		DataResult dataResult;
+
+		Doctor doctor = (Doctor) request.getSession().getAttribute(Constants.SESSION_USER);
+
+		dataResult = doctorService.updatePassword(doctor, oldPassword, newPassword);
+		
+		return dataResult;
 	}
 }

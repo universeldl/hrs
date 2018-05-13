@@ -39,16 +39,16 @@ import com.zjy.vo.DataResult;
 public class PatientController {
 
 	@Autowired
-	PatientService patientService;
+	private PatientService patientService;
 	
 	@Autowired
-	RegistrationService registrationService;
+	private RegistrationService registrationService;
 	
 	@Autowired
-	DoctorService doctorService;
+	private DoctorService doctorService;
 	
 	@Autowired
-	DutyService dutyService;
+	private DutyService dutyService;
 	
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String toRegistrate() {

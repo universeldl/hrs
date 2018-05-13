@@ -28,7 +28,7 @@ import com.zjy.vo.DataResult;
 public class RegistrationController {
 
 	@Autowired
-	RegistrationService registrationService;
+	private RegistrationService registrationService;
 	
 	/**
 	 * 根据条件查询挂号列表

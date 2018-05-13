@@ -26,10 +26,10 @@ import com.zjy.vo.DataResult;
 public class DepartmentService {
 	
 	@Autowired
-	DepartmentMapper departmentMapper;
+	private DepartmentMapper departmentMapper;
 	
 	@Autowired
-	DoctorMapper doctorMapper;
+	private DoctorMapper doctorMapper;
 	
 	public DataResult insert(Department department) {
 		DataResult dataResult = new DataResult();
