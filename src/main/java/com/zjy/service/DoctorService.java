@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
+import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Doctor;
+import com.zjy.entity.Registration;
+import com.zjy.entity.Visit;
 import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
@@ -20,6 +23,9 @@ public class DoctorService {
 
     @Autowired
     private DoctorMapper doctorMapper;
+    
+    @Autowired
+    private VisitMapper visitMapper;
 
     public boolean updateByPrimaryKeySelective(Doctor doctor) {
         try{
@@ -98,6 +104,16 @@ public class DoctorService {
 		DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
 				pageInfo.getPageNum());
 		return dataGridResult;
+	}
+
+	public boolean confirmVisit(String registrationNo) {
+		// TODO Auto-generated method stub
+		Registration reg = doctorMapper.queryRegByNo(registrationNo);
+		reg.setStatus("2");
+		if(visitMapper.insert(reg)==1){
+			return true;
+		}
+		return false;
 	}
 
 }

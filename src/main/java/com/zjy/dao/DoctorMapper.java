@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.zjy.entity.Doctor;
+import com.zjy.entity.Registration;
 import com.zjy.vo.RegistrationResult;
 
 public interface DoctorMapper {
@@ -42,4 +43,6 @@ public interface DoctorMapper {
     int updateByNo(Doctor doctor);
 
 	List<RegistrationResult> queryListByRegNo(@Param("regNo")String regNo);
+
+	Registration queryRegByNo(@Param("regNo")String regNo);
 }

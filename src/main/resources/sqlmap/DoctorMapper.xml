@@ -393,4 +393,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryRegByNo" parameterType="String" resultType="com.zjy.entity.Registration">
+  	select id, registration_no, patient_no, 
+      department_no, doctor_no, appointment_time, 
+      visit_time, status, create_time, update_time 
+      from registration where registration_no=#{regNo, jdbcType=VARCHAR}
+  </select>
 </mapper>
