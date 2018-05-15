@@ -15,6 +15,7 @@ import com.zjy.dao.RegistrationMapper;
 import com.zjy.entity.Registration;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
+import com.zjy.vo.DeptAccountResult;
 import com.zjy.vo.RegistrationResult;
 
 /**
@@ -82,4 +83,8 @@ public class RegistrationService {
 	public int updateByPrimaryKeySelective(Registration registration) {
 		return registrationMapper.updateByPrimaryKeySelective(registration);
 	}
+	
+    public List<DeptAccountResult> registrationAccountByDept() {
+    	return registrationMapper.registrationAccountByDept();
+    }
 }
