@@ -22,7 +22,7 @@ public interface VisitMapper {
 
     int updateByPrimaryKey(Visit record);
 
-    int updateDiagnostic(String patientNo, String diagnostic);
+    int updateDiagnostic(String registrationNo, String diagnostic);
     
     List<VisitResult> selectByPatientNo(Map<String, Object> map);
 }

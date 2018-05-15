@@ -27,9 +27,9 @@ public class VisitService {
     @Autowired
     private VisitMapper visitMapper;
 
-    public boolean updateDiagnostic(String patientNo, String diagnostic) {
+    public boolean updateDiagnostic(String registrationNo, String diagnostic) {
         // TODO Auto-generated method stub
-        if(visitMapper.updateDiagnostic(patientNo,diagnostic)==1) {
+        if(visitMapper.updateDiagnostic(registrationNo,diagnostic)==1) {
             return true;
         }
         return false;

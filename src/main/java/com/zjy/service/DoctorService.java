@@ -13,6 +13,7 @@ import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Registration;
 import com.zjy.entity.Visit;
+import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
@@ -109,7 +110,7 @@ public class DoctorService {
 	public boolean confirmVisit(String registrationNo) {
 		// TODO Auto-generated method stub
 		Registration reg = doctorMapper.queryRegByNo(registrationNo);
-		reg.setStatus("2");
+		reg.setStatus(Constants.VISIT_TYPE);
 		if(visitMapper.insert(reg)==1){
 			return true;
 		}

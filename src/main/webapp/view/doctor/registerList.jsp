@@ -64,14 +64,9 @@
 	    
    	    function confirmFunction(value, row, index) {
                return [
-                       '<button id="tableConfirm" onclick="confirm('+row.registrationNo+')" type="button" class="btn btn-default">确认就诊</button>'
+                       '<button id="tableConfirm" onclick="confirm(\''+row.registrationNo+'\')" type="button" class="btn btn-default">确认就诊</button>'
                        ].join("");
         }
-		
-   	    function confirm(registrationNo){
-   	    	alert(registrationNo);
-   	    	location.href="${pageContext.request.contextPath}/doctor/confirmVisit?registrationNo="+registrationNo;
-   	    }
 		
 	    function queryParams(params){  
 	        return {  
@@ -125,6 +120,12 @@
 	  		}
 	    }); 
  	});
+	</script>
+	<script>
+	    function confirm(registrationNo){
+	    	alert(registrationNo);
+	    	location.href="${pageContext.request.contextPath}/doctor/confirmVisit?registrationNo="+registrationNo;
+	    }
 	</script>
 </head>
 <body>

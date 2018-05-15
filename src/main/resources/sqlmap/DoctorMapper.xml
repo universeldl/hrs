@@ -42,7 +42,8 @@
 	    <if test="regNo != null and regNo != ''" >
 	    	and registration_no=#{regNo, jdbcType=VARCHAR}
 	    </if>
-	    and appointment_time=date_format(now(),'%y-%m-%d')
+	    and visit_time=date_format(now(),'%y-%m-%d')
+	    and status = "1"
 	</where>
     order by department_no
   </select>
