@@ -79,7 +79,7 @@
 		<div class="form-group">
 			<label for="confirmPassword" class="col-sm-2 control-label" style="width:150px">确认密码</label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control" id="confirmPassword" placeholder="确认密码" style="width:250px">
+				<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="确认密码" style="width:250px">
 			</div>
 		</div>
 		<div class="form-group">
