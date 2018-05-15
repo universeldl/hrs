@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.zjy.entity.Registration;
+import com.zjy.vo.DeptAccountResult;
 import com.zjy.vo.RegistrationResult;
 
 public interface RegistrationMapper {
@@ -26,4 +27,6 @@ public interface RegistrationMapper {
     int cancelRegistration(String registrationNo);
     
     List<Registration> selectByDate(String time);
+    
+    List<DeptAccountResult> registrationAccountByDept();
 }

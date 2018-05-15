@@ -56,6 +56,15 @@
     </where>
     order by visit_time desc
   </select>
+  <select id="registrationAccountByDept" resultType="com.zjy.vo.DeptAccountResult">
+  	select count(temp.id) as account, temp.departmentName
+	from
+	(select r.id as id, department_name as departmentName, r.status as status
+	from department d
+	left join registration r on d.department_no = r.department_no) temp
+	where temp.status in ("1","2") or temp.status is null
+	group by temp.departmentName
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from registration
     where id = #{id,jdbcType=VARCHAR}

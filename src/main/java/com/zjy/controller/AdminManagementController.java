@@ -183,6 +183,11 @@ public class AdminManagementController {
     	return "admin/queryAppointment";
     }
     
+    @RequestMapping(value = "/showRegistrationAccountByDept")
+    public String showRegistrationAccountByDept() {
+    	return "admin/registrationAccountByDept";
+    }
+    
     /**
      * 添加部门
      * @author Mervyn

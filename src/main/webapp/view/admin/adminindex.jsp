@@ -109,13 +109,10 @@
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse5">
 	  				<li>
-	   					<a href="#" target="frame"><span class="menu-text">就诊量</span></a>
+	   					<a href="${pageContext.request.contextPath}/admin/showRegistrationAccountByDept" target="frame">
+	   						<span class="menu-text">预约数量</span>
+	   					</a>
 	  				</li>
-				    <li>
-				    	<a href="${pageContext.request.contextPath}/view/loginerror.jsp" target="frame">
-				    		<span class="menu-text">收入</span>
-				    	</a>
-				    </li>
 	  			</ul>
 	 		</li>
 	 	</ul>
