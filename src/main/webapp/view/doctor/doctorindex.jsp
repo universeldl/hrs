@@ -2,87 +2,70 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Insert title here</title>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
-		
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-		
-		<script type="text/javascript">
-			$(function() {
-				$("#visitForm").bootstrapValidator({
-			        container: '#tip',
-					message: 'This value is not valid',
-					feedbackIcons: {
-			            valid: 'glyphicon glyphicon-ok',
-			            invalid: 'glyphicon glyphicon-remove',
-			            validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						regNo: {
-							validators: {
-								notEmpty: {
-									message: '挂号编号不能为空'
-								}
-							}
-						}
-					}
-				});
-			});
-		</script>
-	</head>
-	<body>
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-			<table class="table" border="0px">
-				<tr>
-					<td>
-						<label for="docNo" class="col-sm-2 control-label" style="margin-top: 5px">医生编号：</label>
-					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="docNo" name="docNo" value="${hrs_session_user.doctorNo}" />
-					    </div>
-					</td>
-					<td>
-						<label for="docName" class="col-sm-2 control-label" style="margin-top: 5px">医生姓名：</label>
-					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="docName" name="docName" value="${hrs_session_user.doctorName}" />
-					    </div>
-					</td>
-					<td>
-						<label for="deptName" class="col-sm-2 control-label" style="margin-top: 5px">所属科室：</label>
-					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="deptName" name="deptName" value="${hrs_session_user.doctorDepartmentNo}" />
-					    </div>
-					</td>
-				</tr>
-			</table>
-		  </div>
-		  <hr width="100%"/>
-		  <div class="panel-body">
-		    <form class="form-horizontal" id="visitForm" role="form" action="${pageContext.request.contextPath}/consultationQueryDetail">
-		      <div class="form-group">
-			    <label for="regNo" class="col-sm-4 control-label">挂号编号：</label>
-			    <div class="col-sm-2">
-			      <input type="text" class="form-control" id="regNo" name="regNo" />
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <div class="col-sm-offset-4 col-sm-7">
-			      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			      <button type="submit" id="confirm" class="btn btn-default" onclick="">确认就诊</button>
-			      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			      <button type="reset" class="btn btn-default">取消</button>
-			      <br/><br/><br/><br/><br/><br/><br/><br/>
-			    </div>
-			  </div>
-			</form>
-		  </div>
-		</div>
-		
-		<script type="text/javascript">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/beyond.css" />
+	<title>导航</title>
+</head>
+<body>
+	<!-- 导航 -->
+	<div class="page-sidebar">
+	    <ul class="nav panel-group sidebar-menu" id="nav_parent">
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#collapse3" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">当日挂号列表</span>
+	 			</a>
+	  			<ul class="nav submenu collapse" id="collapse3">
+	  				<li>
+	   					<a href="${pageContext.request.contextPath}/view/doctor/registerList.jsp" target="frame"><span class="menu-text">当日挂号列表</span></a>
+	  				</li>
+	  			</ul>
+	 		</li>
+	 		<li class="panel">
+	  			<a class="panel-heading collapsed" href="#collapse4" data-toggle="collapse" data-parent="#nav_parent">
+	  				<span class="menu-text">修改密码</span>
+	 			</a>
+	  			<ul class="nav submenu collapse" id="collapse4">
+	  				<li>
+	   					<a href="${pageContext.request.contextPath}/view/doctor/updatePassword.jsp" target="frame"><span class="menu-text">修改密码</span></a>
+	  				</li>
+	  			</ul>
+	 		</li>
+	 	</ul>
+	</div>
+	<div style="left: 250px;position: absolute;" name="div_auto" id="div_auto">
+		<iframe name="frame" id="frame" scrolling="no" frameborder="0" style="padding: 0px; width: 1000px; height: 920px;">
 			
-		</script>
+		</iframe>
+	</div>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		
+		$(function(){
+			 //点击菜单箭头变化
+			 $(".page-sidebar .sidebar-menu a").each(function(){
+				 $(this).click(function(){
+					  var Oele = $(this).children('.menu-expand');
+					  if($(Oele)){
+						  if($(Oele).hasClass('glyphicon-chevron-right')){
+						      $(Oele).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+						  }else{
+						      $(Oele).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+						  }
+					  }
+					 
+					  //选中增加active
+					  if(! $(this).hasClass('panel-heading')){
+						  $(".page-sidebar .sidebar-menu a").removeClass('active');
+						  $(this).addClass('active');
+					  }
+				 });
+			 });
+		})
+	</script>
 	</body>
 </html>

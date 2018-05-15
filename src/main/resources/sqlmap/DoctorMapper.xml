@@ -32,6 +32,21 @@
     and doctor_name != "admin"
   </select>
   
+  <select id="queryListByRegNo" resultType="com.zjy.vo.RegistrationResult" parameterType="String" >
+    select 
+    r.registration_no,patient_name  
+    from registration r 
+    join patient p 
+    on r.patient_no=p.patient_no
+    <where>
+	    <if test="regNo != null and regNo != ''" >
+	    	and registration_no=#{regNo, jdbcType=VARCHAR}
+	    </if>
+	    and appointment_time=date_format(now(),'%y-%m-%d')
+	</where>
+    order by department_no
+  </select>
+  
   <select id="selectDoctorByDepartment" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -378,4 +393,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryRegByNo" parameterType="String" resultType="com.zjy.entity.Registration">
+  	select id, registration_no, patient_no, 
+      department_no, doctor_no, appointment_time, 
+      visit_time, status, create_time, update_time 
+      from registration where registration_no=#{regNo, jdbcType=VARCHAR}
+  </select>
 </mapper>

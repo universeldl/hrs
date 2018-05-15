@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
-import com.zjy.entity.Patient;
-import com.zjy.service.DutyService;
-import com.zjy.util.Constants;
 import com.zjy.entity.Prescription;
+import com.zjy.entity.Registration;
+import com.zjy.entity.Visit;
 import com.zjy.service.DoctorService;
+import com.zjy.service.DutyService;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
+import com.zjy.util.Constants;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
@@ -171,5 +172,34 @@ public class DoctorController {
 		dataResult = doctorService.updatePassword(doctor, oldPassword, newPassword);
 		
 		return dataResult;
+	}
+	
+	/**
+	 * 医生分页查看当日挂号
+	 * @param pageSize
+	 * @param pageNumber
+	 * @param regNo
+	 * @return
+	 */
+	@RequestMapping(value = "/queryRegisterList", method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridResult queryRegisterList(@RequestParam(value = "pageSize", required = true) int pageSize,
+    		@RequestParam(value = "pageNumber", required = true) int pageNumber,
+    		@RequestParam(value = "regNo") String regNo) {
+    	DataGridResult dataGridResult = doctorService.queryListByRegNo(regNo, pageNumber, pageSize);
+    	return dataGridResult;
+    }
+	
+	/**
+	 * 确认就诊
+	 * @param registrationNo
+	 * @return
+	 */
+	@RequestMapping("/confirmVisit")
+	public String confirmVisit(String registrationNo){
+		if(doctorService.confirmVisit(registrationNo)){
+			return "doctor/visitDetail";
+		}
+		return "loginerror";
 	}
 }
