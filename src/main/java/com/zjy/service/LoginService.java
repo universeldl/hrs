@@ -41,6 +41,7 @@ public class LoginService {
 			} else {
 				request.getSession().setAttribute(Constants.SESSION_TYPE, Constants.DOCTOR_TYPE);
 			}
+			request.getSession().setAttribute(Constants.SESSION_NO, doctor.getDoctorNo());
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {
@@ -59,6 +60,7 @@ public class LoginService {
 		if (patient.getPatientPassword().equals(CryptographyHelper.encrypt(password, patient.getPatientSalt()))) {
 			request.getSession().setAttribute(Constants.SESSION_USER, patient);
 			request.getSession().setAttribute(Constants.SESSION_TYPE, Constants.PATIENT_TYPE);
+			request.getSession().setAttribute(Constants.SESSION_NO, patient.getPatientNo());
 			dataResult.setStatus(true);
 			dataResult.setTips("登录成功");
 		} else {

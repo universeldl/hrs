@@ -65,9 +65,9 @@ public class ConsultationController {
      * @return
      */
     @RequestMapping("/writeDiagnostic")
-    public String writeDiagnostic(@RequestParam("patientNo")String patientNo,
+    public String writeDiagnostic(@RequestParam("registrationNo")String registrationNo,
                                   @RequestParam("diagnostic")String diagnostic) {
-        if(visitService.updateDiagnostic(patientNo,diagnostic)) {
+        if(visitService.updateDiagnostic(registrationNo,diagnostic)) {
             return "";
         }
         return "";

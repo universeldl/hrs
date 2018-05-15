@@ -53,7 +53,7 @@
     order by visit_time desc
   </select>
   <update id="updateDiagnostic" parameterType="String">
-  	update visit set diagnostic_description=#{diagnostic,jdbcType=LONGVARCHAR} where patient_no=#{patientNo,jdbcType=VARCHAR}
+  	update visit set diagnostic_description=#{diagnostic,jdbcType=LONGVARCHAR} where registration_no=#{registrationNo,jdbcType=VARCHAR}
   </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from visit
