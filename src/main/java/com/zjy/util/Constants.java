@@ -16,6 +16,8 @@ public class Constants {
 	public static final String SESSION_TYPE = "hrs_session_type";
 	// 存放在session中id常量
 	public static final String SESSION_NO = "hrs_session_no";
+	// 存放在session中姓名常量
+	public static final String SESSION_NAME = "hrs_session_name";
 	// 定义存放在Session中验证码常量
 	public final static String VERIFY_CODE = "verify_code";
 	// 定义Cookie的名字

@@ -11,6 +11,12 @@
 	<title>导航</title>
 </head>
 <body>
+	<div class="panel panel-default">
+		<div class="panel-heading text-right">
+			<strong><%=session.getAttribute("hrs_session_name")%></strong>&nbsp;&nbsp;&nbsp;&nbsp;欢迎您使用挂号预约就诊系统&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${pageContext.request.contextPath}/logout">退出登录</a>
+		</div>
+	</div>
 	<!-- 导航 -->
 	<div class="page-sidebar">
 	    <ul class="nav panel-group sidebar-menu" id="nav_parent">
