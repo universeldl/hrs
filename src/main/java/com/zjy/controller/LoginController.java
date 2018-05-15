@@ -1,5 +1,8 @@
 package com.zjy.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,10 +51,11 @@ public class LoginController {
      * @param request
      * @param response
      * @return
+     * @throws IOException 
+     * @throws ServletException 
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    @ResponseBody
-    public DataResult logout(HttpServletRequest request, HttpServletResponse response) {
+    public DataResult logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	DataResult dataResult = new DataResult();
 
 		request.getSession().removeAttribute(Constants.SESSION_USER);
@@ -59,7 +63,8 @@ public class LoginController {
     	CookieTools.removeCookie(Constants.COOKIE_NAME, response, request);
     	dataResult.setStatus(true);
     	dataResult.setTips("退出登录成功");
-    	
+
+        request.getRequestDispatcher("/toLogin").forward(request, response);
     	return dataResult;
     }
     
