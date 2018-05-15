@@ -44,9 +44,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				Patient patient = patientService.selectByPatientNo(userNo);
 				if (doctor != null){
 					request.getSession().setAttribute(Constants.SESSION_USER, doctor);
+					request.getSession().setAttribute(Constants.SESSION_NO, doctor.getDoctorNo());
+					request.getSession().setAttribute(Constants.SESSION_NAME, doctor.getDoctorName());
 					return true;
 				} else if (patient != null) {
 					request.getSession().setAttribute(Constants.SESSION_USER, patient);
+					request.getSession().setAttribute(Constants.SESSION_NAME, patient.getPatientName());
+					request.getSession().setAttribute(Constants.SESSION_NO, patient.getPatientNo());
 					return true;
 				}
 				
