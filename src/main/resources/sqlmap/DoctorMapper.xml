@@ -85,10 +85,13 @@
     where doctor_no = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="queryDoctor" parameterType="HashMap" resultMap="BaseResultMap">
+  <select id="queryDoctor" parameterType="HashMap" resultType="com.zjy.vo.DoctorResult">
   	select 
-  	<include refid="Base_Column_List" /> 
-  	from doctor 
+    doctor.id, doctor.doctor_no, doctor.doctor_name, doctor.doctor_sex, doctor.doctor_birth, 
+    doctor.doctor_phone, doctor.doctor_registration_fee, doctor.doctor_hire_time, doctor.doctor_department_no, doctor.doctor_quit_time, 
+    doctor.type, doctor.create_time, doctor.update_time, dept.department_name as departmentName
+  	from doctor doctor
+  	left join department dept on doctor.doctor_department_no = dept.department_no
   	<where>
   		<if test="name!=null and name!=''">
 	    	and doctor_name like CONCAT('%',#{name},'%')

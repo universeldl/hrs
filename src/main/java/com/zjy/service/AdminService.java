@@ -14,6 +14,7 @@ import com.zjy.entity.Doctor;
 import com.zjy.vo.BatchResult;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
+import com.zjy.vo.DoctorResult;
 
 /**
  * 
@@ -48,8 +49,8 @@ public class AdminService {
     public DataGridResult queryDoctorByPage(Map<String, Object> param, int pageNumber, int pageSize) {
         // TODO Auto-generated method stub
         PageHelper.startPage(pageNumber, pageSize);
-        List<Doctor> doctortList = doctorMapper.queryDoctor(param);
-        PageInfo<Doctor> pageInfo = new PageInfo<Doctor>(doctortList);
+        List<DoctorResult> doctortList = doctorMapper.queryDoctor(param);
+        PageInfo<DoctorResult> pageInfo = new PageInfo<DoctorResult>(doctortList);
         DataGridResult dataGridResult = new DataGridResult(pageInfo.getTotal(), pageInfo.getList(), pageInfo.getPageSize(),
                 pageInfo.getPageNum());
         return dataGridResult;

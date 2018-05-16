@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Registration;
 import com.zjy.vo.ConfirmVo;
+import com.zjy.vo.DoctorResult;
 import com.zjy.vo.RegistrationResult;
 
 public interface DoctorMapper {
@@ -27,7 +28,7 @@ public interface DoctorMapper {
 
     List<Doctor> selectDoctorNoDuty();
     
-    List<Doctor> queryDoctor(Map<String, Object> param);
+    List<DoctorResult> queryDoctor(Map<String, Object> param);
 
     List<Doctor> queryDoctorByDepNo(String depNo);
     

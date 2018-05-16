@@ -93,9 +93,7 @@
 	</div>
 	
 	<div class="panel panel-default">
-		<textarea rows="10" cols="139" id="write" style="resize:none;">
-		
-		</textarea>
+		<textarea rows="10" cols="139" id="write" style="resize:none;"></textarea>
 	</div>
 	
 	<!-- 模态框 -->
@@ -168,6 +166,9 @@
 	<!-- ending -->
 	<input id="hid" type="hidden" value="${confirm.registrationNo}"/>
 	<script type="text/javascript">
+		function line2br(text){
+			  return text.split("\n").join("<br/>");
+		}
 		function queryMedicine(){
 			var medicineName = $("#medicineName").val();
 			$('#medicineTable').bootstrapTable({
@@ -323,7 +324,7 @@
 				type : "POST",
 				data : {
 					registrationNo: $("#registrationNo").val(),
-					write: $("#write").val(),
+					write: line2br($("#write").val()),
 				},
                 dataType: "json",
 				async : true,
