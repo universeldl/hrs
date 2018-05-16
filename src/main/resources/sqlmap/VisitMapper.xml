@@ -52,6 +52,14 @@
     </where>
     order by visit_time desc
   </select>
+  
+  <select id="selectByNo" resultMap="BaseResultMap" parameterType="String">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from visit 
+  	where registration_no=#{registrationNo,jdbcType=VARCHAR}
+  </select>
+  
   <update id="updateDiagnostic" parameterType="String">
   	update visit set diagnostic_description=#{diagnostic,jdbcType=LONGVARCHAR} where registration_no=#{registrationNo,jdbcType=VARCHAR}
   </update>

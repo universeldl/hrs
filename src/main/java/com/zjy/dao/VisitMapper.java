@@ -3,7 +3,8 @@ package com.zjy.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.zjy.entity.Registration;
+import org.apache.ibatis.annotations.Param;
+
 import com.zjy.entity.Visit;
 import com.zjy.vo.VisitResult;
 
@@ -22,8 +23,10 @@ public interface VisitMapper {
 
     int updateByPrimaryKey(Visit record);
 
-    int updateDiagnostic(String registrationNo, String diagnostic);
+    int updateDiagnostic(@Param("registrationNo")String registrationNo, @Param("diagnostic")String diagnostic);
     
     List<VisitResult> selectByPatientNo(Map<String, Object> map);
+
+	Visit selectByNo(@Param("registrationNo")String registrationNo);
 
 }
