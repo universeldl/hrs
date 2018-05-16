@@ -81,8 +81,8 @@
 	                field:'doctorName',
 	                align:'center'
 	            },{
-	                title:'所属部门编号',
-	                field:'doctorDepartmentNo',
+	                title:'所属部门',
+	                field:'departmentName',
 	                align:'center'
 	            },{
 	                title:'医生性别',
@@ -272,7 +272,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label>状态:</label>
-	    <select class="form-control" name="status" id="status">
+	    <select class="selectpicker" name="status" id="status">
 	    	<option value="1" selected="selected">在职</option>
 	    	<option value="0">离职</option>
 	    </select>
