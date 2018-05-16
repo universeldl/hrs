@@ -47,15 +47,15 @@ public class MedicineService {
         try {
             if(mMapper.insertSelective(medicine)==1) {
                 dataResult.setStatus(true);
-                dataResult.setTips("插入成功");
+                dataResult.setTips("添加成功");
             }else {
                 dataResult.setStatus(false);
-                dataResult.setTips("插入失败");
+                dataResult.setTips("添加失败");
             }
         } catch (Exception e) {
             // TODO: handle exception
             dataResult.setStatus(false);
-            dataResult.setTips("插入失败");
+            dataResult.setTips("添加失败");
         }
         return dataResult;
     }

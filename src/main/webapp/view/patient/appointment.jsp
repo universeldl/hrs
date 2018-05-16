@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		//异步获取可是列表并动态填充select
@@ -67,11 +68,35 @@
             autoclose: true,
             minView: 'month',
         });
+        $('#submit').click(function() {
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/patient/appointment",
+				type : "POST",
+				data : {
+					department: $('#selectDepartment').val(),
+					doctor: $('#selectDoctor').val(),
+					viewDate: $('#viewDate').val()
+				},
+                dataType: "json",
+				async : true,
+                success: function (data) {
+                	bootbox.alert({
+                		size: "small",
+    		        	message: data.tips
+                	})
+                },
+                error: function (data) {
+                	bootbox.alert({
+    		        	message: "网络错误"
+                	})
+                }
+            });
+        });
 	});
 </script>
 </head>
 <body>
-	<form id="appointmentForm" class="form-inline" style="margin-top: 30px; margin-left: 30px" action="/patient/appointment" method="post" >
+	<form id="appointmentForm" class="form-inline" style="margin-top: 30px; margin-left: 30px">
 		<select id="selectDepartment" name="department" class="selectpicker" title="选择科室"></select>
 		<div class='input-group date' id='datetimepicker'>
 	        <input type='text' class="form-control" id="viewDate" name=viewDate value="" placeholder="就诊日期" />
@@ -80,7 +105,8 @@
 	        </span>
 	    </div>
 		<select id="selectDoctor" name="doctor" class="selectpicker" title="选择医生"></select>
-		<input type="submit" value="预约" class="btn btn-info" id="submit">
+		<input type="button" value="预约" class="btn btn-info" id="submit">
+		<div id="tips"></div>
 	</form>
 </body>
 </html>

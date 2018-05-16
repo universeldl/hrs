@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	
 	<script type="text/javascript">
 		$(function() {
@@ -33,93 +34,140 @@
 	            }
 	        });
 			
+			initValidator();
 			
-			$("#addDoctor").bootstrapValidator({
-				message: 'This value is not valid',
-				feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
+		    $('#reset_btn').click(function() {
+				$('#doctorName').val("");
+				$('#doctorDepartmentNo').val("");
+				$('#doctorSex').val("");
+				$('#doctorPassword').val("");
+				$('#doctorPassword1').val("");
+				$('#doctorBirth').val("");
+				$('#doctorPhone').val("");
+				$('#doctorRegistrationFee').val("");
+				$('#doctorHireTime').val("");
+				$("#addDoctor").data('bootstrapValidator').destroy();
+				initValidator();
+		    });
+			$('#add').click(function() {
+	    		$.ajax({
+	                url: "${pageContext.request.contextPath}/admin/addDoctor",
+					type : "POST",
+					data : {
+						doctorName: $('#doctorName').val(),
+						doctorDepartmentNo: $('#doctorDepartmentNo').val(),
+						doctorSex: $('#doctorSex').val(),
+						doctorPassword: $('#doctorPassword').val(),
+						birth: $('#doctorBirth').val(),
+						doctorPhone: $('#doctorPhone').val(),
+						doctorRegistrationFee: $('#doctorRegistrationFee').val(),
+						hireTime: $('#doctorHireTime').val()
+					},
+	                dataType: "json",
+					async : true,
+	                success: function (data) {
+	                	bootbox.alert({
+	                		size: "small",
+	    		        	message: data.tips
+	                	})
+	                },
+	                error: function (data) {
+	                	bootbox.alert({
+	    		        	message: "网络错误"
+	                	})
+	                }
+	            });
+	        });
+		});
+	</script>
+	<script>
+	function initValidator() {
+		$("#addDoctor").bootstrapValidator({
+			message: 'This value is not valid',
+			feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				doctorName: {
+					validators: {
+						notEmpty: {
+							message: '医生姓名不能为空'
+						}
+					}
 				},
-				fields: {
-					doctorName: {
-						validators: {
-							notEmpty: {
-								message: '医生姓名不能为空'
-							}
+				doctorPassword: {
+					validators: {
+						notEmpty: {
+							message: '密码不能为空'
+						},
+						stringLength: {
+							min: 6,
+							max: 16,
+							message: '密码需要 6 至 16 个字符'
 						}
-					},
-					doctorPassword: {
-						validators: {
-							notEmpty: {
-								message: '密码不能为空'
-							},
-							stringLength: {
-								min: 6,
-								max: 16,
-								message: '密码需要 6 至 16 个字符'
-							}
+					}
+				},
+				doctorPassword1: {
+					validators: {
+						notEmpty: {
+							message: '密码不能为空'
+						},
+						identical: {
+							field: 'doctorPassword',
+							message: '确认密码与输入的密码不相同'
 						}
-					},
-					doctorPassword1: {
-						validators: {
-							notEmpty: {
-								message: '密码不能为空'
-							},
-							identical: {
-								field: 'doctorPassword',
-								message: '确认密码与输入的密码不相同'
-							}
+					}
+				},
+				doctorBirth: {
+					validators: {
+						notEmpty: {
+							message: '出生年月日不能为空'
+						},
+						date: {
+							format: 'YYYY-MM-DD',
+							message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
 						}
-					},
-					doctorBirth: {
-						validators: {
-							notEmpty: {
-								message: '出生年月日不能为空'
-							},
-							date: {
-								format: 'YYYY-MM-DD',
-								message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
-							}
+					}
+				},
+				doctorHireTime: {
+					validators: {
+						notEmpty: {
+							message: '入职日期不能为空'
+						},
+						date: {
+							format: 'YYYY-MM-DD',
+							message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
 						}
-					},
-					doctorHireTime: {
-						validators: {
-							notEmpty: {
-								message: '入职日期不能为空'
-							},
-							date: {
-								format: 'YYYY-MM-DD',
-								message: '请输入\'YYYY-MM-DD\'格式的日期，或者使用日期选择器'
-							}
-						}
-					}, 
-					doctorPhone: {
-						validators: {
-							notEmpty: {
-								message: '手机号码不能为空'
-							},
-							digit: {},
-		                    phone: {
-		                        country: 'CN',
-		                        message: '请输入正确的手机号'
-		                    }
-						}
-					},
-					doctorRegistrationFee: {
-						validators: {
-							notEmpty: {
-								message: '挂号收费价格不能为空'
-							}
+					}
+				}, 
+				doctorPhone: {
+					validators: {
+						notEmpty: {
+							message: '手机号码不能为空'
+						},
+						digit: {},
+	                    phone: {
+	                        country: 'CN',
+	                        message: '请输入正确的手机号'
+	                    }
+					}
+				},
+				doctorRegistrationFee: {
+					validators: {
+						notEmpty: {
+							message: '挂号收费价格不能为空'
 						}
 					}
 				}
-			});
+			}
 		});
+	}
 	</script>
 </head>
 <body>
-	<form id="addDoctor" class="form-horizontal col-sm-8" role="form" action="${pageContext.request.contextPath}/admin/addDoctor" style="margin-top: 30px; margin-left: 30px" method="post">
+	<form id="addDoctor" class="form-horizontal col-sm-8" role="form" style="margin-top: 30px; margin-left: 30px">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">医生姓名:</label>
 		    <div class="col-sm-4">
@@ -184,7 +232,8 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" id="add" style="margin-top: 10px">添加</button>
+			<button type="button" class="btn btn-default" id="add" style="margin-top: 10px">添加</button>
+	  		<button class="btn btn-default" id="reset_btn" type="button" style="margin-top: 10px;width: 60px;">重置</button>
 		</div>
 	</form>
 	<table id="mytab" class="table table-hover"></table>
