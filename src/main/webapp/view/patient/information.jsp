@@ -14,12 +14,39 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
  	
  	<script type="text/javascript">
  	$(function() {
 	    $('#editPhone').click(function() {
 	        $("#myModal").modal("show");
 	    }); 
+	    $('#update').click(function() {
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/patient/updatePhone",
+				type : "POST",
+				data : {
+					phone: $('#phone').val(),
+				},
+                dataType: "json",
+				async : true,
+                success: function (data) {
+                	bootbox.alert({
+                		size: "small",
+    		        	message: data.tips,
+    		        	callback: function() {
+    	                	$('#myModal').modal('hide')
+    	                	location.reload();
+    		        	}
+                	})
+                },
+                error: function (data) {
+                	bootbox.alert({
+    		        	message: "网络错误"
+                	})
+                }
+            });
+	    });
 		$("#updatePhone").bootstrapValidator({
 			message: 'This value is not valid',
 			feedbackIcons: {
@@ -90,7 +117,7 @@
 	        <h4 class="modal-title" id="myModalLabel">个人信息</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form id="updatePhone" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/patient/updatePhone" method="post">
+	        <form id="updatePhone" class="form-horizontal" role="form">
 			  <div class="form-group">
 			    <label for="doctorPhone" class="col-sm-2 control-label">新手机号:</label>
 			    <div class="col-sm-10">
@@ -98,7 +125,7 @@
 			    </div>
 			  </div>
 		      <div class="modal-footer">
-		        <input type="submit" class="btn btn-primary" value="保存"/>
+		        <input type="button" class="btn btn-primary" value="保存" id="update"/>
 		        <input type="reset" class="btn btn-default" data-dismiss="modal" value="取消"/> 
 		      </div>
 			</form>
