@@ -135,19 +135,25 @@ public class DoctorService {
 	public void insertVisit(String registrationNo, String write) {
 		// TODO Auto-generated method stub
 		Registration reg = doctorMapper.queryRegByNo(registrationNo);
-		Visit visit = new Visit();
-		visit.setId();
-		visit.setAppointmentTime(reg.getAppointmentTime());
-		visit.setCreateTime();
-		visit.setDepartmentNo(reg.getDepartmentNo());
-		visit.setDiagnosticDescription(write);
-		visit.setDoctorNo(reg.getDoctorNo());
-		visit.setPatientNo(reg.getPatientNo());
-		visit.setRegistrationNo(registrationNo);
-		visit.setStatus(reg.getStatus());
-		visit.setUpdateTime();
-		visit.setVisitTime(reg.getVisitTime());
-		visitMapper.insert(visit);
+		Visit visit = visitMapper.selectByNo(registrationNo);
+		if(visit==null){
+			visit = new Visit();
+			visit.setId();
+			visit.setAppointmentTime(reg.getAppointmentTime());
+			visit.setCreateTime();
+			visit.setDepartmentNo(reg.getDepartmentNo());
+			visit.setDiagnosticDescription(write);
+			visit.setDoctorNo(reg.getDoctorNo());
+			visit.setPatientNo(reg.getPatientNo());
+			visit.setRegistrationNo(registrationNo);
+			visit.setStatus(reg.getStatus());
+			visit.setUpdateTime();
+			visit.setVisitTime(reg.getVisitTime());
+			visitMapper.insert(visit);
+		}else{
+			visitMapper.updateDiagnostic(registrationNo, write);
+		}
+		
 	}
 
 }

@@ -40,7 +40,8 @@
 				<td>
 					<label for="" class="col-sm-4 control-label" style="margin-top: 5px">病人性别：</label>
 				    <div class="col-sm-5">
-				      <input type="text" class="form-control" id="" name="" value="${confirm.patientSex}==0?'女':'男'" readonly/>
+				    	<%-- <c:if test="${confirm.patientSex }"></c:if> --%>
+				      <input type="text" class="form-control" id="" name="" value="${confirm.patientSex==0?'女':'男'}" readonly/>
 				    </div>
 				</td>
 			</tr>
