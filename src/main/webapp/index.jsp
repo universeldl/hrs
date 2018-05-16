@@ -109,7 +109,7 @@
 							}
 						} else {
 							alert(data.tips);
-							//页面内提示未实现
+							window.location.href = "${pageContext.request.contextPath}/toLogin";
 						}
 					}
 				});
