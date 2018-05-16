@@ -69,4 +69,15 @@ public class PrescriptionService {
 		return prescriptionMapper.selectByRegistrationNo(registrationNo);
 	}
 
+	public Prescription selectByNo(String registrationNo, String medicineNo) {
+		// TODO Auto-generated method stub
+		Prescription prescription = prescriptionMapper.selectByNo(registrationNo,medicineNo);
+		return prescription;
+	}
+
+	public void update(Prescription prescription) {
+		// TODO Auto-generated method stub
+		prescriptionMapper.updateByPrimaryKey(prescription);
+	}
+
 }

@@ -23,6 +23,10 @@
     left join medicine m on p.medicine_no = m.medicine_no
     where registration_no = #{registrationNo,jdbcType=VARCHAR}
   </select>
+  <select id="selectByNo" resultType="com.zjy.entity.Prescription" parameterType="String">
+  	select * from prescription where registration_no = #{registrationNo,jdbcType=VARCHAR} 
+  	and medicine_no=#{medicineNo,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from prescription
     where id = #{id,jdbcType=VARCHAR}
