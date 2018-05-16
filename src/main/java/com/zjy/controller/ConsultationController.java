@@ -1,18 +1,19 @@
 package com.zjy.controller;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjy.entity.Prescription;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
 import com.zjy.service.VisitService;
+import com.zjy.vo.DataGridResult;
 
 /**
  * 就诊相关
@@ -22,6 +23,7 @@ import com.zjy.service.VisitService;
  * @version $Id: ConsultationController.java, v 0.1 2018年3月30日 上午10:23:16 zhoujiayi Exp $
  */
 @Controller
+@RequestMapping(value="/consultationQuery")
 public class ConsultationController {
 
     
@@ -39,48 +41,43 @@ public class ConsultationController {
         return "consultationQuery";
     }
     
-    
-    /**
-     * 医生编写病例  
-     * 更新visit表里的病例描述字段
-     * @param patientNo
-     * @param diagnostic
-     * @return
-     */
-    @RequestMapping("/writeDiagnostic")
-    public String writeDiagnostic(@RequestParam("registrationNo")String registrationNo,
-                                  @RequestParam("diagnostic")String diagnostic) {
-        if(visitService.updateDiagnostic(registrationNo,diagnostic)) {
-            return "";
-        }
-        return "";
-    }
-    
     /**
      * 药品搜索
      * 根据药品名称模糊匹配
      * @return
      */
     @RequestMapping("/medicineQuery")
-    public Map<String, Object> medicineQuery(@RequestParam("medicineName")String medicineName,
-                                             int pageSize,int pageNumber) {
-        int a = (pageNumber-1)*pageSize;
-        int b = pageSize;
-        Map<String, Object> map = medicineService.queryByMedicineName(medicineName,a,b);
-        return map;
+    @ResponseBody
+    public DataGridResult medicineQuery(@RequestParam(value="medicineName")String medicineName) {
+    	DataGridResult dataGridResult = medicineService.queryListByName(medicineName, 1, 10);
+        return dataGridResult;
     }
     
     /**
-     * 处方确认，传多个对象回来
-     * 存入数据库
-     * @param list
+     * 开药时加入处方表
+     * @param registrationNo
+     * @param medicineNo
      * @return
      */
-    @RequestMapping("/confirmMedicine")
-    public String confirmMedicine(@RequestBody List<Prescription> list) {
-        if(preService.addPrescriptions(list)) {
-            return "";
-        }
-        return "";
+    @RequestMapping("/addMedicine")
+    @ResponseBody
+    public Map<String, String> addMedicine(@RequestParam(value="registrationNo")String registrationNo, 
+    		@RequestParam(value="medicineNo")String medicineNo){
+    	Map<String, String> map = new HashMap<String, String>();
+    	Prescription prescription = preService.selectByNo(registrationNo,medicineNo);
+    	if(prescription==null){
+    		prescription = new Prescription();
+	    	prescription.setId();
+	    	prescription.setMedicineAmount(1);
+	    	prescription.setMedicineNo(medicineNo);
+	    	prescription.setRegistrationNo(registrationNo);
+	    	preService.insertPrescription(prescription);
+	    	
+    	}else{
+    		prescription.setMedicineAmount(prescription.getMedicineAmount()+1);
+    		preService.update(prescription);
+    	}
+    	map.put("msg", "success");
+    	return map;
     }
 }
