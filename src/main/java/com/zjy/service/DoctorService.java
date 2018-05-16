@@ -1,5 +1,6 @@
 package com.zjy.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zjy.dao.DoctorMapper;
+import com.zjy.dao.RegistrationMapper;
 import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Registration;
 import com.zjy.entity.Visit;
 import com.zjy.util.Constants;
 import com.zjy.util.CryptographyHelper;
+import com.zjy.vo.ConfirmVo;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 import com.zjy.vo.RegistrationResult;
@@ -27,6 +30,9 @@ public class DoctorService {
     
     @Autowired
     private VisitMapper visitMapper;
+    
+    @Autowired
+    private RegistrationMapper regMapper;
 
     public boolean updateByPrimaryKeySelective(Doctor doctor) {
         try{
@@ -107,14 +113,41 @@ public class DoctorService {
 		return dataGridResult;
 	}
 
-	public boolean confirmVisit(String registrationNo) {
+	public Map<String, Object> confirmVisit(String registrationNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		Registration reg = doctorMapper.queryRegByNo(registrationNo);
+		reg.setUpdateTime();
+		reg.setStatus(Constants.VISIT_TYPE);
+		
+		ConfirmVo confirmVo = doctorMapper.confirm(reg);
+		confirmVo.setRegistrationNo(registrationNo);
+		map.put("confirm", confirmVo);
+		if(regMapper.updateStatus(reg)==1){
+			map.put("msg", "suc");
+		}else{
+			map.put("msg", "fail");
+		}
+		
+		return map;
+	}
+
+	public void insertVisit(String registrationNo, String write) {
 		// TODO Auto-generated method stub
 		Registration reg = doctorMapper.queryRegByNo(registrationNo);
-		reg.setStatus(Constants.VISIT_TYPE);
-		if(visitMapper.insert(reg)==1){
-			return true;
-		}
-		return false;
+		Visit visit = new Visit();
+		visit.setId();
+		visit.setAppointmentTime(reg.getAppointmentTime());
+		visit.setCreateTime();
+		visit.setDepartmentNo(reg.getDepartmentNo());
+		visit.setDiagnosticDescription(write);
+		visit.setDoctorNo(reg.getDoctorNo());
+		visit.setPatientNo(reg.getPatientNo());
+		visit.setRegistrationNo(registrationNo);
+		visit.setStatus(reg.getStatus());
+		visit.setUpdateTime();
+		visit.setVisitTime(reg.getVisitTime());
+		visitMapper.insert(visit);
 	}
 
 }

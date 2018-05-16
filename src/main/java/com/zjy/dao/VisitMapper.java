@@ -10,7 +10,7 @@ import com.zjy.vo.VisitResult;
 public interface VisitMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(Registration registration);
+    int insert(Visit visit);
 
     int insertSelective(Visit record);
 
@@ -25,4 +25,5 @@ public interface VisitMapper {
     int updateDiagnostic(String registrationNo, String diagnostic);
     
     List<VisitResult> selectByPatientNo(Map<String, Object> map);
+
 }

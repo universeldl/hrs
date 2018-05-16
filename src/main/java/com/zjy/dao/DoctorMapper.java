@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Registration;
+import com.zjy.vo.ConfirmVo;
 import com.zjy.vo.RegistrationResult;
 
 public interface DoctorMapper {
@@ -45,4 +46,6 @@ public interface DoctorMapper {
 	List<RegistrationResult> queryListByRegNo(@Param("regNo")String regNo);
 
 	Registration queryRegByNo(@Param("regNo")String regNo);
+
+	ConfirmVo confirm(Registration reg);
 }

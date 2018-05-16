@@ -192,6 +192,13 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <update id="updateStatus" parameterType="com.zjy.entity.Registration">
+  	update registration 
+  	set status = #{status,jdbcType=VARCHAR} 
+  	where registration_no = #{registrationNo,jdbcType=VARCHAR}
+  </update>
+  
   <update id="cancelRegistration" parameterType="java.lang.String">
   	update registration
   	set status = "0"

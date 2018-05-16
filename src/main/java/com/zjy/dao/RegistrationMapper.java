@@ -29,4 +29,6 @@ public interface RegistrationMapper {
     List<Registration> selectByDate(String time);
     
     List<DeptAccountResult> registrationAccountByDept();
+
+	int updateStatus(Registration reg);
 }
