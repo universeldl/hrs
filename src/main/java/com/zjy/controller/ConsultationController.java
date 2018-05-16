@@ -3,17 +3,13 @@ package com.zjy.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.zjy.entity.Consultation;
 import com.zjy.entity.Prescription;
-import com.zjy.service.ConsultationService;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
 import com.zjy.service.VisitService;
@@ -28,8 +24,6 @@ import com.zjy.service.VisitService;
 @Controller
 public class ConsultationController {
 
-    @Autowired
-    private ConsultationService service;
     
     @Autowired
     private VisitService visitService;
@@ -45,17 +39,6 @@ public class ConsultationController {
         return "consultationQuery";
     }
     
-    /**
-     * 输入挂号编号后显示的内容 -- 就诊
-     * @param regNo
-     * @return
-     */
-    @RequestMapping("/consultationQueryDetail")
-    public String consultationQueryDetail(@RequestParam("regNo") String regNo, HttpServletRequest request) {
-        Consultation consultation = service.queryConsultationByNo(regNo);
-        request.getSession().setAttribute("consultation", consultation);
-        return "doctor/visitDetail";
-    }
     
     /**
      * 医生编写病例  

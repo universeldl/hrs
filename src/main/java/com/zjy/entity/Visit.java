@@ -36,6 +36,10 @@ public class Visit {
     public void setId(String id) {
         this.id = id;
     }
+    
+    public void setId(){
+    	this.id = IdGenerator.generateUUIDforPrimaryKey();
+    }
 
     public String getRegistrationNo() {
         return registrationNo;

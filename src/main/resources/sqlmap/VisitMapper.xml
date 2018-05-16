@@ -59,15 +59,15 @@
     delete from visit
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zjy.entity.Registration" >
+  <insert id="insert" parameterType="com.zjy.entity.Visit" >
     insert into visit (id, registration_no, patient_no, 
       department_no, doctor_no, appointment_time, 
       visit_time, status, create_time, 
-      update_time)
+      update_time, diagnostic_description)
     values (#{id,jdbcType=VARCHAR}, #{registrationNo,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
       #{departmentNo,jdbcType=VARCHAR}, #{doctorNo,jdbcType=VARCHAR}, #{appointmentTime,jdbcType=TIMESTAMP}, 
       #{visitTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{diagnosticDescription,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zjy.entity.Visit" >
     insert into visit

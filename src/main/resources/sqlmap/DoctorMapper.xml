@@ -401,4 +401,17 @@
       visit_time, status, create_time, update_time 
       from registration where registration_no=#{regNo, jdbcType=VARCHAR}
   </select>
+  
+  <select id="confirm" parameterType="com.zjy.entity.Registration" resultType="com.zjy.vo.ConfirmVo">
+  	select d.doctor_name, t.department_name, p.patient_no, p.patient_name, p.patient_sex 
+	from registration r 
+	join doctor d 
+	on r.doctor_no=d.doctor_no 
+	join department t 
+	on t.department_no=d.doctor_department_no 
+	join patient p 
+	on p.patient_no=r.patient_no 
+	where r.registration_no=#{registrationNo,jdbcType=VARCHAR}
+  </select>
+  
 </mapper>

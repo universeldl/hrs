@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
 import com.zjy.entity.Prescription;
-import com.zjy.entity.Registration;
-import com.zjy.entity.Visit;
 import com.zjy.service.DoctorService;
 import com.zjy.service.DutyService;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
 import com.zjy.util.Constants;
+import com.zjy.vo.ConfirmVo;
 import com.zjy.vo.DataGridResult;
 import com.zjy.vo.DataResult;
 
@@ -196,10 +196,19 @@ public class DoctorController {
 	 * @return
 	 */
 	@RequestMapping("/confirmVisit")
-	public String confirmVisit(String registrationNo){
-		if(doctorService.confirmVisit(registrationNo)){
+	public String confirmVisit(String registrationNo, HttpServletRequest request){
+		Map<String, Object> map = doctorService.confirmVisit(registrationNo);
+		if("suc".equals(map.get("msg").toString())){
+			request.getSession().setAttribute("confirm",(ConfirmVo)map.get("confirm"));
 			return "doctor/visitDetail";
 		}
-		return "loginerror";
+		return "";
+		
+	}
+	
+	@RequestMapping("/insertVisit")
+	public String insertVisit(String registrationNo, String write){
+		doctorService.insertVisit(registrationNo,write);
+		return "doctor/visitDetail";
 	}
 }

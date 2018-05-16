@@ -123,7 +123,6 @@
 	</script>
 	<script>
 	    function confirm(registrationNo){
-	    	alert(registrationNo);
 	    	location.href="${pageContext.request.contextPath}/doctor/confirmVisit?registrationNo="+registrationNo;
 	    }
 	</script>
