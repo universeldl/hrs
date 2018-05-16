@@ -268,7 +268,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label>科室:</label>
-	    <select class="form-control selectpicker" name="depNo" id="depNo" title="请选择"></select>
+	    <select class="selectpicker" name="depNo" id="depNo" title="请选择"></select>
 	  </div>
 	  <div class="form-group">
 	    <label>状态:</label>

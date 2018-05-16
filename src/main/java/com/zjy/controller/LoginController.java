@@ -55,17 +55,18 @@ public class LoginController {
      * @throws ServletException 
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public DataResult logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	DataResult dataResult = new DataResult();
 
 		request.getSession().removeAttribute(Constants.SESSION_USER);
 		request.getSession().removeAttribute(Constants.SESSION_TYPE);
+		request.getSession().removeAttribute(Constants.SESSION_NAME);
+		request.getSession().removeAttribute(Constants.SESSION_NO);
     	CookieTools.removeCookie(Constants.COOKIE_NAME, response, request);
     	dataResult.setStatus(true);
     	dataResult.setTips("退出登录成功");
 
-        request.getRequestDispatcher("/toLogin").forward(request, response);
-    	return dataResult;
+		return "forward:/index.jsp";
     }
     
 	@RequestMapping(value = "/toLogin")

@@ -28,60 +28,7 @@
 	
 	<script type="text/javascript">
 		$(function() {
-			$("#loginForm").bootstrapValidator({
-				message: 'This value is not valid',
-				feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					id: {
-						validators: {
-							notEmpty: {
-								message: '编号不能为空'
-							},
-							remote: {
-								type: 'POST',
-								url: '${pageContext.request.contextPath}/check/id',
-								data: {
-									id: function() {
-										return $('#id').val();
-									},
-									type: function() {
-										return $('#type').val();
-									}
-								},
-								message: '账号不存在'
-							}
-						}
-					},
-					password: {
-						validators: {
-							notEmpty: {
-								message: '密码不能为空'
-							}
-						}
-					},
-					verificationCode: {
-						validators: {
-							notEmpty: {
-								message: '验证码不能为空'
-							},
-							remote: {
-								type: 'POST',
-								url: '${pageContext.request.contextPath}/check/verifyCode',
-								data: {
-									verifyCode: function() {
-										return $('#verificationCode').val();
-									}
-								},
-								message: '验证码不正确'
-							}
-						}
-					}
-				}
-			});
+			initValidator();
 			$('#loginButton').click(function() {
 				var id = $('#id').val();
 				var password = $('#password').val();
@@ -108,20 +55,87 @@
 								window.location.href = "${pageContext.request.contextPath}/patientIndex?no="+id;
 							}
 						} else {
-							alert(data.tips);
-							//页面内提示未实现
+							bootbox.alert({
+								size: "small",
+								message: data.tips
+							});
+							$('#password').val("");
+							$("#loginForm").data('bootstrapValidator').destroy();
+							initValidator();
+							$('#verifyCode').attr("src","${pageContext.request.contextPath}/verify/generateVerify?random="+ Math.random())
 						}
+					},
+					error: function(e) {
+						alert(e);
 					}
 				});
 			});
 		});
+	</script>
+	<script>
+	function initValidator() {
+		$("#loginForm").bootstrapValidator({
+			message: 'This value is not valid',
+			feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				id: {
+					validators: {
+						notEmpty: {
+							message: '编号不能为空'
+						},
+						remote: {
+							type: 'POST',
+							url: '${pageContext.request.contextPath}/check/id',
+							data: {
+								id: function() {
+									return $('#id').val();
+								},
+								type: function() {
+									return $('#type').val();
+								}
+							},
+							message: '账号不存在'
+						}
+					}
+				},
+				password: {
+					validators: {
+						notEmpty: {
+							message: '密码不能为空'
+						}
+					}
+				},
+				verificationCode: {
+					validators: {
+						notEmpty: {
+							message: '验证码不能为空'
+						},
+						remote: {
+							type: 'POST',
+							url: '${pageContext.request.contextPath}/check/verifyCode',
+							data: {
+								verifyCode: function() {
+									return $('#verificationCode').val();
+								}
+							},
+							message: '验证码不正确'
+						}
+					}
+				}
+			}
+		});
+	}
 	</script>
 </head>
 <body class="templatemo-bg-gray" style="background-image: url('images/login_background.jpg');background-size: 100%; background-repeat:no-repeat; background-attachment: fixed;">
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">用户登录</h1>
-			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" method="post">				
+			<form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form">				
 		        <div class="form-group">
 		          <div class="">
 		          	<div class="control-wrapper">
@@ -172,7 +186,7 @@
 		        <div class="form-group">
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
-		          		<input id="loginButton" type="submit" value="登录" class="btn btn-info">
+		          		<input id="loginButton" type="button" value="登录" class="btn btn-info">
 		          		<input type="reset" value="重置" class="btn btn-info">
 		          		<a href="${pageContext.request.contextPath}/patient/registration" class="text-right pull-right">用户注册</a>
 		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>

@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	
 	<script type="text/javascript">
 	$(function() {
@@ -46,11 +47,35 @@
 				}
 			}
 		});
+		$('#add').click(function() {
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/medicine/addMedicine",
+				type : "POST",
+				data : {
+					medicineName: $('#medicineName').val(),
+					medicinePrice: $('#medicinePrice').val(),
+					medicineAmount: $('#medicineAmount').val()
+				},
+                dataType: "json",
+				async : true,
+                success: function (data) {
+                	bootbox.alert({
+                		size: "small",
+    		        	message: data.tips
+                	})
+                },
+                error: function (data) {
+                	bootbox.alert({
+    		        	message: "网络错误"
+                	})
+                }
+            });
+        });
 	});
 	</script>
 	</head>
 	<body>
-		<form id="addMedicine" class="form-inline" role="form" action="${pageContext.request.contextPath}/medicine/addMedicine" style="margin-top: 30px; margin-left: 30px" method="post">
+		<form id="addMedicine" class="form-inline" role="form" style="margin-top: 30px; margin-left: 30px">
 			<div class="form-group">
 				<label>药品名称:</label> <input type="text" class="form-control" id="medicineName" name="medicineName">
 			</div>
@@ -60,7 +85,7 @@
 			<div class="form-group">
 				<label>药品数量:</label> <input type="text" class="form-control" id="medicineAmount" name="medicineAmount">
 			</div>
-			<button type="submit" class="btn btn-default" id="add">添加</button>
+			<button type="button" class="btn btn-default" id="add">添加</button>
 			<div id="tip"></div>
 		</form>
 	

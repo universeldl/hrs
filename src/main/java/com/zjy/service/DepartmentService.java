@@ -35,10 +35,10 @@ public class DepartmentService {
 		DataResult dataResult = new DataResult();
 		if (departmentMapper.insert(department) == 1) {
 			dataResult.setStatus(true);
-			dataResult.setTips("添加部门成功");
+			dataResult.setTips("添加科室成功");
 		} else {
 			dataResult.setStatus(false);
-			dataResult.setTips("添加部门失败");
+			dataResult.setTips("添加科室失败");
 		}
 		
 		return dataResult;
