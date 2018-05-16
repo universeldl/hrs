@@ -223,8 +223,8 @@ public class DoctorController {
 	 * @return
 	 */
 	@RequestMapping("/insertVisit")
-	public String insertVisit(String registrationNo, String write){
-		doctorService.insertVisit(registrationNo,write);
-		return "doctor/visitDetail";
+	@ResponseBody
+	public DataResult insertVisit(String registrationNo, String write){
+		return doctorService.insertVisit(registrationNo,write);
 	}
 }

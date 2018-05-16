@@ -181,6 +181,7 @@
 		            }
 		        ]
 		    });
+	        $('#prescriptionTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/prescription/queryPrescriptionList?registrationNo='+no});
 	        $("#medicineModal").modal("show");
 	    }
 	</script>
