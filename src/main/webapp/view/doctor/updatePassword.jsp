@@ -13,53 +13,82 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#updatePasswordForm").bootstrapValidator({
-				message: 'This value is not valid',
-				feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
+			initValidator();
+			$('#update').click(function() {
+	    		$.ajax({
+	                url: "${pageContext.request.contextPath}/doctor/updatePassword",
+					type : "POST",
+					data : {
+						oldPassword: $('#oldPassword').val(),
+						newPassword: $('#newPassword').val(),
+					},
+	                dataType: "json",
+					async : true,
+	                success: function (data) {
+	                	bootbox.alert({
+	                		size: "small",
+	    		        	message: data.tips
+	                	})
+	                },
+	                error: function (data) {
+	                	bootbox.alert({
+	    		        	message: "网络错误"
+	                	})
+	                }
+	            });
+			});
+		});
+	</script>
+	<script>
+	function initValidator(){
+		$("#updatePasswordForm").bootstrapValidator({
+			message: 'This value is not valid',
+			feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				oldPassword: {
+					validators: {
+						notEmpty: {
+							message: '旧密码不能为空'
+						}
+					}
 				},
-				fields: {
-					oldPassword: {
-						validators: {
-							notEmpty: {
-								message: '旧密码不能为空'
-							}
+				newPassword: {
+					validators: {
+						notEmpty: {
+							message: '新密码不能为空'
+						},
+						stringLength: {
+							min: 6,
+							max: 16,
+							message: '新密码需要 6 至 16 个字符'
+						},
+						different: {
+							field: 'oldPassword',
+							message: '新密码不能与旧密码相同'
 						}
-					},
-					newPassword: {
-						validators: {
-							notEmpty: {
-								message: '新密码不能为空'
-							},
-							stringLength: {
-								min: 6,
-								max: 16,
-								message: '新密码需要 6 至 16 个字符'
-							},
-							different: {
-								field: 'oldPassword',
-								message: '新密码不能与旧密码相同'
-							}
-						}
-					},
-					confirmPassword: {
-						validators: {
-							notEmpty: {
-								message: '密码不能为空'
-							},
-							identical: {
-								field: 'newPassword',
-								message: '确认密码与输入的密码不相同'
-							}
+					}
+				},
+				confirmPassword: {
+					validators: {
+						notEmpty: {
+							message: '密码不能为空'
+						},
+						identical: {
+							field: 'newPassword',
+							message: '确认密码与输入的密码不相同'
 						}
 					}
 				}
-			});
+			}
 		});
+	}
 	</script>
 </head>
 <body>
@@ -70,26 +99,26 @@
 					<td>
 						<label for="docNo" class="col-sm-4 control-label" style="margin-top: 5px">医生编号：</label>
 					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="docNo" name="docNo" value="${hrs_session_user.doctorNo}" readonly/>
+					      <input type="text" class="form-control" id="docNo" name="docNo" value="${doctor.doctorNo}" readonly/>
 					    </div>
 					</td>
 					<td>
 						<label for="docName" class="col-sm-4 control-label" style="margin-top: 5px">医生姓名：</label>
 					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="docName" name="docName" value="${hrs_session_user.doctorName}" readonly/>
+					      <input type="text" class="form-control" id="docName" name="docName" value="${doctor.doctorName}" readonly/>
 					    </div>
 					</td>
 					<td>
 						<label for="deptName" class="col-sm-4 control-label" style="margin-top: 5px">所属科室：</label>
 					    <div class="col-sm-5">
-					      <input type="text" class="form-control" id="deptName" name="deptName" value="${hrs_session_user.doctorDepartmentNo}" readonly/>
+					      <input type="text" class="form-control" id="deptName" name="deptName" value="${doctor.doctorDepartmentNo}" readonly/>
 					    </div>
 					</td>
 				</tr>
 			</table>
 		  </div>
 		</div>
-	<form id="updatePasswordForm" class="form-horizontal" style="margin-top: 30px;" action="${pageContext.request.contextPath}/doctor/updatePassword" method="post">
+	<form id="updatePasswordForm" class="form-horizontal" style="margin-top: 30px;">
 		<div class="form-group">
 			<label for="oldPassword" class="col-sm-2 control-label" style="width:150px">旧密码</label>
 			<div class="col-sm-10">
@@ -110,7 +139,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-1 col-sm-10" style="margin-left:150px">
-				<button type="submit" class="btn btn-default">修改</button>
+				<button id="update" type="button" class="btn btn-default">修改</button>
 			</div>
 		</div>
 	</form>

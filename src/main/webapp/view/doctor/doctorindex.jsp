@@ -36,7 +36,7 @@
 	 			</a>
 	  			<ul class="nav submenu collapse" id="collapse4">
 	  				<li>
-	   					<a href="${pageContext.request.contextPath}/view/doctor/updatePassword.jsp" target="frame"><span class="menu-text">修改密码</span></a>
+	   					<a href="${pageContext.request.contextPath}/doctor/showUpdatePassword?no=${doctor.doctorNo}" target="frame"><span class="menu-text">修改密码</span></a>
 	  				</li>
 	  			</ul>
 	 		</li>

@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.zjy.dao.VisitMapper;
 import com.zjy.entity.Doctor;
 import com.zjy.entity.Duty;
+import com.zjy.entity.Patient;
 import com.zjy.entity.Prescription;
 import com.zjy.service.DoctorService;
 import com.zjy.service.DutyService;
@@ -204,6 +206,14 @@ public class DoctorController {
 		}
 		return "";
 		
+	}
+	
+	@RequestMapping(value="/showUpdatePassword")
+	public ModelAndView showUpdatePassword(@RequestParam(required=true) String no) {
+		Doctor doctor = doctorService.selectByDoctorNo(no);
+		ModelAndView m = new ModelAndView("/doctor/updatePassword");
+		m.addObject("doctor", doctor);
+		return m;
 	}
 	
 	@RequestMapping("/insertVisit")
