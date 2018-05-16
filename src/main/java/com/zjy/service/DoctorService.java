@@ -132,8 +132,9 @@ public class DoctorService {
 		return map;
 	}
 
-	public void insertVisit(String registrationNo, String write) {
+	public DataResult insertVisit(String registrationNo, String write) {
 		// TODO Auto-generated method stub
+		DataResult dataResult = new DataResult();
 		Registration reg = doctorMapper.queryRegByNo(registrationNo);
 		Visit visit = visitMapper.selectByNo(registrationNo);
 		if(visit==null){
@@ -149,10 +150,24 @@ public class DoctorService {
 			visit.setStatus(reg.getStatus());
 			visit.setUpdateTime();
 			visit.setVisitTime(reg.getVisitTime());
-			visitMapper.insert(visit);
-		}else{
-			visitMapper.updateDiagnostic(registrationNo, write);
+			if (visitMapper.insert(visit) == 1){
+				dataResult.setStatus(true);
+				dataResult.setTips("病历编写成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("病历编写失败");
+			}
+		} else {
+			if (visitMapper.updateDiagnostic(registrationNo, write) == 1){
+				dataResult.setStatus(true);
+				dataResult.setTips("病历编写成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("病历编写失败");
+			}
 		}
+		
+		return dataResult;
 		
 	}
 
