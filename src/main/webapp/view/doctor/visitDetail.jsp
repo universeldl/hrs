@@ -396,6 +396,7 @@
         		success: function(data){
         			if(data.msg=="success"){
         				alert("添加成功！");
+        		        $('#medicineTable').bootstrapTable('refresh', {url: '${pageContext.request.contextPath}/doctor/queryMedicine'});
         			}
         		}	
 			});

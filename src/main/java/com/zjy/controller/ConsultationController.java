@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zjy.entity.Medicine;
 import com.zjy.entity.Prescription;
 import com.zjy.service.MedicineService;
 import com.zjy.service.PrescriptionService;
@@ -77,6 +78,9 @@ public class ConsultationController {
     		prescription.setMedicineAmount(prescription.getMedicineAmount()+1);
     		preService.update(prescription);
     	}
+    	Medicine medicine = medicineService.selectByMedicineNo(medicineNo);
+    	medicine.setMedicineAmount(medicine.getMedicineAmount()-1);
+    	medicineService.updateByNo(medicine);
     	map.put("msg", "success");
     	return map;
     }
