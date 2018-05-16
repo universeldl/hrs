@@ -80,7 +80,7 @@
 	        </span>
 	    </div>
 		<select id="selectDoctor" name="doctor" class="selectpicker" title="选择医生"></select>
-		<input type="submit" value="预约" class="btn btn-info">
+		<input type="submit" value="预约" class="btn btn-info" id="submit">
 	</form>
 </body>
 </html>

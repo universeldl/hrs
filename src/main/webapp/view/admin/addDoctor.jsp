@@ -157,7 +157,7 @@
 			<label class="col-sm-2 control-label">出生日期:</label>
 		    <div class="col-sm-4">
 				<div class='input-group date' id='birthDatetimepicker'>
-					<input type="text" class="form-control" id="doctorBirth" name="birth" value="" style="width:192px">
+					<input type="text" class="form-control" id="doctorBirth" name="birth" value="" style="width:286px">
 					<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
 				</div>
 			</div>
@@ -178,7 +178,7 @@
 			<label class="col-sm-2 control-label">入职日期:</label>
 		    <div class="col-sm-4">
 				<div class='input-group date' id='hireDatetimepicker'>
-					<input type="text" class="form-control" id="doctorHireTime"name="hireTime" style="width:192px">
+					<input type="text" class="form-control" id="doctorHireTime"name="hireTime" style="width:286px">
 					<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
 				</div>
 			</div>

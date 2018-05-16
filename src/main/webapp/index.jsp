@@ -111,6 +111,9 @@
 							alert(data.tips);
 							window.location.href = "${pageContext.request.contextPath}/toLogin";
 						}
+					},
+					error: function(e) {
+						alert(e);
 					}
 				});
 			});
