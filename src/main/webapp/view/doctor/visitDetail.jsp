@@ -131,10 +131,82 @@
 	</div>
 	<!-- ending -->
 	
+	<!-- 模态框 -->
+   	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">开药</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form id="addMedicineForm" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/consultationQuery/medicineQuery" method="post">
+			  <div class="form-group">
+			    <label for="medicineName" class="col-sm-2 control-label">药品名称:</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" id="medicineName" name="medicineName" >
+			    </div>
+			    <div class="col-sm-2">
+			      <input type="submit" class="btn btn-primary" value="搜索"/>
+			    </div>
+			  </div>
+			</form>
+			<table id="medicineTable" class="table table-hover table-striped"></table>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- ending -->
+	<input id="hid" type="hidden" value="${confirm.registrationNo}"/>
 	<script type="text/javascript">
 		function queryMedicine(){
-			location.href="${pageContext.request.contextPath}/doctor/queryMedicine";
+			var medicineName = $("#medicineName").val();
+			$('#medicineTable').bootstrapTable({
+		        method: 'post',//post避免中文乱码
+		        contentType: "application/x-www-form-urlencoded",//必须要有！！！！
+		        url:"${pageContext.request.contextPath}/doctor/queryMedicine?medicineName="+medicineName+"&pageSize=15&pageNumber=1",//要请求数据的文件路径
+		        //height:tableHeight(),//高度调整
+		        //toolbar: '#toolbar',//指定工具栏 
+		        dataType: "json",
+		        pageNumber: 1, //初始化加载第一页，默认第一页
+		        //pagination:true,//是否分页
+		        //queryParams:queryParams,//请求服务器时所传的参数
+		        sidePagination:'server',//指定服务器端分页
+		        pageSize:10,//单页记录数
+		        pageList:[5,10,20,30],//分页步进值
+		        showRefresh:false,//刷新按钮
+		        showColumns:false,
+		        clickToSelect: false,//是否启用点击选中行
+		        columns:[{
+		        		title:'药品ID',
+		        		field:'medicineNo',
+		        		hidden:true
+	        		},{
+		                title:'药品名称',
+		                field:'medicineName',
+		                align:'center'
+		            },{
+		            	title:'药品数量',
+		            	field:'medicineAmount',
+		            	align:'center'
+		            },{
+	   	            	title:'操作',
+	   	                field:'Button',
+	   	                align:'center',
+	   	                //events:operateEvents,
+	   	                formatter: confirmFunction
+	  	            }
+		        ]
+		    });
+	        $("#myModal2").modal("show");
 		}
+
+		
+		function confirmFunction(value, row, index) {
+               return [
+                       '<button id="tableConfirm" onclick="add(\''+row.medicineNo+'\')" type="button" class="btn btn-default">添加</button>'
+                       ].join("");
+        }
 		
 		function queryRecord(){
 			$('#visitTable').bootstrapTable({
@@ -270,6 +342,24 @@
 		    });
 	        $("#medicineModal").modal("show");
 	    }
+	</script>
+	<script type="text/javascript">
+		var hid = $("#hid").val();
+		function add(medicineNo){
+			$.ajax({
+				url: "${pageContext.request.contextPath}/consultationQuery/addMedicine",
+        		type: "post",
+        		data: {'registrationNo':hid,
+        				'medicineNo':medicineNo},    //如何拿到该行的depNo
+        		dataType: "json",
+        		async: true,
+        		success: function(data){
+        			if(data.msg=="success"){
+        				alert("添加成功！");
+        			}
+        		}	
+			});
+		}
 	</script>
 </body>
 </html>

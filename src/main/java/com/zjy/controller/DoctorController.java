@@ -216,6 +216,12 @@ public class DoctorController {
 		return m;
 	}
 	
+	/**
+	 * 编写病例之后加入visit表
+	 * @param registrationNo
+	 * @param write
+	 * @return
+	 */
 	@RequestMapping("/insertVisit")
 	public String insertVisit(String registrationNo, String write){
 		doctorService.insertVisit(registrationNo,write);
