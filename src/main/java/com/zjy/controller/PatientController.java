@@ -102,7 +102,7 @@ public class PatientController {
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
-	public DataResult registrate(@RequestParam(value = "name", required = true) String name,
+	public ModelAndView registrate(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "birth", required = true) String birth,
 			@RequestParam(value = "phone", required = true) String phone,
@@ -131,8 +131,16 @@ public class PatientController {
 		patient.setUpdateTime();
 		
 		dataResult = patientService.insert(patient);
-		
-		return dataResult;
+
+		ModelAndView m = new ModelAndView("/patient/registrationSuccess");
+		if (dataResult.isStatus()) {
+			m.addObject("patient", patient);
+			m.addObject("status",true);
+		} else {
+			m.addObject("status",false);
+		}
+		return m;
+//		return dataResult;
 		
 	}
 	
