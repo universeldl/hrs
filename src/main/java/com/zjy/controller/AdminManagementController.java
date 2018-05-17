@@ -206,7 +206,8 @@ public class AdminManagementController {
 	    	department.setDepartmentNo();
 		} while (departmentService.selectByDeptNo(department.getDepartmentNo()) != null);
     	department.setDepartmentNo();
-    	department.setDepartmentName(name);
+    	if (name != null && !"".equals(name))
+    		department.setDepartmentName(name);
     	department.setIsDeleted(Constants.NOT_DELETED);
     	department.setCreateTime();
     	department.setUpdateTime();

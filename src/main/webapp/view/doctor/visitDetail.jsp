@@ -93,7 +93,7 @@
 	</div>
 	
 	<div class="panel panel-default">
-		<textarea rows="10" cols="139" id="write" style="resize:none;"></textarea>
+		<textarea rows="10" cols="225" id="write" style="resize:none;"></textarea>
 	</div>
 	
 	<!-- 模态框 -->
