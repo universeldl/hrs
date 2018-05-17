@@ -3,6 +3,8 @@ package com.zjy.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -18,17 +20,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-public class mail {
+public class SendCodeToPhone {
 	
-	public static void main(String[] args) {
-		try {
-			doPost();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void doPost() throws Exception{
+	public static void doPost(String phone, HttpServletRequest request) throws Exception{
 		
 		//创建一个浏览器
 		CloseableHttpClient client = 
@@ -42,12 +36,13 @@ public class mail {
 		List<NameValuePair> list = new ArrayList<>();
 		list.add(new BasicNameValuePair("account", "C89466886"));
 		list.add(new BasicNameValuePair("password", "c34f25ad2cc9669b7d011587df61ccda"));
-		list.add(new BasicNameValuePair("mobile", "18620708410"));
+		list.add(new BasicNameValuePair("mobile", phone));
 		
 		int mobile_code = (int)((Math.random()*9+1)*100000);
 
 	    String content = new String("您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。");
 		list.add(new BasicNameValuePair("content", content));
+		request.getSession().setAttribute(Constants.PHONE_CODE, mobile_code+"");
 		
 		
 		//定义一个form表单发送post请求和参数  表单  form

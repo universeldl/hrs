@@ -1,6 +1,8 @@
 package com.zjy.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import com.zjy.service.LoginService;
 import com.zjy.service.PatientService;
 import com.zjy.util.Constants;
 import com.zjy.util.CookieTools;
+import com.zjy.util.SendCodeToPhone;
 import com.zjy.vo.DataResult;
 
 /**
@@ -133,7 +136,44 @@ public class LoginController {
     }
     
     @RequestMapping("/forgetPassword")
-    public void forgetPassword(){
-    	
+    public String forgetPassword(){
+    	return "forgetPassword";
+    }
+    
+    @RequestMapping("/getPhone")
+    @ResponseBody
+    public Map<String, String> getPhone(@RequestParam(value="no") String no,
+    		@RequestParam(value="type") String type,
+    		HttpServletRequest request) throws Exception {
+    	Map<String, String> map = new HashMap<String, String>();
+    	String phone;
+    	if (Constants.DOCTOR_TYPE.equals(type)) {
+    		Doctor doctor = doctorService.selectByDoctorNo(no);
+    		phone = doctor.getDoctorPhone();
+    	} else {
+    		Patient patient = patientService.selectByPatientNo(no);
+    		phone = patient.getPatientPhone();
+    	}
+    	map.put("type", type);
+    	map.put("no", no);
+		map.put("phone", phone);
+    	SendCodeToPhone.doPost(phone, request);
+    	return map;
+    }
+    
+    @RequestMapping("/updatePassword")
+    @ResponseBody
+    public DataResult updatePassword(@RequestParam(value="no") String no,
+    		@RequestParam(value="type") String type,
+    		@RequestParam(value="password") String password) {
+    	DataResult dataResult;
+    	if (Constants.DOCTOR_TYPE.equals(type)) {
+    		Doctor doctor = doctorService.selectByDoctorNo(no);
+    		dataResult = doctorService.updatePasswordByPhone(doctor, password);
+    	} else {
+    		Patient patient = patientService.selectByPatientNo(no);
+    		dataResult = patientService.updatePasswordByPhone(patient, password);
+    	}
+    	return dataResult;
     }
 }
