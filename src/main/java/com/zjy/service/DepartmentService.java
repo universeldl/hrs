@@ -33,10 +33,15 @@ public class DepartmentService {
 	
 	public DataResult insert(Department department) {
 		DataResult dataResult = new DataResult();
-		if (departmentMapper.insert(department) == 1) {
-			dataResult.setStatus(true);
-			dataResult.setTips("添加科室成功");
-		} else {
+		try {
+			if (departmentMapper.insert(department) == 1) {
+				dataResult.setStatus(true);
+				dataResult.setTips("添加科室成功");
+			} else {
+				dataResult.setStatus(false);
+				dataResult.setTips("添加科室失败");
+			}
+		} catch(Exception e) {
 			dataResult.setStatus(false);
 			dataResult.setTips("添加科室失败");
 		}

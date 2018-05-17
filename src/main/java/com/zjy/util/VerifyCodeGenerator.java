@@ -89,7 +89,7 @@ public class VerifyCodeGenerator {
 	}
 	
 	private static String generatorVerify() {
-		int flag = random.nextInt(2);
+		int flag = random.nextInt(3);
 		switch(flag) {
 			case 0: // 生成大写字母(A-Z|65-90)
 				long temp = Math.round(Math.random() * 25 + 65);

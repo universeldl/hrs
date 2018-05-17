@@ -88,7 +88,7 @@
 	 		</li>
 	 		<li class="panel">
 	  			<a class="panel-heading collapsed" href="#collapse7" data-toggle="collapse" data-parent="#nav_parent">
-	  				<span class="menu-text">药品</span>
+	  				<span class="menu-text">药品管理</span>
 	 			</a>
 	 			<ul class="nav submenu collapse" id="collapse7">
 	 				<li>
