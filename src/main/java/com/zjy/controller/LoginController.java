@@ -131,4 +131,9 @@ public class LoginController {
     	
         return dataResult;
     }
+    
+    @RequestMapping("/forgetPassword")
+    public void forgetPassword(){
+    	
+    }
 }

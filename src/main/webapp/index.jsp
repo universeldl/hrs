@@ -190,7 +190,7 @@
 		          		<input type="reset" value="重置" class="btn btn-info">
 		          		<a href="${pageContext.request.contextPath}/patient/registration" class="text-right pull-right">用户注册</a>
 		          		<a class="text-right pull-right" href="#">&nbsp|&nbsp</a>
-		          		<a href="forgot-password.html" class="text-right pull-right">忘记密码?</a>
+		          		<a href="${pageContext.request.contextPath}/forgetPassword" class="text-right pull-right">忘记密码?</a>
 		          	</div>
 		          </div>
 		        </div>
