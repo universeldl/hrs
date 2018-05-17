@@ -122,4 +122,33 @@ public class PatientService {
 				pageInfo.getPageNum());
 		return dataGridResult;
 	}
+
+	/**
+	 * @author Mervyn
+	 * 
+	 * @param patient
+	 * @param password
+	 * @return
+	 */
+	public DataResult updatePasswordByPhone(Patient patient, String password) {
+		DataResult dataResult = new DataResult();
+		
+		patient.setPatientSalt(CryptographyHelper.getRandomSalt());
+		patient.setPatientPassword(CryptographyHelper.encrypt(password, patient.getPatientSalt()));
+		
+        try {
+    		if (patientMapper.updateByPrimaryKeySelective(patient)==1) {
+    			dataResult.setStatus(true);
+    			dataResult.setTips("修改密码成功");
+    		} else {
+    			dataResult.setStatus(false);
+    			dataResult.setTips("修改密码失败");
+    		}
+        }catch(Exception e) {
+			dataResult.setStatus(false);
+			dataResult.setTips("修改密码失败");
+        }
+        
+		return dataResult;
+	}
 }

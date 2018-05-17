@@ -54,6 +54,28 @@ public class CheckFormController {
     	
     	return result;
     }
+	
+    /**
+     * 登陆验证码表单验证
+     * @author Mervyn
+     * 
+     * @param code
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/phoneCode", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> checkPhoneCode(@RequestParam(value = "phoneCode") String code, HttpServletRequest request) {
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	if (((String)request.getSession().getAttribute(Constants.PHONE_CODE)).equalsIgnoreCase(code)) {
+    		result.put("valid", "true");
+    	} else {
+    		result.put("valid", "false");
+    	}
+    	
+    	return result;
+    }
     
     /**
      * 检查账户是否存在

@@ -171,4 +171,33 @@ public class DoctorService {
 		
 	}
 
+	/**
+	 * @author Mervyn
+	 * 
+	 * @param doctor
+	 * @param password
+	 * @return
+	 */
+	public DataResult updatePasswordByPhone(Doctor doctor, String password) {
+		DataResult dataResult = new DataResult();
+		
+		doctor.setDoctorSalt(CryptographyHelper.getRandomSalt());
+		doctor.setDoctorPassword(CryptographyHelper.encrypt(password, doctor.getDoctorSalt()));
+		
+        try {
+    		if (doctorMapper.updateByPrimaryKeySelective(doctor)==1) {
+    			dataResult.setStatus(true);
+    			dataResult.setTips("修改密码成功");
+    		} else {
+    			dataResult.setStatus(false);
+    			dataResult.setTips("修改密码失败");
+    		}
+        }catch(Exception e) {
+			dataResult.setStatus(false);
+			dataResult.setTips("修改密码失败");
+        }
+        
+		return dataResult;
+	}
+
 }
